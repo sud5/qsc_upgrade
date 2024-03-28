@@ -681,7 +681,7 @@ class core_renderer extends renderer_base {
      * @return string HTML fragment.
      */
     public function standard_head_html() {
-        global $CFG, $SESSION, $SITE;
+        global $CFG, $DB, $SITE;
 
         // Before we output any content, we need to ensure that certain
         // page components are set up.
@@ -711,6 +711,42 @@ class core_renderer extends renderer_base {
 
         $output .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n";
         $output .= '<meta name="keywords" content="moodle, ' . $this->page->title . '" />' . "\n";
+        $output .= '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' . "\n";
+        //For Static Pages
+        if ($this->page->url->get_path() == '/mod/page/view.php') {
+            $page_page = $DB->get_record('page', array('id' => $this->page->cm->instance), '*');
+
+            $output .= '<meta name="keywords" content="' . $page_page->meta_keywords . '" />' . "\n";
+            $output .= '<meta name="description" content="' . $page_page->meta_descriptions . '" />' . "\n";
+        } elseif ($this->page->url->get_path() == '/course/index.php') {
+            //For Classroom Pages
+
+            $param_cc = $this->page->url->params();
+
+            $page_cc = $DB->get_record('course_categories', array('id' => $param_cc['categoryid']), '*');
+
+            $output .= '<meta name="keywords" content="' . $page_cc->meta_keywords . '" />' . "\n";
+            $output .= '<meta name="description" content="' . $page_cc->meta_descriptions . '" />' . "\n";
+        } elseif ($this->page->url->get_path() == '/mod/facetoface/view.php') {
+            //For Classroom Pages
+            $page_f2f = $DB->get_record('facetoface', array('id' => $this->page->cm->instance), '*');
+
+            $output .= '<meta name="keywords" content="' . $page_f2f->meta_keywords . '" />' . "\n";
+            $output .= '<meta name="description" content="' . $page_f2f->meta_descriptions . '" />' . "\n";
+        } elseif ($this->page->url->get_path() == '/mod/book/view.php') {
+            //For Classroom Pages
+            $page_book = $DB->get_record('book', array('id' => $this->page->cm->instance), '*');
+
+            $output .= '<meta name="keywords" content="' . $page_book->meta_keywords . '" />' . "\n";
+
+            $page_book_chapter = $DB->get_record('book_chapters', array('bookid' => $this->page->cm->instance, 'title' => 'Lesson Description'), '*');
+            $output .= '<meta name="description" content="' . format_string($page_book_chapter->content) . '" />' . "\n";
+        } elseif ($this->page->url->get_path() == '/course/view.php') {
+            //For Course Pages
+            $output .= '<meta name="keywords" content="' . $this->page->course->meta_keywords . '" />' . "\n";
+
+            $output .= '<meta name="description" content="' . $this->page->course->meta_descriptions . '" />' . "\n";
+        }
         // This is only set by the {@link redirect()} method
         $output .= $this->metarefreshtag;
 
@@ -1193,7 +1229,7 @@ class core_renderer extends renderer_base {
             if (isguestuser()) {
                 $loggedinas = $realuserinfo.get_string('loggedinasguest');
                 if (!$loginpage && $withlinks) {
-                    $loggedinas .= " (<a href=\"$loginurl\">".get_string('login').'</a>)';
+                    $loggedinas = " <a href=\"$loginurl\">".get_string('login').'</a>';
                 }
             } else if (is_role_switched($course->id)) { // Has switched roles
                 $rolename = '';
@@ -1214,7 +1250,7 @@ class core_renderer extends renderer_base {
         } else {
             $loggedinas = get_string('loggedinnot', 'moodle');
             if (!$loginpage && $withlinks) {
-                $loggedinas .= " (<a href=\"$loginurl\">".get_string('login').'</a>)';
+                $loggedinas .= " <a href=\"$loginurl\">".get_string('login').'</a>';
             }
         }
 
@@ -2071,7 +2107,7 @@ class core_renderer extends renderer_base {
     * @param array $displayoptions optional extra display options
     * @return string HTML fragment
     */
-    public function confirm($message, $continue, $cancel, array $displayoptions = []) {
+    public function confirm($message, $continue, $cancel, array $displayoptions = [], $flag=0) {
 
         // Check existing displayoptions.
         $displayoptions['confirmtitle'] = $displayoptions['confirmtitle'] ?? get_string('confirm');
@@ -2096,7 +2132,10 @@ class core_renderer extends renderer_base {
         if ($cancel instanceof single_button) {
             // ok
         } else if (is_string($cancel)) {
-            $cancel = new single_button(new moodle_url($cancel), $displayoptions['cancelstr'], 'get');
+            if ($flag == 0)
+                $cancel = new single_button(new moodle_url($cancel), $displayoptions['cancelstr'], 'get');
+            else
+                $cancel = new single_button(new moodle_url($cancel), $displayoptions['cancelstr_custom'], 'get');
         } else if ($cancel instanceof moodle_url) {
             $cancel = new single_button($cancel, $displayoptions['cancelstr'], 'get');
         } else {
@@ -3633,6 +3672,11 @@ EOD;
         } else {
             return '';
         }
+
+        return html_writer::div(
+            $this->render($am),
+            $usermenuclasses
+        );
     }
 
     /**

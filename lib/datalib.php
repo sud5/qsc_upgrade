@@ -412,7 +412,7 @@ function users_order_by_sql(string $usertablealias = '', string $search = null, 
  * @return array|int|bool  {@link $USER} records unless get is false in which case the integer count of the records found is returned.
  *                        False is returned if an error is encountered.
  */
-function get_users($get=true, $search='', $confirmed=false, array $exceptions=null, $sort='firstname ASC',
+/*function get_users($get=true, $search='', $confirmed=false, array $exceptions=null, $sort='firstname ASC',
                    $firstinitial='', $lastinitial='', $page='', $recordsperpage='', $fields='*', $extraselect='', array $extraparams=null) {
     global $DB, $CFG;
 
@@ -465,8 +465,172 @@ function get_users($get=true, $search='', $confirmed=false, array $exceptions=nu
     } else {
         return $DB->count_records_select('user', $select, $params);
     }
-}
+}*/
+// -- -  - - --  -Start - Tag Search for Private Course Tag -Nav -- - - - -- - //
+function get_users($get=true, $search='', $confirmed=false, array $exceptions=null, $sort='firstname ASC',
+                   $firstinitial='', $lastinitial='', $page='', $recordsperpage='', $fields='*', $extraselect='', array $extraparams=null, $tagSearch = false) {
+    global $DB, $CFG;
+    if ($get && !$recordsperpage) {
+        debugging('Call to get_users with $get = true no $recordsperpage limit. ' .
+                'On large installations, this will probably cause an out of memory error. ' .
+                'Please think again and change your code so that it does not try to ' .
+                'load so much data into memory.', DEBUG_DEVELOPER);
+    }
 
+    $fullname  = $DB->sql_fullname();
+    //if(empty($tagSearch)){
+    $select = " id <> :guestid AND deleted = 0";
+    $params = array('guestid'=>$CFG->siteguest);
+
+    if (!empty($search)){
+        $search = trim($search);
+        $select .= " AND (".$DB->sql_like($fullname, ':search1', false)." OR ".$DB->sql_like('email', ':search2', false)." OR username = :search3)";
+        $params['search1'] = "%$search%";
+        $params['search2'] = "%$search%";
+        $params['search3'] = "$search";
+    }
+
+    if ($confirmed) {
+        $select .= " AND confirmed = 1";
+    }
+
+    if ($exceptions) {
+        list($exceptions, $eparams) = $DB->get_in_or_equal($exceptions, SQL_PARAMS_NAMED, 'ex', false);
+        $params = $params + $eparams;
+        $select .= " AND id $exceptions";
+    }
+
+    if ($firstinitial) {
+        $select .= " AND ".$DB->sql_like('firstname', ':fni', false, false);
+        $params['fni'] = "$firstinitial%";
+    }
+    if ($lastinitial) {
+        $select .= " AND ".$DB->sql_like('lastname', ':lni', false, false);
+        $params['lni'] = "$lastinitial%";
+    }
+
+    if ($extraselect) {
+        $select .= " AND $extraselect";
+        $params = $params + (array)$extraparams;
+    }
+
+    if(!empty($tagSearch)){
+        $tagStr = implode(",", $tagSearch);
+        $TagedUser =$DB->get_records_sql("SELECT DISTINCT(userid) as uid FROM mdl_user_tags_pc WHERE tagid IN($tagStr)");
+        if(!empty($TagedUser))
+        {
+            $TagUserIdArr = array();
+            foreach ($TagedUser as  $TUvalue) {
+               $TagUserIdArr[] = $TUvalue->uid;
+            }
+            if(!empty($TagUserIdArr)){
+                $userTagStr= implode(",", $TagUserIdArr);
+                $select .= " AND id IN ($userTagStr)";
+            }
+
+        }
+    }
+
+        if ($get) {
+            return $DB->get_records_select('user', $select, $params, $sort, $fields, $page, $recordsperpage);
+
+        } else {
+            return $DB->count_records_select('user', $select, $params);
+            }
+}
+// -- -  - - --  -END - Tag Search for Private Course Tag -Nav -- - - - -- - //
+// -- -  - - --  -Start - Tag Search for Private Course Tag -Nav - - - - -  - -//
+
+/**
+ * Return filtered (if provided) list of users in site, except guest and deleted users.
+ *
+ * @param string $sort An SQL field to sort by
+ * @param string $dir The sort direction ASC|DESC
+ * @param int $page The page or records to return
+ * @param int $recordsperpage The number of records to return per page
+ * @param string $search A simple string to search for
+ * @param string $firstinitial Users whose first name starts with $firstinitial
+ * @param string $lastinitial Users whose last name starts with $lastinitial
+ * @param string $extraselect An additional SQL select statement to append to the query
+ * @param array $extraparams Additional parameters to use for the above $extraselect
+ * @param stdClass $extracontext If specified, will include user 'extra fields'
+ *   as appropriate for current user and given context
+ * @return array Array of {@link $USER} records
+ */
+function get_users_listing_with_tag($sort='lastaccess', $dir='ASC', $page=0, $recordsperpage=0,
+                           $search='', $firstinitial='', $lastinitial='', $extraselect='',
+                           array $extraparams=null, $extracontext = null, $tagArr ='')
+{
+    global $DB, $CFG;
+
+    $fullname  = $DB->sql_fullname();
+
+    $select = "deleted <> 1 AND id <> :guestid";
+    $params = array('guestid' => $CFG->siteguest);
+
+    if (!empty($search)) {
+        $search = trim($search);
+        $select .= " AND (". $DB->sql_like($fullname, ':search1', false, false).
+                   " OR ". $DB->sql_like('email', ':search2', false, false).
+                   " OR username = :search3)";
+        $params['search1'] = "%$search%";
+        $params['search2'] = "%$search%";
+        $params['search3'] = "$search";
+    }
+
+    if ($firstinitial) {
+        $select .= " AND ". $DB->sql_like('firstname', ':fni', false, false);
+        $params['fni'] = "$firstinitial%";
+    }
+    if ($lastinitial) {
+        $select .= " AND ". $DB->sql_like('lastname', ':lni', false, false);
+        $params['lni'] = "$lastinitial%";
+    }
+
+    if ($extraselect) {
+            //print_r($extraselect);
+            $select .= " AND $extraselect";
+            $params = $params + (array)$extraparams;
+    }
+    if(!empty($tagArr)){
+        $tagStr = implode(",", $tagArr);
+        //$select .= " AND id IN (SELECT DISTINCT(userid) FROM mdl_user_tags_pc where tagid IN($tagStr))";
+        $TagedUser =$DB->get_records_sql("SELECT DISTINCT(userid) as uid FROM mdl_user_tags_pc WHERE tagid IN($tagStr)");
+        if(!empty($TagedUser))
+        {
+            $userTagArr = array();
+            foreach ($TagedUser as  $TUvalue) {
+               $userTagArr[] = $TUvalue->uid;
+            }
+            if(!empty($userTagArr)){
+                $TagedUserIDStr= implode(",", $userTagArr);
+                $select .= " AND id IN ($TagedUserIDStr)";
+            }
+        }
+    }
+    if ($sort) {
+        $sort = " ORDER BY $sort $dir";
+    }
+
+    // If a context is specified, get extra user fields that the current user
+    // is supposed to see.
+    $extrafields = '';
+    if ($extracontext) {
+        $extrafields = get_extra_user_fields_sql($extracontext, '', '',
+                array('id', 'username', 'email', 'firstname', 'lastname', 'city', 'country',
+                'lastaccess', 'confirmed', 'mnethostid'));
+    }
+    $namefields = get_all_user_name_fields(true);
+    $extrafields = "$extrafields, $namefields";
+
+    // warning: will return UNCONFIRMED USERS
+
+    return $DB->get_records_sql("SELECT id, username, email, city, country, lastaccess, confirmed, mnethostid, suspended $extrafields
+                                   FROM {user}
+                                  WHERE $select
+                                  $sort", $params, $page, $recordsperpage);
+}
+// -- -  - - --  -End - Tag Search for Private Course Tag -Nav - - - - -  - -//
 
 /**
  * Return filtered (if provided) list of users in site, except guest and deleted users.

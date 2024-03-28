@@ -89,6 +89,15 @@ class assign_grading_table extends table_sql implements renderable {
 
         $this->is_persistent(true);
         $this->assignment = $assignment;
+        //Customization Sameer start
+        $raQuery = "SELECT userid as graderid FROM {role_assignments} WHERE roleid=10 AND userid =".$USER->id;
+        $raObjData = $DB->get_record_sql($raQuery);
+
+        $existGrader=0;
+        if($raObjData){
+            $existGrader = 1;
+        }
+        //Customization Sameer end
 
         // Check permissions up front.
         $this->hasgrantextension = has_capability('mod/assign:grantextension',
@@ -989,6 +998,10 @@ class assign_grading_table extends table_sql implements renderable {
             $urlparams = array('id' => $this->assignment->get_course_module()->id,
                                'rownum' => 0,
                                'action' => 'grader');
+                               $name = $this->assignment->fullname($row);
+            $icon = $this->output->pix_icon('gradefeedback',
+                get_string('gradeuser', 'assign', $name),
+                'mod_assign');
 
             if ($this->assignment->is_blind_marking()) {
                 if (empty($row->recordid)) {
@@ -1000,7 +1013,8 @@ class assign_grading_table extends table_sql implements renderable {
             }
 
             $url = new moodle_url('/mod/assign/view.php', $urlparams);
-            $link = '<a href="' . $url . '" class="btn btn-primary">' . get_string('gradeverb') . '</a>';
+            //$link = '<a href="' . $url . '" class="btn btn-primary">' . get_string('gradeverb') . '</a>';
+            $link = $this->output->action_link($url, $icon);
             $grade .= $link . $separator;
         }
 
@@ -1418,6 +1432,25 @@ class assign_grading_table extends table_sql implements renderable {
                 $description
             );
         }
+
+        //modify by shiva for US_7765
+        if ($ismanual && $hasattempts) {
+            $urlparams = array('id' => $this->assignment->get_course_module()->id,
+                'userid'=>$row->id,
+                'action'=>'comment',
+                'sesskey'=>sesskey(),
+                'page'=>$this->currpage);
+
+
+            $url = new moodle_url('/local/assign/comment.php', $urlparams);
+            $description = get_string('comment', 'assign');
+            $actions['comment'] = new action_menu_link_secondary(
+                $url,
+                $noimage,
+                $description
+            );
+        }
+        //ends
 
         $menu = new action_menu();
         $menu->set_owner_selector('.gradingtable-actionmenu');

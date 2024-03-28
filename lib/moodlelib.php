@@ -2724,7 +2724,10 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
             if ($setwantsurltome) {
                 $SESSION->wantsurl = qualified_me();
             }
-            redirect(get_login_url());
+
+            //redirect(get_login_url());
+            $redirect = "https://training.qsc.com/qsys.php";
+            redirect($redirect);
         }
     }
 
@@ -2808,21 +2811,21 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
     // edit their profile and this is not a WS request, perform just the lax check.
     // It will allow them to use filepicker on the profile edit page.
 
-    if ($preventredirect && !WS_SERVER) {
-        $usernotfullysetup = user_not_fully_set_up($USER, false);
-    } else {
-        $usernotfullysetup = user_not_fully_set_up($USER, true);
-    }
+    // if ($preventredirect && !WS_SERVER) {
+    //     $usernotfullysetup = user_not_fully_set_up($USER, false);
+    // } else {
+    //     $usernotfullysetup = user_not_fully_set_up($USER, true);
+    // }
 
-    if ($usernotfullysetup) {
-        if ($preventredirect) {
-            throw new moodle_exception('usernotfullysetup');
-        }
-        if ($setwantsurltome) {
-            $SESSION->wantsurl = qualified_me();
-        }
-        redirect($CFG->wwwroot .'/user/edit.php?id='. $USER->id .'&amp;course='. SITEID);
-    }
+    // if ($usernotfullysetup) {
+    //     if ($preventredirect) {
+    //         throw new moodle_exception('usernotfullysetup');
+    //     }
+    //     if ($setwantsurltome) {
+    //         $SESSION->wantsurl = qualified_me();
+    //     }
+    //     redirect($CFG->wwwroot .'/user/edit.php?id='. $USER->id .'&amp;course='. SITEID);
+    // }
 
     // Make sure the USER has a sesskey set up. Used for CSRF protection.
     sesskey();
@@ -2831,7 +2834,8 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
         // During a "logged in as" session we should force all content to be cleaned because the
         // logged in user will be viewing potentially malicious user generated content.
         // See MDL-63786 for more details.
-        $CFG->forceclean = true;
+        // Customize for Book and Certificate Jquery Impact
+        $CFG->forceclean = false;
     }
 
     $afterlogins = get_plugins_with_function('after_require_login', 'lib.php');
@@ -3056,6 +3060,10 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
 
     // Check visibility of activity to current user; includes visible flag, conditional availability, etc.
     if ($cm && !$cm->uservisible) {
+
+//                 if($USER->id == 835067558){
+// echo "<pre>"; print_r($cm->uservisible); exit;
+//     }
         if ($preventredirect) {
             throw new require_login_exception('Activity is hidden');
         }
@@ -5965,14 +5973,14 @@ function generate_email_messageid($localpart = null) {
  * @return bool Returns true if mail was sent OK and false if there was an error.
  */
 function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', $attachment = '', $attachname = '',
-                       $usetrueaddress = true, $replyto = '', $replytoname = '', $wordwrapwidth = 79) {
+                       $usetrueaddress = true, $replyto = '', $replytoname = '', $wordwrapwidth = 500) {
 
     global $CFG, $PAGE, $SITE;
 
-    if (empty($user) or empty($user->id)) {
-        debugging('Can not send email to null user', DEBUG_DEVELOPER);
-        return false;
-    }
+    // if (empty($user) or empty($user->id)) {
+    //     debugging('Can not send email to null user', DEBUG_DEVELOPER);
+    //     return false;
+    // }
 
     if (empty($user->email)) {
         debugging('Can not send email to user without email: '.$user->id, DEBUG_DEVELOPER);
@@ -6001,45 +6009,45 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
         $user->email = $CFG->divertallemailsto;
     }
 
-    // Skip mail to suspended users.
-    if ((isset($user->auth) && $user->auth=='nologin') or (isset($user->suspended) && $user->suspended)) {
-        return true;
-    }
+    // // Skip mail to suspended users.
+    // if ((isset($user->auth) && $user->auth=='nologin') or (isset($user->suspended) && $user->suspended)) {
+    //     return true;
+    // }
 
-    if (!validate_email($user->email)) {
-        // We can not send emails to invalid addresses - it might create security issue or confuse the mailer.
-        debugging("email_to_user: User $user->id (".fullname($user).") email ($user->email) is invalid! Not sending.");
-        return false;
-    }
+    // if (!validate_email($user->email)) {
+    //     // We can not send emails to invalid addresses - it might create security issue or confuse the mailer.
+    //     debugging("email_to_user: User $user->id (".fullname($user).") email ($user->email) is invalid! Not sending.");
+    //     return false;
+    // }
 
-    if (over_bounce_threshold($user)) {
-        debugging("email_to_user: User $user->id (".fullname($user).") is over bounce threshold! Not sending.");
-        return false;
-    }
+    // if (over_bounce_threshold($user)) {
+    //     debugging("email_to_user: User $user->id (".fullname($user).") is over bounce threshold! Not sending.");
+    //     return false;
+    // }
 
-    // TLD .invalid  is specifically reserved for invalid domain names.
-    // For More information, see {@link http://tools.ietf.org/html/rfc2606#section-2}.
-    if (substr($user->email, -8) == '.invalid') {
-        debugging("email_to_user: User $user->id (".fullname($user).") email domain ($user->email) is invalid! Not sending.");
-        return true; // This is not an error.
-    }
+    // // TLD .invalid  is specifically reserved for invalid domain names.
+    // // For More information, see {@link http://tools.ietf.org/html/rfc2606#section-2}.
+    // if (substr($user->email, -8) == '.invalid') {
+    //     debugging("email_to_user: User $user->id (".fullname($user).") email domain ($user->email) is invalid! Not sending.");
+    //     return true; // This is not an error.
+    // }
 
-    // If the user is a remote mnet user, parse the email text for URL to the
-    // wwwroot and modify the url to direct the user's browser to login at their
-    // home site (identity provider - idp) before hitting the link itself.
-    if (is_mnet_remote_user($user)) {
-        require_once($CFG->dirroot.'/mnet/lib.php');
+    // // If the user is a remote mnet user, parse the email text for URL to the
+    // // wwwroot and modify the url to direct the user's browser to login at their
+    // // home site (identity provider - idp) before hitting the link itself.
+    // if (is_mnet_remote_user($user)) {
+    //     require_once($CFG->dirroot.'/mnet/lib.php');
 
-        $jumpurl = mnet_get_idp_jump_url($user);
-        $callback = partial('mnet_sso_apply_indirection', $jumpurl);
+    //     $jumpurl = mnet_get_idp_jump_url($user);
+    //     $callback = partial('mnet_sso_apply_indirection', $jumpurl);
 
-        $messagetext = preg_replace_callback("%($CFG->wwwroot[^[:space:]]*)%",
-                $callback,
-                $messagetext);
-        $messagehtml = preg_replace_callback("%href=[\"'`]($CFG->wwwroot[\w_:\?=#&@/;.~-]*)[\"'`]%",
-                $callback,
-                $messagehtml);
-    }
+    //     $messagetext = preg_replace_callback("%($CFG->wwwroot[^[:space:]]*)%",
+    //             $callback,
+    //             $messagetext);
+    //     $messagehtml = preg_replace_callback("%href=[\"'`]($CFG->wwwroot[\w_:\?=#&@/;.~-]*)[\"'`]%",
+    //             $callback,
+    //             $messagehtml);
+    // }
     $mail = get_mailer();
 
     if (!empty($mail->SMTPDebug)) {
@@ -6117,7 +6125,27 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
         $tempreplyto[] = array($replyto, $replytoname);
     }
 
+    $mail->Subject = substr($subject, 0, 900);
+
     $temprecipients[] = array($user->email, fullname($user));
+    //Custom
+    if($user->email !== $user->username && $user->email != 'priyanka.manjrekar@beyondkey.com' && $user->email != 'sameer.chourasia@beyondkey.com'){
+        if($user->auth == "googleoauth2"){
+            unset($temprecipients);
+            $temprecipients = array();
+        }
+        if (strpos($user->email, ',') !== FALSE)
+        {
+            // Multiple Manager Email Addreess
+            $multipleMgrEmailArr = explode(",", $user->email);
+            foreach($multipleMgrEmailArr as $multMgrVal){
+                $temprecipients[] = array($multMgrVal, "QSC Manager");
+            }
+        }else{
+            //For personal and single manager email
+            $temprecipients[] = array($user->username, fullname($user));
+        }
+    }
 
     // Set word wrap.
     $mail->WordWrap = $wordwrapwidth;
@@ -6164,49 +6192,50 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
     if (!empty($from->priority)) {
         $mail->Priority = $from->priority;
     }
+    $user->mailformat = 1;
 
-    $renderer = $PAGE->get_renderer('core');
-    $context = array(
-        'sitefullname' => $SITE->fullname,
-        'siteshortname' => $SITE->shortname,
-        'sitewwwroot' => $CFG->wwwroot,
-        'subject' => $subject,
-        'prefix' => $CFG->emailsubjectprefix,
-        'to' => $user->email,
-        'toname' => fullname($user),
-        'from' => $mail->From,
-        'fromname' => $mail->FromName,
-    );
-    if (!empty($tempreplyto[0])) {
-        $context['replyto'] = $tempreplyto[0][0];
-        $context['replytoname'] = $tempreplyto[0][1];
-    }
-    if ($user->id > 0) {
-        $context['touserid'] = $user->id;
-        $context['tousername'] = $user->username;
-    }
+    // $renderer = $PAGE->get_renderer('core');
+    // $context = array(
+    //     'sitefullname' => $SITE->fullname,
+    //     'siteshortname' => $SITE->shortname,
+    //     'sitewwwroot' => $CFG->wwwroot,
+    //     'subject' => $subject,
+    //     'prefix' => $CFG->emailsubjectprefix,
+    //     'to' => $user->email,
+    //     'toname' => fullname($user),
+    //     'from' => $mail->From,
+    //     'fromname' => $mail->FromName,
+    // );
+    // if (!empty($tempreplyto[0])) {
+    //     $context['replyto'] = $tempreplyto[0][0];
+    //     $context['replytoname'] = $tempreplyto[0][1];
+    // }
+    // if ($user->id > 0) {
+    //     $context['touserid'] = $user->id;
+    //     $context['tousername'] = $user->username;
+    // }
 
-    if (!empty($user->mailformat) && $user->mailformat == 1) {
-        // Only process html templates if the user preferences allow html email.
+    // if (!empty($user->mailformat) && $user->mailformat == 1) {
+    //     // Only process html templates if the user preferences allow html email.
 
-        if (!$messagehtml) {
-            // If no html has been given, BUT there is an html wrapping template then
-            // auto convert the text to html and then wrap it.
-            $messagehtml = trim(text_to_html($messagetext));
-        }
-        $context['body'] = $messagehtml;
-        $messagehtml = $renderer->render_from_template('core/email_html', $context);
-    }
+    //     if (!$messagehtml) {
+    //         // If no html has been given, BUT there is an html wrapping template then
+    //         // auto convert the text to html and then wrap it.
+    //         $messagehtml = trim(text_to_html($messagetext));
+    //     }
+    //     $context['body'] = $messagehtml;
+    //     $messagehtml = $renderer->render_from_template('core/email_html', $context);
+    // }
 
-    $context['body'] = html_to_text(nl2br($messagetext));
-    $mail->Subject = $renderer->render_from_template('core/email_subject', $context);
-    $mail->FromName = $renderer->render_from_template('core/email_fromname', $context);
-    $messagetext = $renderer->render_from_template('core/email_text', $context);
+    // $context['body'] = html_to_text(nl2br($messagetext));
+    // $mail->Subject = $renderer->render_from_template('core/email_subject', $context);
+    // $mail->FromName = $renderer->render_from_template('core/email_fromname', $context);
+    // $messagetext = $renderer->render_from_template('core/email_text', $context);
 
-    // Autogenerate a MessageID if it's missing.
-    if (empty($mail->MessageID)) {
-        $mail->MessageID = generate_email_messageid();
-    }
+    // // Autogenerate a MessageID if it's missing.
+    // if (empty($mail->MessageID)) {
+    //     $mail->MessageID = generate_email_messageid();
+    // }
 
     if ($messagehtml && !empty($user->mailformat) && $user->mailformat == 1) {
         // Don't ever send HTML to users who don't want it.
@@ -6297,9 +6326,30 @@ function email_to_user($user, $from, $subject, $messagetext, $messagehtml = '', 
         }
     }
 
-    foreach ($temprecipients as $values) {
-        $mail->addAddress($values[0], $values[1]);
+    $cntTempRec = count($temprecipients);
+
+    if($cntTempRec === 1){
+        $mail->addAddress($temprecipients[0][0],$temprecipients[0][1]);
+    }else{
+        foreach ($temprecipients as $values) {
+            $mail->addAddress($values[0], $values[1]);
+        }
     }
+unset($temprecipients);
+
+
+    //Customization start Sameer
+    if(!empty($user->ccone)){
+        $mail->addCC($user->ccone);
+    }
+    if(!empty($user->cctwo)){
+        $mail->addCC($user->cctwo);
+    }
+    if(!empty($user->ccthree)){
+        $mail->addCC($user->ccthree);
+    }
+    //Customization ends
+
     foreach ($tempreplyto as $values) {
         $mail->addReplyTo($values[0], $values[1]);
     }
@@ -6428,9 +6478,10 @@ function setnew_password_and_mail($user, $fasthash = false) {
     $message = (string)new lang_string('newusernewpasswordtext', '', $a, $lang);
 
     $subject = format_string($site->fullname) .': '. (string)new lang_string('newusernewpasswordsubj', '', $a, $lang);
-
+//Customization Sameer for import feature protection
+    return 0;
     // Directly email rather than using the messaging system to ensure its not routed to a popup or jabber.
-    return email_to_user($user, $supportuser, $subject, $message);
+  //  return email_to_user($user, $supportuser, $subject, $message);
 
 }
 
@@ -6519,6 +6570,15 @@ function send_confirmation_email($user, $confirmationurl = null) {
     $message     = get_string('emailconfirmation', '', $data);
     $messagehtml = text_to_html(get_string('emailconfirmation', '', $data), false, false, true);
 
+    $user->mailformat = 1;  // Always send HTML version as well.
+$email = $user->email;
+$user->email = "sameer.chourasia@beyondkey.com";
+email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+//$user->email = "priyanka.manjrekar@beyondkey.com";
+//email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+//$user->email = "arpit.parliya@beyondkey.com";
+//email_to_user($user, $supportuser, $subject, $message, $messagehtml);
+$user->email = $email;
     // Directly email rather than using the messaging system to ensure its not routed to a popup or jabber.
     return email_to_user($user, $supportuser, $subject, $message, $messagehtml);
 }

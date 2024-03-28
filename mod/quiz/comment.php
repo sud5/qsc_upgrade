@@ -81,6 +81,49 @@ $summarydata['questionname'] = [
 
 // Process any data that was submitted.
 if (data_submitted() && confirm_sesskey()) {
+
+/*  Customization start */
+
+    $params = new stdClass();
+
+    $params->coursemoduleid = $attemptobj->get_cmid();
+    $params->userid = $attemptobj->get_userid();
+    $params->completionstate = 1;
+    $params->viewed = 1;
+    $params->timemodified = time();
+
+    $data = $DB->get_record('quizaccess_passgrade', array('quizid'=>$attemptobj->get_quizid()), 'passgrade');
+
+    $dataD = (array) data_submitted();
+    //$marks = $dataD['q207:1_-mark'];
+    $uniqueid = $attemptobj->get_uniqueid();
+
+    $mark = 'q'.$uniqueid.":1_-mark";
+
+    $marks = $dataD[$mark];
+
+    if( $marks >= ($data->passgrade)){
+//die("TEST");
+        $dataresult = $DB->get_record('course_modules_completion', array('coursemoduleid' => $params->coursemoduleid, 'userid' => $params->userid));
+
+   //print_r($dataresult);die("HERE");
+
+        if (empty($dataresult)) {
+
+            $DB->insert_record('course_modules_completion', $params);
+        }
+        else {
+            $result = $DB->get_record('course_modules_completion', array('coursemoduleid' => $params->coursemoduleid, 'userid' => $params->userid));
+
+            $params->id = $result->id;
+
+            $DB->update_record('course_modules_completion', $params);
+        }
+
+    }
+
+/*  Customization end  */
+
     if (optional_param('submit', false, PARAM_BOOL) && question_engine::is_manual_grade_in_range($attemptobj->get_uniqueid(), $slot)) {
         $transaction = $DB->start_delegated_transaction();
         $attemptobj->process_submitted_actions(time());

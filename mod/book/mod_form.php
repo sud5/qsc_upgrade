@@ -30,7 +30,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 class mod_book_mod_form extends moodleform_mod {
 
     function definition() {
-        global $CFG;
+        global $CFG, $PAGE,$DB, $USER; //pre
 
         $mform = $this->_form;
 
@@ -38,7 +38,8 @@ class mod_book_mod_form extends moodleform_mod {
 
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
+        $mform->addElement('textarea', 'name', get_string('name'), array('cols'=>'128'));
+        $mform->addElement('textarea', 'displaytime', format_string('Display Time'), array('cols'=>'128','placeholder'=>'in seconds'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -47,7 +48,49 @@ class mod_book_mod_form extends moodleform_mod {
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $this->standard_intro_elements(get_string('moduleintro'));
+        // - - --- Start- Feature Request: "Update Help File" Field- Customized by Naveen - -- - -  -//
+        $mform->addElement('checkbox', 'update_help_file', get_string('updatehelpfile'));
+        $mform->addHelpButton('update_help_file', 'updatehelpfile');
+        $mform->addRule('update_help_file', '', 'required', null, 'client');
+        $mform->setDefault('update_help_file', 0);
+        // - - -- - - End-Feature Request: "Update Help File" Field- Customized by Naveen  - -- - -  -//
 
+        //custom text start
+        $mform->addElement('textarea','c_text_beneath_video', 'Custom Text Beneath a Video on Lesson Page', null);
+        $mform->addElement('selectyesno', 'custom_text_display_flag', 'Display Custom Text Beneath a Video');
+        //custom text end
+
+        //Customization Sameer start
+        if (!$bookData = $DB->get_record('book', array('id'=>$PAGE->cm->instance))) {
+        $imagevalue = '';
+        }else{
+            //echo base64_decode($bookData->thumbnailpath); die;
+            if($bookData->thumbnailpath != ''){
+            //print_r(str_replace("pluginfile.php","draftfile.php",base64_decode($bookData->thumbnailpath)));exit;
+            $imagevalue = '<div class="fitem form-group row"><div class="fitemtitle col-md-3 col-form-label d-flex pb-0 pr-md-0"><div class="fstaticlabel">'.get_string('cthumbnail','book').' </div></div>
+                <div class="felement fstatic col-md-9 form-inline align-items-start"><img src="'.str_replace("pluginfile.php","draftfile.php",base64_decode($bookData->thumbnailpath)).'" class="userpicture"></div></div>';
+            }else{
+              $imagevalue = '';
+            }
+        }
+
+        if($imagevalue != '')
+            $mform->addElement('html',$imagevalue);
+
+        $options = array();
+        $options['accepted_types'] = array('*');
+        $mform->addElement('filepicker', 'lessonthumbfile', "Module thumbnail Image <br> (Minimum size 115x115)", null, $options);
+        //$mform->addRule('lessonthumbfile', null, 'required');
+        //Customization Sameer end
+
+        //seo settings start
+        $mform->addElement('textarea','meta_keywords', get_string('metakeywords'), null);
+        $mform->addHelpButton('meta_keywords', 'metakeywords');
+        $mform->setType('meta_keywords', PARAM_RAW);
+        // - - -- - - - - -- Start- Feature Request: Frontpage Latest content  - -- - -  -//
+        $mform->addElement('selectyesno', 'showfrontpage_flag', get_string('showfrontpage'));
+        $mform->addHelpButton('showfrontpage_flag', 'showfrontpage');
+        // - - -- - - - - -- End- Feature Request: Frontpage Latest content  - -- - -  -//
         // Appearance.
         $mform->addElement('header', 'appearancehdr', get_string('appearance'));
 
@@ -71,9 +114,16 @@ class mod_book_mod_form extends moodleform_mod {
         $mform->setDefault('numbering', $config->numbering);
 
         $mform->addElement('static', 'customtitlestext', get_string('customtitles', 'mod_book'));
+        $a = "<a href='javascript:void(0);' data-toggle='modal' data-target='#memberModalNM'> View Content</a>";
         $mform->addElement('checkbox', 'customtitles', get_string('customtitles', 'book'));
         $mform->addHelpButton('customtitles', 'customtitles', 'mod_book');
         $mform->setDefault('customtitles', 0);
+
+        //prev-start
+        if($USER->usertype == 'graderasadmin' || $USER->usertype == 'mainadmin'){
+            $mform->addElement('hidden', 'imagefrombookmod', 'imagefrombookmod');
+        }
+        //prev-end
 
         $this->standard_coursemodule_elements();
 

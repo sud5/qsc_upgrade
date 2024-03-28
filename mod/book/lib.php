@@ -74,7 +74,7 @@ function book_get_nav_classes() {
  * @return int new book instance id
  */
 function book_add_instance($data, $mform) {
-    global $DB;
+    global $CFG, $DB;
 
     $data->timecreated = time();
     $data->timemodified = $data->timecreated;
@@ -82,13 +82,25 @@ function book_add_instance($data, $mform) {
         $data->customtitles = 0;
     }
 
-    $id = $DB->insert_record('book', $data);
+        $id = $DB->insert_record('book', $data);
+
+    //Customization Sameer Start
+    $newfilename = $mform->get_new_filename('lessonthumbfile');
+    if ($newfilename) {
+        require_once("$CFG->dirroot/local/thumbnail/lib.php");
+        $context = context_system::instance();
+        file_handling($newfilename, 'lessonthumbfile', $mform, $context, $id);
+        $importdraftfile = $_SESSION['lpath'];
+        $data->thumbnailpath = base64_encode($importdraftfile);
+    }
+    //Customization Sameer End
 
     $completiontimeexpected = !empty($data->completionexpected) ? $data->completionexpected : null;
     \core_completion\api::update_completion_date_event($data->coursemodule, 'book', $id, $completiontimeexpected);
 
     return $id;
 }
+
 
 /**
  * Update book instance.
@@ -98,7 +110,24 @@ function book_add_instance($data, $mform) {
  * @return bool true
  */
 function book_update_instance($data, $mform) {
-    global $DB;
+    global $CFG, $DB;
+
+    //Customization Sameer Start
+    $modform = $mform;
+
+    $content = $mform->get_file_content('lessonthumbfile');
+    $realfilename = $modform->get_new_filename('lessonthumbfile');
+
+    if ($realfilename) {
+        require_once("$CFG->dirroot/local/thumbnail/lib.php");
+        $context = context_system::instance();
+        $newfilename = $mform->get_new_filename('lessonthumbfile');
+        file_handling($newfilename, 'lessonthumbfile', $mform, $context, $data->instance);
+
+        $importdraftfile = $_SESSION['lpath'];
+        $data->thumbnailpath = base64_encode($importdraftfile);
+    }
+    //Customization Sameer End
 
     $data->timemodified = time();
     $data->id = $data->instance;
@@ -116,7 +145,6 @@ function book_update_instance($data, $mform) {
 
     return true;
 }
-
 /**
  * Delete book instance by activity id
  *

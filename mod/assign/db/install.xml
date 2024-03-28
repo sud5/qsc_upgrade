@@ -164,5 +164,99 @@
         <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
+    <!-- added by shiva -->
+    <TABLE NAME="speed_text" COMMENT="The speed text.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="user_id" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="userid"/>
+        <FIELD NAME="course_id" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="course_id"/>
+        <FIELD NAME="exam_id" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="button_lable" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false"  COMMENT="button_lable"/>
+        <FIELD NAME="comment_text" TYPE="text"  NOTNULL="false" SEQUENCE="false" COMMENT="comment_text"/>
+        <FIELD NAME="created_date" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="created_date"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="assign_graders" COMMENT="Grading information about a single assignment submission.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="grader_id" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="exam_id" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="student_id" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="timeassigned" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false"  COMMENT="timeassigned"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="exam_not_exist_on_certified_users" COMMENT="exam_not_exist_on_certified_users.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="assignid" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="courseid" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="exam_not_exist_on_certified_users_copy" COMMENT="exam_not_exist_on_certified_users_copy.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="userid" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="assignid" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="courseid" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="log_assign_graders" COMMENT="Grading information about a single assignment submission.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="request_step" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="grader_id" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="exam_id" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="student_id" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="request_data" TYPE="text"  NOTNULL="false" SEQUENCE="false"  COMMENT="timeassigned"/>
+        <FIELD NAME="created_date" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="comment_reports" COMMENT="comment_reports.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="assignmentid" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="firstname" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="lastname" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="email_address" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="exam_name" TYPE="char"  NOTNULL="false" SEQUENCE="false"  COMMENT="timeassigned"/>
+        <FIELD NAME="grade" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="attempt_no" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="sender_name" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="comment" TYPE="text" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="comment_type" TYPE="text"  NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+        <FIELD NAME="timestamp" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="course_user_assign_notifications" COMMENT="course_user_assign_notifications.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="user_id" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="course_id" TYPE="char" LENGTH="255" NOTNULL="false"  SEQUENCE="false" COMMENT="grader_id"/>
+        <FIELD NAME="assign_notification" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="exam_id"/>
+        <FIELD NAME="timeduration" TYPE="char" LENGTH="225" NOTNULL="false" SEQUENCE="false" COMMENT="student_id"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
   </TABLES>
 </XMLDB>

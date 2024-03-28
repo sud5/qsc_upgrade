@@ -1,0 +1,450 @@
+//facetoface css changes
+
+table.generaltable td a:focus {
+    box-shadow: none;
+    background: transparent;
+}
+table.generaltable .c1 {
+ width: 15%;
+}
+table.generaltable .c1 input {
+ border-radius: 4px;
+}
+input#id_submitbutton {
+    color: #fff !important;
+}
+.threecol .icon {
+    width: auto;
+}
+#region-main .generaltable {
+    width: 100% !important;
+}
+.session_confirm #notice {
+    height: auto;
+    width: 100% !important;
+    min-width: auto !important;
+}
+#region-main-box .generalbox {
+    overflow: inherit;
+}
+.dropdownV::after, .dropdownV::before {
+display:none;
+}
+.dropdownV select {
+    border-radius: 4px !important;
+    border-color: #ddd !important;
+}
+.dropdownV select:focus {
+    box-shadow: none;
+}
+table.generaltable td i {
+    color: #999999;
+    font-size: 14px;
+    margin-right: 4px;
+}
+#fitem_id_custom_CustomMessage.row {
+    width: 100%;
+}
+.fcontainer a.btn-link i {
+    margin-top: 0;
+}
+legend.ftoggler a.fheader:focus {
+    box-shadow: none;
+}
+.collapsibleregioninner .form-check {
+ justify-content: start;
+}
+tr.lastrow td input, tr.lastrow td label {
+ display: inline-flex;
+ align-items: center;
+ margin-right: 6px;
+}
+.userselector .form-inline label {
+ display: flex;
+ width: 100%;
+ justify-content: start;
+}
+.collapsibleregioncaption a:focus {
+ box-shadow: none;
+ background: none;
+}
+.form-inline .btn-secondary {
+ color: #000 !important;
+}
+.form-inline input {
+ margin-bottom: 0 !important;
+}
+ 
+.fcontainer a.btn-link i, .fcontainer div i, .fcontainer div.text-danger {
+    margin-top: 0 !important;
+}
+#page.container-fluid {
+    max-width: 1280px !important;
+}
+@media (min-width: 1200px) {
+.row {
+     margin-right: 0 !important;
+     margin-left: 0 !important;
+}
+#page.container-fluid {
+    padding: 0 20px !important;
+}
+}
+.f2fsessiongroup {
+    padding-bottom: 10px;
+}
+.f2fsession {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}
+.f2fsession:last-child {
+    border-bottom: none;
+}
+.f2fsessiontime {
+    width: 80%;
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 5px;
+}
+.f2finprogress .f2fsessiontime {
+    width: 100%;
+}
+.f2foptions {
+    width: 20%;
+    display: inline-block;
+    min-width: 60px;
+}
+.f2fsessionlinks,
+.f2fsessionnotice {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+    display: block;
+    padding: 3px;
+}
+.f2factivityname {
+    line-height: 1.5;
+}
+
+body.path-mod-facetoface table.f2fsession td.c0 {
+    font-weight: bold;
+    width: 12%;
+}
+body.path-mod-facetoface table.f2fsession {
+    width: 100%;
+}
+table.table90 {
+    width: 90%;
+}
+table.table50 {
+    width: 50%;
+    text-align: left;
+}
+table.inlinetable {
+    display: inline-table;
+    border: 0;
+}
+tr.highlight td.cell {
+    background-color: #afa;
+}
+a.f2fsessionlinks,
+td.f2fsessionnotice,
+span.f2fsessionnotice {
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 14px;
+}
+span.f2fonepointfive {
+    line-height: 1.5;
+}
+span.errorstring {
+    font-size: 12px;
+    line-height: 18px;
+}
+
+body#page-mod-facetoface-view div#page-content table.sessions {
+    width: 100%;
+}
+
+body#page-mod-facetoface-view div#page-content .formlocation {
+    float: right;
+    margin-bottom: 6px;
+}
+
+body#page-mod-facetoface-view div#page-content .formlocation {
+    float: right;
+    margin-bottom: 6px;
+}
+
+.hrefclss{
+    background: #0070c0 none repeat scroll 0 0 !important;
+    border: medium none !important;
+    border-radius: 0 !important;
+    color: #fff !important;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 10px;
+    text-align: center;
+    width: 100px;
+}
+.hrefclss a{
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.hrefclss a:hover{
+    color: white !important;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.hrefclss:hover, .hrefclss a:active, .hrefclss a:visited{
+    background: #000 none repeat scroll 0 0 !important;
+    color: white !important;
+}
+
+div.dataTables_wrapper {
+    margin-bottom: 3em;
+}
+/* US #3952 add classes start */
+.generaltable{
+    width: auto !important;
+}
+.c7{
+    display: none;
+}
+/* US #3952 add classes end */
+
+/* Classroom Feature start */
+.generaltable{
+    table-layout: fixed;
+}
+
+.generaltable tr th:first-child {
+    width: 10%;
+}
+
+.generaltable th, .generaltable td {
+    font-size: 12px;
+}
+.modal{
+    left:10% !important;
+    margin-left: 0% !important;
+    width: 80% !important;
+}
+
+.prereq_comp_page_bottom_full_section {
+    border: 1px solid #dddddd;
+    display: inline-block;
+    margin: 20px 0;
+    width: 99%;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f6f6f6+0,f9f9f9+100 */
+    background: rgb(246,246,246); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(246,246,246,1) 0%, rgba(249,249,249,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(246,246,246,1) 0%,rgba(249,249,249,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(246,246,246,1) 0%,rgba(249,249,249,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#f9f9f9',GradientType=0 ); /* IE6-9 */
+
+    border-radius: 5px;
+
+    padding:20px;
+    box-sizing:border-box;
+}
+.prereq_comp_page_full_left_secion img {
+    width: 150px;
+}
+.prereq_comp_page_full_left_secion {
+    float: left;
+    margin-right: 2%;
+    text-align: center;
+    width: 16%;
+}
+.prereq_comp_page_full_right_secion {
+    float: left;
+    width: 82%;
+}
+.prereq_comp_page_full_right_secion p{
+    text-align:left !important;
+}
+.prereq_comp_page_main li {
+    list-style: outside none none;
+}
+.prereq_comp_page_top_section h3 {
+    font-size: 20px;
+}
+.prereq_comp_page_brreadcrumb ul li {
+    display: inline;
+    margin-right: 2px;
+}
+.prereq_comp_page_brreadcrumb span {
+    margin-left: 6px;
+}
+.prereq_comp_page_brreadcrumb ul li a, .prereq_comp_page_brreadcrumb ul li span {
+    color: #555;
+}
+.prereq_comp_page_bottom_full_section h3 {
+    font-size: 20px;
+    line-height:normal;
+}
+.prereq_comp_page_main a:hover
+{
+    color:#0070a8 !important;
+}
+
+.prereq_comp_page_main h3
+{
+    color:#0070a8;
+    line-height:normal;
+}
+
+.bottom_section {
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.prereq_comp_page_full_right_secion ul {
+    margin: 15px 0;
+}
+.prereq_comp_page_full_right_secion ul {
+    color: #0070a8;
+    padding-left: 30px;
+}
+.prereq_comp_page_main .prereq_comp_page_full_right_secion ul li {
+    list-style:disc !important;
+    margin: 5px 0;
+}
+.prereq_comp_page_brreadcrumb {
+    margin: 5px 0;
+}
+
+@media (max-width:640px)
+{
+    .prereq_comp_page_full_left_secion {
+        float: left;
+        margin-bottom: 20px;
+        margin-left: 0;
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+    }
+    .prereq_comp_page_full_right_secion {
+        float: left;
+        width: 100%;
+    }
+
+    .prereq_comp_page_main h3
+    {
+        font-size:16px;
+    }
+}
+.modal.fade {
+    display: none;
+}
+/* Classroom Feature end */
+/* - - - - - - - - Start-Feature Request: In-Classroom Location Filter -Nav - - - - -- */
+.dropdownV::before {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 32.5px;
+    background: #fff;
+    right: 3px;
+    top: -2px;
+    border-bottom-right-radius: 4px;
+    pointer-events: none;
+}
+.dropdownV::after {
+    content: "";
+    border: 6px solid rgba(0, 0, 0, 0);
+    border-top-color: #999;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+.dropdownV {
+    display: inline;
+    position: relative;
+}
+.dropdownV select {
+    height: 36px;
+    width: 250px;
+    font-size: 13px;
+}
+
+.box.generalbox .top-image img {
+    margin: 0 !important;
+}
+
+.modal-dialog {
+    transform: inherit !important;
+    max-width: 80% !important;
+}
+.modal-dialog .modal-content {
+    border-radius: 4px !important;
+    border: 0 none !important;
+}
+.modal-header {
+    display: block !important;
+    border-bottom: 1px solid #e9e9e9 !important;
+}
+.has-danger .invalid-feedback{
+    display: inline-block;
+    padding: 4px;
+    margin-bottom: 4px;
+    background-color: #f2dede;
+    border: 1px solid #eed3d7;
+    border-radius: 4px;
+    color:#d85030;
+    margin-top: 4px;
+}
+#resionsForm{
+    margin-top: 15px;
+}
+
+@media (min-width: 1200px){ 
+    .felement {
+        margin-left: 0 !important;
+    }
+}
+
+@media (max-width: 979px){
+    .container-fluid.outercont {
+        padding-top: 0!important;
+    }
+    .has-page-header.page-header-margin.header-style1 #page {
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 859px) {
+.container-fluid.outercont {
+    padding-top: 0 !important;
+}
+.container-fluid.outercont #page-content {
+    padding-top: 0;
+}
+}
+/* - - - - - - - - End-Feature Request: In-Classroom Location Filter -Nav - - - - -- */
+
+select#id_custom_qscinstructorname, select#id_custom_repinstructorname {
+    width: 260px;
+}
+
+#page-mod-facetoface-attendees .generalbox .alert-danger{
+margin: 10px 0;
+}
+
+#page-mod-facetoface-attendees input.waitlist, #page-mod-facetoface-attendees input.hold, #page-mod-facetoface-attendees input.allow {
+    margin-left: 5px !important;
+    padding: 0.5rem 1rem !important;
+    margin-right: 0;
+    border: 1px solid #fff !important;
+}

@@ -141,7 +141,8 @@ function file_area_contains_subdirs(context $context, $component, $filearea, $it
  * @param int $itemid item id, required if item exists
  * @return stdClass modified data object
  */
-function file_prepare_standard_editor($data, $field, array $options, $context=null, $component=null, $filearea=null, $itemid=null) {
+
+function file_prepare_standard_editor($data, $field, array $options, $context=null, $component=null, $filearea=null, $itemid=null, $onlysession = false) {
     $options = (array)$options;
     if (!isset($options['trusttext'])) {
         $options['trusttext'] = false;
@@ -211,8 +212,15 @@ function file_prepare_standard_editor($data, $field, array $options, $context=nu
     }
 
     if ($options['maxfiles'] != 0) {
-        $draftid_editor = file_get_submitted_draft_itemid($field);
-        $currenttext = file_prepare_draft_area($draftid_editor, $contextid, $component, $filearea, $itemid, $options, $data->{$field});
+        // - - - --  - - - - Start-Session logo File issue - - - - - - -//
+        if($onlysession == true)
+        {
+            $currenttext = file_rewrite_pluginfile_urls($data->{$field}, 'pluginfile.php', $contextid, 'mod_facetoface', 'session', $itemid, $options);
+        }else{
+            $draftid_editor = file_get_submitted_draft_itemid($field);
+            $currenttext = file_prepare_draft_area($draftid_editor, $contextid, $component, $filearea, $itemid, $options, $data->{$field});
+        }
+        // - - - --  - - -End - -Session logo File issue - - - - - - -//
         $data->{$field.'_editor'} = array('text'=>$currenttext, 'format'=>$data->{$field.'format'}, 'itemid'=>$draftid_editor);
     } else {
         $data->{$field.'_editor'} = array('text'=>$data->{$field}, 'format'=>$data->{$field.'format'}, 'itemid'=>0);
@@ -220,6 +228,94 @@ function file_prepare_standard_editor($data, $field, array $options, $context=nu
 
     return $data;
 }
+
+
+
+// function file_prepare_standard_editor($data, $field, array $options, $context=null, $component=null, $filearea=null, $itemid=null) {
+//     $options = (array)$options;
+//     if (!isset($options['trusttext'])) {
+//         $options['trusttext'] = false;
+//     }
+//     if (!isset($options['forcehttps'])) {
+//         $options['forcehttps'] = false;
+//     }
+//     if (!isset($options['subdirs'])) {
+//         $options['subdirs'] = false;
+//     }
+//     if (!isset($options['maxfiles'])) {
+//         $options['maxfiles'] = 0; // no files by default
+//     }
+//     if (!isset($options['noclean'])) {
+//         $options['noclean'] = false;
+//     }
+
+//     //sanity check for passed context. This function doesn't expect $option['context'] to be set
+//     //But this function is called before creating editor hence, this is one of the best places to check
+//     //if context is used properly. This check notify developer that they missed passing context to editor.
+//     if (isset($context) && !isset($options['context'])) {
+//         //if $context is not null then make sure $option['context'] is also set.
+//         debugging('Context for editor is not set in editoroptions. Hence editor will not respect editor filters', DEBUG_DEVELOPER);
+//     } else if (isset($options['context']) && isset($context)) {
+//         //If both are passed then they should be equal.
+//         if ($options['context']->id != $context->id) {
+//             $exceptionmsg = 'Editor context ['.$options['context']->id.'] is not equal to passed context ['.$context->id.']';
+//             throw new coding_exception($exceptionmsg);
+//         }
+//     }
+
+//     if (is_null($itemid) or is_null($context)) {
+//         $contextid = null;
+//         $itemid = null;
+//         if (!isset($data)) {
+//             $data = new stdClass();
+//         }
+//         if (!isset($data->{$field})) {
+//             $data->{$field} = '';
+//         }
+//         if (!isset($data->{$field.'format'})) {
+//             $data->{$field.'format'} = editors_get_preferred_format();
+//         }
+//         if (!$options['noclean']) {
+//             $data->{$field} = clean_text($data->{$field}, $data->{$field.'format'});
+//         }
+
+//     } else {
+//         if ($options['trusttext']) {
+//             // noclean ignored if trusttext enabled
+//             if (!isset($data->{$field.'trust'})) {
+//                 $data->{$field.'trust'} = 0;
+//             }
+//             $data = trusttext_pre_edit($data, $field, $context);
+//         } else {
+//             if (!$options['noclean']) {
+//                 $data->{$field} = clean_text($data->{$field}, $data->{$field.'format'});
+//             }
+//         }
+//         $contextid = $context->id;
+//     }
+
+//     if ($options['maxfiles'] != 0) {
+
+//         // - - - --  - - - - Start-Session logo File issue - - - - - - -//
+//         if($onlysession == true)
+//         {
+//             $currenttext = file_rewrite_pluginfile_urls($data->{$field}, 'pluginfile.php', $contextid, 'mod_facetoface', 'session', $itemid, $options);
+//         }else{
+//             $draftid_editor = file_get_submitted_draft_itemid($field);
+//             $currenttext = file_prepare_draft_area($draftid_editor, $contextid, $component, $filearea, $itemid, $options, $data->{$field});
+//         }
+//         // - - - --  - - -End - -Session logo File issue - - - - - - -//
+
+//         // $draftid_editor = file_get_submitted_draft_itemid($field);
+//         // $currenttext = file_prepare_draft_area($draftid_editor, $contextid, $component, $filearea, $itemid, $options, $data->{$field});
+
+//         $data->{$field.'_editor'} = array('text'=>$currenttext, 'format'=>$data->{$field.'format'}, 'itemid'=>$draftid_editor);
+//     } else {
+//         $data->{$field.'_editor'} = array('text'=>$data->{$field}, 'format'=>$data->{$field.'format'}, 'itemid'=>0);
+//     }
+
+//     return $data;
+// }
 
 /**
  * Prepares the content of the 'editor' form element with embedded media files to be saved in database
@@ -372,9 +468,21 @@ function file_postupdate_standard_filemanager($data, $field, array $options, $co
 function file_get_unused_draft_itemid() {
     global $DB, $USER;
 
+//    if (isguestuser() or !isloggedin()) {
+//        // guests and not-logged-in users can not be allowed to upload anything!!!!!!
+//        throw new \moodle_exception('noguest');
+//    }
+    
+    //Customization Sameer
     if (isguestuser() or !isloggedin()) {
-        // guests and not-logged-in users can not be allowed to upload anything!!!!!!
-        throw new \moodle_exception('noguest');
+        //Customization commented for facetoface view page show images
+        if(!isset($_GET['f']))
+                print_error('noguest');
+        else
+            $userid = 2;
+            }
+    else{
+        $userid = $USER->id;
     }
 
     $contextid = context_user::instance($USER->id)->id;
@@ -4550,8 +4658,16 @@ function file_pluginfile($relativepath, $forcedownload, $preview = null, $offlin
             if ($filename !== 'f1' && $filename !== 'f2' && $filename !== 'f3') {
                 send_file_not_found();
             }
+            //echo $badge->id; exit;
             if (!$file = $fs->get_file($context->id, 'badges', 'badgeimage', $badge->id, '/', $filename.'.png')) {
-                send_file_not_found();
+               // send_file_not_found();
+                //--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- --  - - -//
+                if (!$file = $fs->get_file($context->id, 'badges', 'badgeimage', $badge->id, '/', $filename.'.zip')) {
+                    send_file_not_found();
+                }
+                if(!$file){
+                    send_file_not_found();
+                }
             }
 
             \core\session\manager::write_close();
@@ -5227,6 +5343,24 @@ function file_pluginfile($relativepath, $forcedownload, $preview = null, $offlin
             // finally send the file
             send_stored_file($file, null, 0, false, $sendfileoptions);
         }
+
+         // - - - --  - - - -Start -Session logo File issue - - - - - - -//
+        if ($filearea === 'session') {
+             if (!plugin_supports('mod', $modname, FEATURE_MOD_INTRO, true)) {
+                 send_file_not_found();
+             }
+            require_course_login($course, true, $cm);
+            // all users may access it
+            $sessionid = (int)array_shift($args);
+            $filename = array_pop($args);
+            $filepath = $args ? '/'.implode('/', $args).'/' : '/';
+            if (!$file = $fs->get_file($context->id, 'mod_'.$modname, 'session', $sessionid, $filepath, $filename) or $file->is_directory()) {
+                send_file_not_found();
+            }
+            // finally send the file
+            send_stored_file($file, null, 0, false, array('preview' => $preview));
+        }
+        // - - - --  - - - - End -Session logo File issue - - - - - - -//
 
         $filefunction = $component.'_pluginfile';
         $filefunctionold = $modname.'_pluginfile';

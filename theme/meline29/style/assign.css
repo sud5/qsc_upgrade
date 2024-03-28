@@ -1,0 +1,42 @@
+.gradingtable table.flexible.generaltable.generalbox {
+	width: 3000px !important;
+	max-width: inherit !important;
+}
+.gradingtable table.flexible.generaltable.generalbox td {
+	border: 1px solid #ccc;
+	font-size: 11px;
+	padding: 5px 10px;
+}
+.gradingtable table.flexible.generaltable.generalbox th {
+	font-size: 13px;
+}
+table.flexible.generaltable.generalbox .commands {
+	float: left;
+}
+table.flexible.generaltable.generalbox .selectall {
+	float: left;
+	position: relative;
+	top: 10px;
+}
+table.flexible.generaltable.generalbox td.c0 {
+	text-align: center !important;
+}
+table.flexible.generaltable.generalbox .comment-area .fd {
+	text-align: center;
+}
+.gradingtable table.flexible.generaltable.generalbox .comment-link img {
+	margin-right: 5px;
+}
+.gradingtable table.flexible.generaltable.generalbox .comment-area textarea {
+	margin-top: 5px;
+}
+table.flexible.generaltable.generalbox .cell.c5 {
+	text-align: center;
+}
+table.flexible.generaltable.generalbox .submissiongraded, table.flexible.generaltable.generalbox .submissionstatus, table.flexible.generaltable.generalbox .submissionstatussubmitted {
+	padding: 2px 5px;
+}
+.felement.ftext input {
+	height: 30px;
+}
+

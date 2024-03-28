@@ -144,6 +144,11 @@ Y.extend(TOOLBOX, Y.Base, {
                     if (responsetext.hasOwnProperty('newsummarks')) {
                         Y.one(SELECTOR.SUMMARKS).setHTML(responsetext.newsummarks);
                     }
+                    //Customization start add if condition
+                    if (responsetext.hasOwnProperty('maxmark')) {
+                        Y.all(SELECTOR.MAXMARK).setHTML(responsetext.maxmark);
+                    }
+                    //Customization end
                     if (responsetext.hasOwnProperty('newnumquestions')) {
                         Y.one(SELECTOR.NUMQUESTIONS).setHTML(
                                 M.util.get_string('numquestionsx', 'quiz', responsetext.newnumquestions)

@@ -1,0 +1,19 @@
+#thememeline29-slideshow .uk-cover-background {
+    background-size: [[setting:slideshowsizingmode]];
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#thememeline29-slideshow h2 {
+	color: [[setting:slideshowtitlecolor]];
+	margin: 5px 0 30px !important;
+	text-transform: uppercase;
+}
+
+#thememeline29-slideshow p {
+	color: [[setting:slideshowcaptioncolor]];
+}
+
+#thememeline29-slideshow .uk-slidenav.uk-slidenav-contrast {
+	color: [[setting:slideshowarrowscolor]];
+}

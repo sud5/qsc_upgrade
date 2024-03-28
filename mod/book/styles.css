@@ -10,7 +10,10 @@
 .path-mod-book .navtop {
     text-align: right;
 }
-
+.dir-rtl.path-mod-book .navbottom,
+.dir-rtl.path-mod-book .navtop {
+    text-align: left;
+}
 .path-mod-book .navtop {
     margin-bottom: 0.5em;
 }
@@ -20,7 +23,26 @@
 }
 
 /* == Fake toc block == */
+.path-mod-book .block_book_toc ul {
+    margin: 0 0 0 5px;
+    padding-left: 0;
+    padding-right: 0;
+}
 .path-mod-book .book_toc .action-list img.smallicon {
+    margin: 0 3px;
+}
+.dir-rtl.path-mod-book .block_book_toc ul { margin: 0 5px 0 0; }
+.path-mod-book .block_book_toc li {
+    clear: both;
+    list-style: none;
+    margin-top: .5em;
+}
+.path-mod-book .block_book_toc li li {
+    list-style: none;
+}
+.path-mod-book .block_book_toc .action-list { float: right; }
+.dir-rtl.path-mod-book .block_book_toc .action-list { float: left; }
+.path-mod-book .block_book_toc .action-list img.smallicon {
     margin: 0 3px;
 }
 
@@ -28,6 +50,19 @@
 .path-mod-book .book_toc ul {
     display: flex;
     flex-direction: column;
+}
+
+.dir-rtl.path-mod-book .book_toc_indented ul {
+    margin-left: 0;
+    margin-right: 5px;
+}
+.path-mod-book .book_toc_bullets li li:before {
+    display: none;
+}
+
+.dir-rtl.path-mod-book .book_toc_indented ul ul {
+    margin-left: 0;
+    margin-right: 15px;
 }
 .path-mod-book .book_toc li {
     flex: 1 1 100%;
@@ -46,10 +81,13 @@
     margin-left: 0;
     padding-left: 1.3rem;
 }
-.path-mod-book .book_toc_bullets li {
+.path-mod-book .book_toc_bullets li li {
+    list-style: circle;
+}
+/*.path-mod-book .book_toc_bullets li {
     list-style: disc;
 }
-
+*/
 /* toc style NUMBERED*/
 .path-mod-book .book_toc_numbered > ul {
     margin-left: 0;
@@ -90,7 +128,9 @@
 
 @media (max-width: 480px) {
     .path-mod-book .navbottom,
-    .path-mod-book .navtop {
+    .path-mod-book .navtop,
+    .dir-rtl.path-mod-book .navbottom,
+    .dir-rtl.path-mod-book .navtop {
         text-align: center;
     }
 
@@ -102,7 +142,55 @@
     }
 
     .navtop.navtext a.bookprev,
-    .navbottom.navtext a.bookprev {
+    .navbottom.navtext a.bookprev,
+    .dir-rtl .navtop.navtext a.bookprev,
+    .dir-rtl .navbottom.navtext a.bookprev  {
         float: none;
     }
+}
+
+/*New theme Book View Changes*/
+
+.right-cover-area #content {
+    min-height: 200px;
+}
+.right-cover-area .nav-tabs {
+    border-bottom: 1px solid #dee2e6 !important;
+    display: flex;
+}
+.right-cover-area ul#tabs li a {
+    float: left;
+    width: auto;
+    padding: 15px 12px;
+    line-height: 26px;
+}
+.right-cover-area #tabs {
+    margin-bottom: 20px !important;
+    margin-left: 0;
+}
+
+.left-cover-area .new-search form i {
+    display: none;
+}
+
+.left-cover-area .new-search input[type="submit"] {
+    font-size: 14px !important;
+}
+
+/*Resposive Changes*/
+@media (max-width: 1200px) and (min-width: 768px){
+.right-cover-area .nav-tabs li {
+    width: 100%;
+}
+.right-cover-area ul#tabs li a {
+    width: 100% !Important;
+}
+}
+@media (max-width: 767px){
+.right-cover-area .nav-tabs li {
+    width: 100%;
+}
+.right-cover-area ul#tabs li a {
+    width: 100% !Important;
+}
 }

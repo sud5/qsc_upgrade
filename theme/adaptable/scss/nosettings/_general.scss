@@ -1,0 +1,464 @@
+//
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+//
+//
+// Adaptable General style sheet
+//
+// @package    theme_adaptable
+// @copyright  2021 G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
+// @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+
+li {
+    line-height: 28px;
+}
+
+select {
+    width: auto;
+}
+#page-user-profile {
+    li {
+        line-height: unset !important;
+    }
+    .profile_tree {
+        section h3 {
+            background: #fafafa;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            line-height: 23px;
+            font-size: 18px !important;
+            margin: 0;
+            margin-top: 0px;
+        }
+        section.node_category.Administration {
+            position: absolute;
+            left: 0;
+            bottom: 292px;
+            ul {
+                padding: 10px;
+            }
+        }
+        .node_category.Login.activity ul {
+            padding: 10px;
+            min-height: 192px;
+        }
+        .node_category.User.details ul {
+            li:first-child dl dd {
+                font-size: 20px;
+                padding-left: 142px;
+                position: relative;
+                top: -24px;
+                padding-right: 20px;
+                line-height: 25px;
+            }
+            margin-top: 25px !important;
+            padding: 0 18px !important;
+            margin-bottom: 20px !important;
+        }
+        margin-top: 17px;
+        -webkit-column-count: auto;
+        -moz-column-count: auto;
+        column-count: auto;
+        -webkit-column-gap: auto;
+        -moz-column-gap: auto;
+        column-gap: auto;
+        position: relative;
+        float: left;
+        width: 100%;
+    }
+    .profile_tree1 {
+        float: right;
+        width: 67.6%;
+        padding-top: 26px;
+        section {
+            h3 {
+                text-transform: uppercase;
+                background: #fafafa;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+                line-height: 23px;
+                font-size: 18px !important;
+                margin: 0;
+                margin-top: 0px;
+            }
+
+            border: 1px solid #ececec;
+            border-radius: 0;
+            border-color: #ddd;
+            border-top-color: rgb(221, 221, 221);
+            padding: 0;
+            margin-bottom: 20px;
+            width: 32%;
+            float: left;
+        }
+
+        .node_category {
+            width: 47%;
+            margin-left: 20px;
+            min-height: 294px;
+        }
+    }
+}
+@font-face {
+    font-family: "Futura PT";
+    src: url('/theme/adaptable/fonts/futura/FuturaPTBook/font.woff2') format('woff2'), url('/theme/adaptable/fonts/futura/FuturaPTBook/font.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url('/theme/adaptable/fonts/futura/FuturaPTDemi/font.woff2') format('woff2'), url('/theme/adaptable/fonts/futura/FuturaPTDemi/font.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url('/theme/adaptable/fonts/futura/FuturaPTLight/font.woff2') format('woff2'), url('/theme/adaptable/fonts/futura/FuturaPTLight/font.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Futura PT";
+    src: url('/theme/adaptable/fonts/futura/FuturaPTBold/font.woff2') format('woff2'), url('/theme/adaptable/fonts/futura/FuturaPTBold/font.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+
+body {
+    color: #515151;
+    font-family: "Futura PT" !important;
+    font-size: 14px;
+}
+
+input, button, select, textarea{
+    font-family: "Futura PT" !important;
+    font-size: 14px !important;
+}
+h1, h2, h3, h4, h5, h6,label#LblCompany__c {
+    font-family: "Futura PT" !important;
+    font-weight: 600 !important;
+}
+p,.tree_item,a {
+    font-family: "Futura PT" !important;
+    font-weight: 400 !important;
+}
+.generalbox .hrefclss a {
+    font-size: 15px;
+}
+.dropdownV::before{
+    top: -5px;
+}
+.box.generalbox.boxaligncenter a {
+    font-size: 16px;
+}
+.adminsearchform input[type="submit"] {
+    font-size: 16px !important;
+}
+#page-mod-quiz-view .quizinfo, #page-mod-quiz-view #page .quizgradefeedback, #page-mod-quiz-view #page .quizattempt{
+    font-size:14px;
+}
+input[type="submit"] {
+    font-size: 16px !important;
+}
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd, .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd{
+    font-size:20px;
+}
+.confirmation-message {
+    font-size: 14px;
+}
+.moodle-dialogue-confirm .confirmation-dialogue input{
+    font-size:16px;
+}
+.yui3-panel .yui3-widget-hd .yui3-widget-buttons{
+    top:14px;
+}
+.checkheight .actn-btns a {
+    padding: 6px 13px;
+    font-family: "Futura PT" !important;
+}
+
+/*CSS updated by Meenakshi end*/
+.site-nav {
+    /*    margin-bottom: 40px;
+    margin-left: 11.8%;
+    position: relative;
+    width: 60%;*/
+    z-index: 1100;
+}
+/*CSS updated by Meenakshi*/
+
+#dock .dockedtitle h2 {
+    font-size: 14px !important;
+}
+button, input.form-submit, input[type="button"], input[type="submit"], input[type="reset"]{
+    font-family: "Futura PT";
+    font-size: 14px;
+}
+/*meenakshi css*/
+.graderpg_cls th, .graderpg_cls td{
+    font-family: "Futura PT";
+    font-size: 15px !important;
+}
+.felement.fstatic {
+    font-size: 14px;
+}
+.felement.fgroup input {
+    font-size: 16px;
+}
+.mform .fdescription.required {
+    margin-left: 0;
+    font-size: 16px;
+}
+.attempthistory td {
+    font-size: 16px;
+}
+.comment-area a {
+    font-size: 16px;
+}
+.fp-restrictions span {
+    font-size: 16px;
+}
+.dndupload-message {
+    font-size: 14px;
+}
+#region-main-box h3 a {
+    font-size: 24px !important;
+}
+.dataTables_wrapper .dataTables_length label select {
+    margin: 0 2px;
+}
+.deferredfeedback .state,
+.deferredfeedback .questionflag,
+.deferredfeedback .editquestion{
+    font-size:16px !important;
+}
+.itemnav.previtem, .itemnav.nextitem,.singleview_bulk label,.singleview_bulk label{
+    font-size: 16px;
+}
+.singleview_buttons.submit input {
+    font-size: 18px;
+}
+.caption-line-text {
+    font-size: 16px;
+}
+.class-room-sessions .generaltable th, .class-room-sessions .generaltable td {
+    font-size: 14px;
+}
+#dock {
+    position: fixed;
+    display: inline !important;
+    top: 0;
+    left: 0;
+    z-index: 12000;
+    width: 42px;
+    height: 100%;
+    background-color: transparent;
+    border-right: 0 none;
+    .dockedtitle {
+        display: inline-block;
+        display: block;
+        *display: inline;
+        width: 36px;
+        padding: 4px 12px;
+        padding: 0;
+        margin: 3px;
+        margin-bottom: 0;
+        *margin-left: .3em;
+        font-size: 14px;
+        line-height: 20px;
+        color: #333;
+        text-align: center;
+        text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #f5f5f5;
+        *background-color: #e6e6e6;
+        background-image: -moz-linear-gradient(top, #fff, #e6e6e6);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#e6e6e6));
+        background-image: -webkit-linear-gradient(top, #fff, #e6e6e6);
+        background-image: -o-linear-gradient(top, #fff, #e6e6e6);
+        background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+        background-repeat: repeat-x;
+        border: 1px solid #ccc;
+        *border: 0;
+        border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+        border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+        border-bottom-color: #b3b3b3;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+        *zoom:1;-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+        -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.05)
+    }
+    .dockedtitle:hover, .dockedtitle:focus, .dockedtitle:active, .dockedtitle.active, .dockedtitle.disabled, .dockedtitle[disabled] {
+        color: #333;
+        background-color: #e6e6e6;
+        *background-color: #d9d9d9
+    }
+    .dockedtitle h2 {
+        padding: 0;
+        margin: 0;
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 36px;
+        text-align: center
+    }
+}
+input,button,select,textarea {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+label {
+    display: block;
+    margin-bottom: 5px
+}
+
+select,textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input {
+    display: inline-block;
+    height: 32px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px
+}
+
+input,textarea,.uneditable-input {
+    width: 206px
+}
+
+textarea {
+    height: auto
+}
+
+textarea,input[type="text"],input[type="password"],input[type="datetime"],input[type="datetime-local"],input[type="date"],input[type="month"],input[type="time"],input[type="week"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="color"],.uneditable-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+    -webkit-transition: border linear .2s, box-shadow linear .2s;
+    -moz-transition: border linear .2s, box-shadow linear .2s;
+    -o-transition: border linear .2s, box-shadow linear .2s;
+    transition: border linear .2s, box-shadow linear .2s
+}
+
+textarea:focus,input[type="text"]:focus,input[type="password"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="time"]:focus,input[type="week"]:focus,input[type="number"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="color"]:focus,.uneditable-input:focus {
+    border-color: rgba(82,168,236,0.8);
+    outline: 0;
+    outline: thin dotted \9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(82,168,236,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(82,168,236,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 8px rgba(82,168,236,0.6)
+}
+
+input[type="radio"],input[type="checkbox"] {
+    margin-top: 1px \9;
+    *margin-top: 0;
+    line-height: normal
+}
+
+input[type="file"],input[type="image"],input[type="submit"],input[type="reset"],input[type="button"],input[type="radio"],input[type="checkbox"] {
+    width: auto
+}
+
+select,input[type="file"] {
+    height: 30px;
+    *margin-top: 4px;
+    line-height: 30px
+}
+
+select {
+    /*width: 220px;*/
+    background-color: #fff;
+    border: 1px solid #ccc
+}
+
+select[multiple],select[size] {
+    height: auto
+}
+
+select:focus,input[type="file"]:focus,input[type="radio"]:focus,input[type="checkbox"]:focus {
+    outline: thin dotted #333;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px
+}
+#page-local-assign-dashboard_admin_grader_new {
+a.btn.btn-secondary.act-btn:hover {
+    border: 1px solid #0179b5;
+    color: #fff !important;
+    background: #0179b5;
+}
+}
+#page-my-index div[role="main"]{
+padding:unset;
+}
+#page-mod-assign-view,#page-mod-assign-grade{
+.generaltable{
+width: 100% !important;
+}
+}
+#page-local-assign-edit_stext, #page-local-assign-speedtext{
+table.collection, th, td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  padding: 8px;
+}
+textarea{
+width: unset;
+}
+}
+
+//Menu Navigation Gear Icon
+.menubar {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.menu {
+    top: 48px;
+    padding: 0 8px;
+    left: inherit !important;
+    right: 36px;
+}
+
+.menu[aria-hidden="true"] {
+    display: none;
+}
+
+span i.icon{
+font-size:12px !important;
+}
+
+.menu-action img.icon {
+ display: none;
+}

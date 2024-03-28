@@ -175,23 +175,23 @@ function badges_notify_badge_award(badge $badge, $userid, $issued, $filepathhash
     $eventdata->fullmessageformat = FORMAT_HTML;
     $eventdata->fullmessagehtml   = $message;
     $eventdata->smallmessage      = '';
-    $eventdata->customdata        = [
-        'notificationiconurl' => moodle_url::make_pluginfile_url(
-            $badge->get_context()->id, 'badges', 'badgeimage', $badge->id, '/', 'f1')->out(),
-        'hash' => $issued,
-    ];
+//    $eventdata->customdata        = [
+//        'notificationiconurl' => moodle_url::make_pluginfile_url(
+//            $badge->get_context()->id, 'badges', 'badgeimage', $badge->id, '/', 'f1')->out(),
+//        'hash' => $issued,
+//    ];
 
     // Attach badge image if possible.
-    if (!empty($CFG->allowattachments) && $badge->attachment && is_string($filepathhash)) {
-        $fs = get_file_storage();
-        $file = $fs->get_file_by_hash($filepathhash);
-        $eventdata->attachment = $file;
-        $eventdata->attachname = str_replace(' ', '_', $badge->name) . ".png";
-
-        message_send($eventdata);
-    } else {
-        message_send($eventdata);
-    }
+//    if (!empty($CFG->allowattachments) && $badge->attachment && is_string($filepathhash)) {
+//        $fs = get_file_storage();
+//        $file = $fs->get_file_by_hash($filepathhash);
+//        $eventdata->attachment = $file;
+//        $eventdata->attachname = str_replace(' ', '_', $badge->name) . ".png";
+//
+//        message_send($eventdata);
+//    } else {
+//        message_send($eventdata);
+//    }
 
     // Notify badge creator about the award if they receive notifications every time.
     if ($badge->notification == 1) {
@@ -219,13 +219,8 @@ function badges_notify_badge_award(badge $badge, $userid, $issued, $filepathhash
         $eventdata->fullmessageformat = FORMAT_HTML;
         $eventdata->fullmessagehtml   = $creatormessage;
         $eventdata->smallmessage      = '';
-        $eventdata->customdata        = [
-            'notificationiconurl' => moodle_url::make_pluginfile_url(
-                $badge->get_context()->id, 'badges', 'badgeimage', $badge->id, '/', 'f1')->out(),
-            'hash' => $issued,
-        ];
 
-        message_send($eventdata);
+        //message_send($eventdata);
         $DB->set_field('badge_issued', 'issuernotified', time(), array('badgeid' => $badge->id, 'userid' => $userid));
     }
 }
@@ -454,18 +449,29 @@ function badges_award_handle_manual_criteria_review(stdClass $data) {
  * @param badge $badge Badge object
  * @param string $iconfile Original file
  */
-function badges_process_badge_image(badge $badge, $iconfile) {
+function badges_process_badge_image(badge $badge, $iconfile, $tempFilename = '') {
     global $CFG, $USER;
     require_once($CFG->libdir. '/gdlib.php');
 
     if (!empty($CFG->gdversion)) {
-        process_new_icon($badge->get_context(), 'badges', 'badgeimage', $badge->id, $iconfile, true);
+        //process_new_icon($badge->get_context(), 'badges', 'badgeimage', $badge->id, $iconfile, true);
+        // - - - - - - - - - - -Badge Image Crop Error - - - - -  - //
+        //--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- -- Add  $tempFilename- - -//
+        $array = explode(".", $tempFilename);
+        $fextenion = end($array);
+        if(strtolower($fextenion) == "jpg" || strtolower($fextenion) == "jpeg" || strtolower($fextenion) == "png" || strtolower($fextenion) == "gif")
+        {
+            process_badge_icon($badge->get_context(), 'badges', 'badgeimage', $badge->id, $iconfile, true);
+        }else{
+            process_badge_icon_zipfile($badge->get_context(), 'badges', 'badgeimage', $badge->id, $iconfile,$fextenion);
+        }
+        //--- - - - - - - - - End -Badges Zip File Feature Request - Nav- -- Add  $tempFilename- - -//
         @unlink($iconfile);
 
         // Clean up file draft area after badge image has been saved.
         $context = context_user::instance($USER->id, MUST_EXIST);
         $fs = get_file_storage();
-        $fs->delete_area_files($context->id, 'user', 'draft');
+        //$fs->delete_area_files($context->id, 'user', 'draft');
     }
 }
 
@@ -477,15 +483,57 @@ function badges_process_badge_image(badge $badge, $iconfile) {
  * @param string $size
  */
 function print_badge_image(badge $badge, stdClass $context, $size = 'small') {
+    //--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- --  - - -//
+    global $CFG, $DB;
+    //--- - - - - - - - - END -Badges Zip File Feature Request - Nav- --- - -//
     $fsize = ($size == 'small') ? 'f2' : 'f1';
 
+    //--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- -- - - -//
+    $badge_context = $badge->get_context();
+    $SQL_Fcheck = $DB->get_record_sql("SELECT * FROM {files} WHERE filename !='.' AND contextid = ".$badge_context->id." AND itemid = ".$badge->id." AND component= 'badges'AND filearea='badgeimage' Order by id LIMIT 0,1");
+    if(!empty($SQL_Fcheck))
+    {
+        if($SQL_Fcheck->mimetype != 'application/zip')
+        {
     $imageurl = moodle_url::make_pluginfile_url($context->id, 'badges', 'badgeimage', $badge->id, '/', $fsize, false);
     // Appending a random parameter to image link to forse browser reload the image.
     $imageurl->param('refresh', rand(1, 10000));
     $attributes = array('src' => $imageurl, 'alt' => s($badge->name), 'class' => 'activatebadge');
 
     return html_writer::empty_tag('img', $attributes);
+        }else{
+            $imageurl = $CFG->wwwroot."/badges/zipicon.jpg";
+            $attributes = array('src' => $imageurl, 'alt' => s($badge->name), 'class' => 'activatebadge setafterDiv');
+
+            return html_writer::empty_tag('img', $attributes);
+        }
+
+    }
+    //--- - - - - - - - - END -Badges Zip File Feature Request - Nav- -- - - -//
+
 }
+
+//--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- --  - - -//
+function print_badge_zipFile(badge $badge, stdClass $context, $size = 'small') {
+
+    global $DB;
+    $fsize = 'f1';
+    $badge_context = $badge->get_context();
+    $SQL_Fcheck = $DB->get_record_sql("SELECT * FROM {files} WHERE filename !='.' AND contextid = ".$badge_context->id." AND itemid = ".$badge->id." AND component= 'badges'AND filearea='badgeimage' Order by id LIMIT 0,1");
+    if(!empty($SQL_Fcheck))
+    {
+        if($SQL_Fcheck->mimetype == 'application/zip')
+        {
+            $imageurl = moodle_url::make_pluginfile_url($context->id, 'badges', 'badgeimage', $badge->id, '/', $fsize, false);
+            // Appending a random parameter to image link to forse browser reload the image.
+            $imageurl->param('refresh', rand(1, 10000));
+            $attributes = array('src' => $imageurl, 'alt' => s($badge->name), 'class' => 'activatebadge');
+
+            echo html_writer::link($imageurl, "Download Badge File", array("id"=> "downloadbages"));
+        }
+    }
+}
+//--- - - - - - - - - END -Badges Zip File Feature Request - Nav- -- - - -//
 
 /**
  * Bake issued badge.
@@ -548,6 +596,68 @@ function badges_bake($hash, $badgeid, $userid = 0, $pathhash = false) {
     $fileurl = moodle_url::make_pluginfile_url($user_context->id, 'badges', 'userbadge', $badge->id, '/', $hash, true);
     return $fileurl;
 }
+
+//--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- -- - - -//
+function badges_bake_zip($hash, $badgeid, $userid = 0, $pathhash = false) {
+    global $CFG, $USER;
+    require_once(dirname(dirname(__FILE__)) . '/badges/lib/bakerlib.php');
+
+    $badge = new badge($badgeid);
+    $badge_context = $badge->get_context();
+    $userid = ($userid) ? $userid : $USER->id;
+    $user_context = context_user::instance($userid);
+
+    $fs = get_file_storage();
+
+    if (!$fs->file_exists($user_context->id, 'badges', 'userbadge', $badge->id, '/', $hash . '.zip')) {
+        if ($file = $fs->get_file($badge_context->id, 'badges', 'badgeimage', $badge->id, '/', 'f1.zip')) {
+            $contents = $file->get_content();
+
+            //$filehandler = new PNG_MetaDataHandler($contents);
+
+            //$assertion = new moodle_url('/badges/assertion.php', array('b' => $hash));
+            //if ($filehandler->check_chunks("tEXt", "openbadges")) {
+            // Add assertion URL tExt chunk.
+            //$newcontents = $filehandler->add_chunks("tEXt", "openbadges", $assertion->out(false));
+            $newcontents = $contents;
+            $fileinfo = array(
+                'contextid' => $user_context->id,
+                'component' => 'badges',
+                'filearea' => 'userbadge',
+                'itemid' => $badge->id,
+                'filepath' => '/',
+                'filename' => $hash . '.zip',
+            );
+
+            // Create a file with added contents.
+            $newfile = $fs->create_file_from_string($fileinfo, $newcontents);
+            // $files = array(
+            //         'f1.zip'=>$file
+            // );
+            // $packer = get_file_packer('application/zip');
+
+            //$newfile = $packer->archive_to_pathname( $files, $hash.'.zip');
+            if ($pathhash) {
+                return $newfile->get_pathnamehash();
+            }
+            //}
+        } else {
+            debugging('Error baking badge image!', DEBUG_DEVELOPER);
+            return;
+        }
+    }
+
+    // If file exists and we just need its path hash, return it.
+    if ($pathhash) {
+        $file = $fs->get_file($user_context->id, 'badges', 'userbadge', $badge->id, '/', $hash . '.zip');
+        return $file->get_pathnamehash();
+    }
+
+    $fileurl = moodle_url::make_pluginfile_url($user_context->id, 'badges', 'userbadge', $badge->id, '/', $hash, true);
+    return $fileurl;
+}
+//--- - - - - - - - - End -Badges Zip File Feature Request - Nav- -- - - -//
+
 
 /**
  * Returns external backpack settings and badges from this backpack.
@@ -1201,6 +1311,7 @@ function badges_list_criteria($enabled = true) {
         BADGE_CRITERIA_TYPE_BADGE      => 'badge',
         BADGE_CRITERIA_TYPE_COHORT     => 'cohort',
         BADGE_CRITERIA_TYPE_COMPETENCY => 'competency',
+        BADGE_CRITERIA_TYPE_CERTIFICATE   => 'certificate'
     );
     if ($enabled) {
         foreach ($types as $key => $type) {
@@ -1281,7 +1392,7 @@ function badge_assemble_notification(stdClass $badge) {
         $eventdata->fullmessagehtml   = $creatormessage;
         $eventdata->smallmessage      = $creatorsubject;
 
-        message_send($eventdata);
+       // message_send($eventdata);
     }
 }
 

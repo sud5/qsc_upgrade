@@ -100,14 +100,14 @@ class user_submission_actionmenu implements templatable, renderable {
         if ($this->showedit) {
             $url = new moodle_url('/mod/assign/view.php', ['id' => $this->cmid, 'action' => 'editsubmission']);
             $button = new single_button($url, get_string('editsubmission', 'mod_assign'), 'get');
-            $data['edit'] = [
-                'button' => $button->export_for_template($output),
-            ];
+//            $data['edit'] = [
+//                'button' => $button->export_for_template($output),
+//            ];
             $status = $this->get_current_status();
             if ($status !== ASSIGN_SUBMISSION_STATUS_NEW && $status !== ASSIGN_SUBMISSION_STATUS_REOPENED) {
                 $url = new moodle_url('/mod/assign/view.php', ['id' => $this->cmid, 'action' => 'removesubmissionconfirm']);
                 $button = new single_button($url, get_string('removesubmission', 'mod_assign'), 'get');
-                $data['remove'] = ['button' => $button->export_for_template($output)];
+//                $data['remove'] = ['button' => $button->export_for_template($output)];
             }
             if ($status === ASSIGN_SUBMISSION_STATUS_REOPENED) {
                 $params = ['id' => $this->cmid, 'action' => 'editprevioussubmission', 'sesskey' => sesskey()];
@@ -154,7 +154,7 @@ class user_submission_actionmenu implements templatable, renderable {
                         'get',
                         single_button::BUTTON_PRIMARY
                     );
-                    $data['edit']['button'] = $newattemptbutton->export_for_template($output);
+//                    $data['edit']['button'] = $newattemptbutton->export_for_template($output);
                     $data['edit']['help'] = '';
                 }
             }

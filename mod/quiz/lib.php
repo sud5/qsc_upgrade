@@ -102,7 +102,7 @@ function quiz_add_instance($quiz) {
     if ($result && is_string($result)) {
         return $result;
     }
-
+$quiz->completionpass = 1;
     // Try to store it in the database.
     $quiz->id = $DB->insert_record('quiz', $quiz);
 
@@ -1732,7 +1732,7 @@ function quiz_get_extra_capabilities() {
  * @return void
  */
 function quiz_extend_settings_navigation(settings_navigation $settings, navigation_node $quiznode) {
-    global $CFG;
+    global $CFG, $PAGE;
 
     // Require {@link questionlib.php}
     // Included here as we only ever want to include this file if we really need to.
@@ -1748,6 +1748,15 @@ function quiz_extend_settings_navigation(settings_navigation $settings, navigati
     } else if (array_key_exists($i + 1, $keys)) {
         $beforekey = $keys[$i + 1];
     }
+    
+    // -----Start -  Assessment Manually Pass ---  Nav
+    if (has_capability('mod/quiz:manage', $PAGE->cm->context)) {
+        $url = new moodle_url('/mod/quiz/manuallypass.php', array('cmid'=>$PAGE->cm->id));
+        $node = navigation_node::create(get_string('manuallypass', 'quiz'),$url,
+                navigation_node::TYPE_SETTING, null, 'mod_quiz_manuallypass');
+        $quiznode->add_node($node, $beforekey);
+    }
+    // -----End -  Assessment Manually Pass ---  Nav
 
     if (has_any_capability(['mod/quiz:manageoverrides', 'mod/quiz:viewoverrides'], $settings->get_page()->cm->context)) {
         $url = new moodle_url('/mod/quiz/overrides.php', ['cmid' => $settings->get_page()->cm->id, 'mode' => 'user']);

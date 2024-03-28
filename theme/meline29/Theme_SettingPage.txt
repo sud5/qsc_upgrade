@@ -1,0 +1,261 @@
+Theme Meline29.
+
+General Settings
+=========================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------
+
+1. Logo
+   -Here you can Change the Logo of your theme.
+   Drag and Drop:- You need to drag the selected logo from your local computer and drop it here. Hence, the logo will be saved.
+
+2. Theme Color
+   -Here you can change the color of theme elements.
+
+3. Theme Hover Color
+   -Here you can change hover color of theme elements.
+
+4. Copyright
+   -Here you can change your copyright text which comes in footer area.
+
+5. Footnote
+   -If you want any text to appear in the footer area then you can add here. 
+   
+
+Frontpage Slideshow Settings
+=========================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------
+
+1. Toggle Slideshow display
+   -Here you can show and hide frontpage slideshow.
+   
+2. Slideshow height
+   -Here you can set slideshow height.
+
+3. Slide sizing mode
+   -Here you can set slide sizing mode.
+
+4. Number of slides
+   -Here you can set number of slides of theme slideshow.
+
+5. Slide Title Color
+   -Here you can change slide title color.
+   
+6. Slide Caption Color
+   -Here you can change slide caption text.
+   
+7. Enable autoplay
+   -Here you can enable and disable auto play of theme slideshow.
+   
+8. Slideshow animation
+   -Here you can choose slideshow animation type from given.
+   
+9. Enable ken burns effect
+   -Here you can enable slide burns effect.
+      
+   
+Slide 1 Settings
+-------------------------------------------
+
+1. Slide Title
+   -Here you can change slide one title.
+   
+2. Slide Image
+   -Here you can change slide one image.
+   
+3. Slide Caption
+   -Here you can change slide one caption content.
+
+4. Slide Button Link
+   -Here you can change slide one button link.
+
+5. Slide button Text
+   -Here you can change slide one button text.
+   
+Note- You can change all slide elements like slide one. 
+
+
+Frontpage Settings
+=========================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------
+
+1. Header Top Phone Number
+   -Here you can change contact numbers which comes in the right top of the theme.
+   
+
+Frontpage Banner Settings When You Are Not Logged In.
+--------------------------------------------------------
+
+1. Display Banner
+   -Here you can show or hide Banner in your theme when you are not login.
+
+2. Banner Description
+   -Here You can write or change the description of Banner.
+   
+3. Button One Text
+   -Here you can change button one text.
+
+4. Button One URL
+   -Here you can change button one URL link.
+   
+5. Button Two Text
+   -Here you can change button two text.
+
+6. Button Two URL
+   -Here you can change button two URL link.
+   
+   
+Frontpage Welcome Block Settings
+--------------------------------------------------------
+
+1. Display Welcome Block
+   -Here you can Hide and show welcome block.
+   
+2. Welcome Block Title
+   -Here you can change welcome block title.
+   
+3. Welcome Block Content
+   -Here You can change welcome block content.
+   
+   
+Frontpage Main Blocks Settings
+--------------------------------------------------------
+
+1. Display Block One
+   -Here you can hide and show block one.
+   
+2. Block One Image
+   -Here you can change image for block one of main content blocks area.
+   
+3. Block One Title
+   -Here you can change block one title text.
+   
+4. Block One Link Text
+   -Here you can change block one link text.
+   
+5. Block One Link URL
+   -Here you can change block one link URL.
+   
+6. Image Hover Title
+   -Here you can change block one image hover title.
+
+7. Image One Hover Content
+   -Here you can change block one image hover content.
+   
+Note: You can show and hide or change all blocks like block one.
+
+
+Theme Features Blocks Settings
+--------------------------------------------------------
+
+1. Display Theme feature block
+   -Here you can show and hide theme features block.
+
+2. Feature Block Top Content
+   -Here you can add and edit feature block top content.
+
+3. Feature Block One Image
+   -Here you can change feature block one image.
+   
+4. Feature Block One Title
+   -Here you can change feature block one title.
+   
+5. Feature Block One Content
+   -Here you can change feature block one content.
+   
+Note: You can edit all feature blocks like block one.
+
+
+Theme Site News Blocks Settings
+--------------------------------------------------------
+
+1. Site News Block Top Title
+   -Here you can change site news block top title.
+   
+2. Site News Block Top Content
+   -Here you can change site news block top content.
+
+
+New Events Block Settings
+--------------------------------------------------------
+
+1. Display Event Block
+   -Here you can show and hide event block.
+   
+2. New Event Block Text
+   -Here you can change text of new event block.
+   
+3. New Event Button Link Text
+   -Here you can change new event button text.
+   
+4. New Event Button Link URL
+   -Here you can change new event button link URL.
+   
+   
+Testimonials Block Settings
+--------------------------------------------------------
+
+1. Display Testimonial Block
+   -Here you can show and hide testimonial block.
+   
+2. Testimonial Block Top Title
+   -Here you can change testimonial block top title.
+   
+3. Testimonial Block Top Content
+   -Here you can change testimonial block top content.
+   
+4. Testimonial One Content
+   -Here you can change testimonial one content.
+   
+5. Testimonial One User Picture
+   -Here you can upload user picture for testimonial one.
+   
+6. Testimonial One User Name
+   -Here you can change user name of testimonial one.
+   
+7. Testimonial One User Roll
+   -Here you can change user roll of testimonial one user.
+   
+Note: You can change all testimonials like testimonial one.
+
+
+Frontpage Contact Form Setting
+--------------------------------------------------------
+
+1. Display Frontpage Contact Form
+   -Here you can show and hide frontpage contact form.
+
+
+Social Networking Settings
+=========================================================================================================================
+-------------------------------------------------------------------------------------------------------------------------
+
+1. Facebook URL
+   -Here you can put the URL of facebook page of your institution so that the user will be directed to the page on one click.
+
+2. Flickr URL
+   -Here you can put the URL of Flickr page of your institution so that the user will be directed to the page on one click.
+
+3. Twitter URL
+   -Here you can put the URL of Twitter page of your institution so that the user will be directed to the page on one click.
+   
+4. Google+ URL
+   -Here you can put the URL of Google+ page of your institution so that the user will be directed to the page on one click.
+
+5. Linkedin URL
+   -Here you can put the URL of Linkedin page of your institution so that the user will be directed to the page on one click.
+
+6. Pinterest URL
+   -Here you can put the URL of Pinterest page of your institution so that the user will be directed to the page on one click.
+   
+7. Instagram URL
+   -Here you can put the URL of Instagram page of your institution so that the user will be directed to the page on one click.
+   
+8. Youtube URL
+   -Here you can put the URL of Youtube page of your institution so that the user will be directed to the page on one click.
+   
+9. Skype URL
+   -Here you can put the URL of Skype page of your institution so that the user will be directed to the page on one click.
+   
+   
+   
+

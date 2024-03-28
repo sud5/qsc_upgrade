@@ -1027,7 +1027,8 @@ class file_storage {
         static $contenthash = null;
         if (!$contenthash) {
             $this->add_string_to_pool('');
-            $contenthash = self::hash_from_string('');
+            //$contenthash = self::hash_from_string('');
+            $contenthash = sha1('');
         }
 
         $now = time();

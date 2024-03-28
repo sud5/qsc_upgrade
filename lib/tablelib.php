@@ -1056,7 +1056,21 @@ class flexible_table {
         }
         return $row;
     }
-
+    /**
+     * This function is not part of the public api.
+     */
+    function get_download_menu() {
+        $allclasses= get_declared_classes();
+        $exportclasses = array();
+        foreach ($allclasses as $class) {
+            $matches = array();
+            if (preg_match('/^table\_([a-z]+)\_export\_format$/', $class, $matches)) {
+                $type = $matches[1];
+                $exportclasses[$type]= get_string("download$type", 'table');
+            }
+        }
+        return $exportclasses;
+    }
     /**
      * Get the html for the download buttons
      *

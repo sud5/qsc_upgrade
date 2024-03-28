@@ -86,6 +86,14 @@ define('BADGE_CRITERIA_TYPE_COHORT', 8);
  */
 define('BADGE_CRITERIA_TYPE_COMPETENCY', 9);
 
+/*
+ * Certificate completion criteria type
+ * Criteria type constant, primarily for storing criteria type in the database.
+ */
+define('BADGE_CRITERIA_TYPE_CERTIFICATE', 10);
+
+
+
 /**
  * Award criteria abstract definition
  *
@@ -127,24 +135,6 @@ abstract class award_criteria {
      * @var array
      */
     public $params = array();
-
-    /**
-     * Criteria type.
-     * @var string
-     */
-    public $criteriatype;
-
-    /**
-     * Required parameters.
-     * @var string
-     */
-    public $required_param = '';
-
-    /**
-     * Optional parameters.
-     * @var array
-     */
-    public $optional_params = [];
 
     /**
      * The base constructor

@@ -189,6 +189,19 @@ class core_plugin_manager {
 
         $this->installedplugins = array();
 
+        // TODO: Delete this block once Moodle 2.6 or later becomes minimum required version to upgrade.
+        if ($CFG->version < 2013092001.02) {
+            // We did not upgrade the database yet.
+            $modules = $DB->get_records('modules', array(), 'name ASC', 'id, name, version');
+            foreach ($modules as $module) {
+                $this->installedplugins['mod'][$module->name] = $module->version;
+            }
+            $blocks = $DB->get_records('block', array(), 'name ASC', 'id, name, version');
+            foreach ($blocks as $block) {
+                $this->installedplugins['block'][$block->name] = $block->version;
+            }
+        }
+
         $versions = $DB->get_records('config_plugins', array('name'=>'version'));
         foreach ($versions as $version) {
             $parts = explode('_', $version->plugin, 2);
@@ -1761,6 +1774,7 @@ class core_plugin_manager {
      * @param string $type
      * @return false|array array of standard plugins or false if the type is unknown
      */
+    // added googleoauth2 in the array - QSCID
     public static function standard_plugins_list($type) {
 
         $standard_plugins = array(
@@ -1774,8 +1788,8 @@ class core_plugin_manager {
                 'backcolor', 'bold', 'charmap', 'clear', 'collapse', 'emoticon',
                 'equation', 'fontcolor', 'html', 'image', 'indent', 'italic',
                 'link', 'managefiles', 'media', 'noautolink', 'orderedlist',
-                'recordrtc', 'rtl', 'strike', 'subscript', 'superscript', 'table',
-                'title', 'underline', 'undo', 'unorderedlist', 'h5p', 'emojipicker',
+                'rtl', 'strike', 'subscript', 'superscript', 'table', 'title',
+                'underline', 'undo', 'unorderedlist'
             ),
 
             'assignsubmission' => array(
@@ -1787,8 +1801,8 @@ class core_plugin_manager {
             ),
 
             'auth' => array(
-                'cas', 'db', 'email', 'ldap', 'lti', 'manual', 'mnet',
-                'nologin', 'none', 'oauth2', 'shibboleth', 'webservice'
+                'cas', 'googleoauth2', 'db', 'email', 'fc', 'imap', 'ldap', 'lti', 'manual', 'mnet',
+                'nntp', 'nologin', 'none', 'pam', 'pop3', 'shibboleth', 'webservice'
             ),
 
             'availability' => array(

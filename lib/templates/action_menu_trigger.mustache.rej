@@ -1,0 +1,40 @@
+diff a/templates/action_menu_trigger.mustache b/templates/action_menu_trigger.mustache	(rejected hunks)
+@@ -77,37 +77,4 @@
+         }
+     }
+ }}
+-<div class="dropdown{{^secondary.items}} hidden{{/secondary.items}}">
+-    <a href="#" tabindex="0" class="d-inline-block {{triggerextraclasses}} dropdown-toggle icon-no-margin" id="action-menu-toggle-{{instance}}" aria-label="{{title}}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="action-menu-{{instance}}-menu">
+-        {{{actiontext}}}
+-        {{{menutrigger}}}
+-            {{#icon}}
+-                {{#pix}}
+-                    {{key}},{{component}},{{title}}
+-                {{/pix}}
+-            {{/icon}}
+-            {{#rawicon}}{{{.}}}{{/rawicon}}
+-        {{#menutrigger}}
+-        <b class="caret"></b>
+-        {{/menutrigger}}
+-    </a>
+-    {{#secondary}}
+-        <div class="dropdown-menu dropdown-menu-right {{classes}}"{{#attributes}} {{name}}="{{value}}"{{/attributes}}>
+-            {{#items}}
+-                {{#actionmenulink}}
+-                    {{< core/action_menu_link}}
+-                        {{$actionmenulinkclasses}}dropdown-item {{classes}}{{/actionmenulinkclasses}}
+-                    {{/ core/action_menu_link}}
+-                {{/actionmenulink}}
+-                {{#actionmenufiller}}
+-                    <div class="dropdown-divider" role="presentation"><span class="filler">&nbsp;</span></div>
+-                {{/actionmenufiller}}
+-                {{^actionmenulink}}
+-                    {{^actionmenufiller}}
+-                        <div class="dropdown-item">{{> core/action_menu_item }}</div>
+-                    {{/actionmenufiller}}
+-                {{/actionmenulink}}
+-            {{/items}}
+-        </div>
+-    {{/secondary}}
+-</div>
++<a href="#" class="toggle-display {{#menutrigger}}textmenu{{/menutrigger}}" id="action-menu-toggle-{{instance}}" title="{{title}}" role="menuitem">{{{actiontext}}}{{{menutrigger}}}{{#icon}}{{> core/pix_icon}}{{/icon}}{{#rawicon}}{{{.}}}{{/rawicon}}{{#menutrigger}}<b class="caret"></b>{{/menutrigger}}</a>

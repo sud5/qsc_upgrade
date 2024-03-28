@@ -29,6 +29,9 @@ use mod_quiz\quiz_attempt;
 require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 
+//US #3820 unset
+unset($SESSION->passwordcheckedquizzes);
+
 // Look for old-style URLs, such as may be in the logs, and redirect them to startattemtp.php.
 if ($id = optional_param('id', 0, PARAM_INT)) {
     redirect($CFG->wwwroot . '/mod/quiz/startattempt.php?cmid=' . $id . '&sesskey=' . sesskey());
@@ -52,6 +55,11 @@ $PAGE->set_url($attemptobj->attempt_url(null, $page));
 $PAGE->set_cacheable(false);
 
 $PAGE->set_secondary_active_tab("modulepage");
+
+//US #3820 set password hardcoded
+$chkQuizId = $attemptobj->get_quizid();
+$SESSION->passwordcheckedquizzes[$chkQuizId] = 'qsc';
+//US #3820 end
 
 // Check login.
 require_login($attemptobj->get_course(), false, $attemptobj->get_cm());
@@ -93,9 +101,9 @@ if (!$attemptobj->is_preview_user() && $messages) {
     throw new \moodle_exception('attempterror', 'quiz', $attemptobj->view_url(),
             $output->access_messages($messages));
 }
-if ($accessmanager->is_preflight_check_required($attemptobj->get_attemptid())) {
-    redirect($attemptobj->start_attempt_url(null, $page));
-}
+//if ($accessmanager->is_preflight_check_required($attemptobj->get_attemptid())) {
+//    redirect($attemptobj->start_attempt_url(null, $page));
+//}
 
 // Set up auto-save if required.
 $autosaveperiod = get_config('quiz', 'autosaveperiod');
@@ -142,3 +150,9 @@ if ($attemptobj->is_last_page($page)) {
 }
 
 echo $output->attempt_page($attemptobj, $page, $accessmanager, $messages, $slots, $id, $nextpage);
+?>
+<script type = "text/javascript">
+
+  window.history.forward();
+
+</script>

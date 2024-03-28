@@ -1,0 +1,33 @@
+<div class="login-user">
+            <nav class="navbar navbar-expand btco-hover-menu">
+                
+
+                <div class="collapse navbar-collapse">
+                {{^menuslinkright}}
+                <div class="my-auto m-1">{{{topmenus}}}</div>
+                {{/menuslinkright}}
+                    <ul class="navbar-nav ml-auto my-auto">
+                        
+
+                        {{! Remove Messages and Notifications icons when no navbar. }}
+                    
+
+                        {{#langmenu}}
+                        <li class="nav-item dropdown ml-2 my-auto">{{{output.lang_menu}}}</li>
+                        {{/langmenu}}
+
+                        {{{output.page_heading_menu}}}
+
+                        {{{loginoruser}}}
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+            
+        </div>
+    </div>
+        
+</header>

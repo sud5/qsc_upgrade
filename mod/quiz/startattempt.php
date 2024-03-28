@@ -73,6 +73,7 @@ if (!$quizobj->is_preview_user() && $messages) {
             $output->access_messages($messages));
 }
 
+/* customization starts
 if ($accessmanager->is_preflight_check_required($currentattemptid)) {
     // Need to do some checks before allowing the user to continue.
     $mform = $accessmanager->get_preflight_check_form(
@@ -99,6 +100,8 @@ if ($accessmanager->is_preflight_check_required($currentattemptid)) {
     // Pre-flight check passed.
     $accessmanager->notify_preflight_check_passed($currentattemptid);
 }
+ends */
+
 if ($currentattemptid) {
     if ($lastattempt->state == quiz_attempt::OVERDUE) {
         redirect($quizobj->summary_url($lastattempt->id));

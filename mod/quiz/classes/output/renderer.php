@@ -255,7 +255,8 @@ class renderer extends plugin_renderer_base {
 
         } else {
             return html_writer::link($url, get_string('finishreview', 'quiz'),
-                    ['class' => 'mod_quiz-next-nav']);
+//                    ['class' => 'mod_quiz-next-nav']);
+                    ['class' => 'btn btn-primary','style'=>'margin-top:5px;']);
         }
     }
 
@@ -342,6 +343,9 @@ class renderer extends plugin_renderer_base {
 
         $bcc = $panel->get_button_container_class();
         $output .= html_writer::start_tag('div', ['class' => "qn_buttons clearfix $bcc"]);
+                
+        /* 
+        # Original
         foreach ($panel->get_question_buttons() as $button) {
             $output .= $this->render($button);
         }
@@ -349,6 +353,24 @@ class renderer extends plugin_renderer_base {
 
         $output .= html_writer::tag('div', $panel->render_end_bits($this),
                 ['class' => 'othernav']);
+                # Original ends
+        */
+
+        /* Start Customization Sameer for Finish attempt link seems conditionally*/
+        $flag = 0;
+        foreach ($panel->get_question_buttons() as $button) {
+            if($button->stateclass == "notyetanswered")
+                $flag = 1;
+            $output .= $this->render($button);
+        }
+       
+        $output .= html_writer::end_tag('div');
+
+        if($flag == 0){
+            $output .= html_writer::tag('div', $panel->render_end_bits($this),
+                array('class' => 'othernav'));
+        }
+        /* End Customization Sameer for Finish attempt link seems when all question answered conditionally*/
 
         $this->page->requires->js_init_call('M.mod_quiz.nav.init', null, false,
                 quiz_get_js_module());
@@ -480,8 +502,15 @@ class renderer extends plugin_renderer_base {
      */
     public function attempt_page($attemptobj, $page, $accessmanager, $messages, $slots, $id,
             $nextpage) {
+
+        global $DB;
+        $objCS = $DB->get_record('course_sections',array('id' => $attemptobj->get_cm()->section),'name');
+//        $headings = format_string($attemptobj->get_quiz_name()).": ".format_string($objCS->name)."<br><span style='font-size:20px;'>".format_string($attemptobj->get_quizobj()->get_course()->fullname)."</span>";
+        $headings = get_string('assessmentc','quiz').format_string($objCS->name)."<br><span style='font-size:20px;'>".format_string($attemptobj->get_quizobj()->get_course()->fullname)."</span>";
+        
         $output = '';
         $output .= $this->header();
+        $output .= $this->heading($headings);
         $output .= $this->during_attempt_tertiary_nav($attemptobj->view_url());
         $output .= $this->quiz_notices($messages);
         $output .= $this->countdown_timer($attemptobj, time());
@@ -535,6 +564,33 @@ class renderer extends plugin_renderer_base {
      * @param int $nextpage Next page number
      */
     public function attempt_form($attemptobj, $page, $slots, $id, $nextpage) {
+/*Custom section Start*/
+        ?>
+
+<script language='javascript'>
+
+function callValid() {
+var names = {};
+$('input:radio').each(function() { // find unique names
+names[$(this).attr('name')] = true;
+});
+var count = 0;
+$.each(names, function() { // then count them
+count++;
+});
+if($('input:radio:checked').length == count) {
+return true;
+}
+else
+{
+alert( '<?=get_string("quiz_answer_blank","quiz")?>' );
+return false;
+}
+}
+</script>
+<?php
+/*Custom section End*/
+
         $output = '';
 
         // Start the form.
@@ -606,8 +662,15 @@ class renderer extends plugin_renderer_base {
         } else {
             $nextlabel = get_string('navigatenext', 'quiz');
         }
+        /*Original Section Start
         $output .= html_writer::empty_tag('input', ['type' => 'submit', 'name' => 'next',
                 'value' => $nextlabel, 'class' => 'mod_quiz-next-nav btn btn-primary', 'id' => 'mod_quiz-next-nav']);
+        Original Section End */
+        
+        /*Custom section Start*/ 
+        $output .= html_writer::empty_tag('input', array('type' => 'submit', 'name' => 'next',
+                'value' => get_string('next'),'onClick'=>'return callValid();'));
+        /*Custom section End*/
         $output .= html_writer::end_tag('div');
         $this->page->requires->js_call_amd('core_form/submit', 'init', ['mod_quiz-next-nav']);
 
@@ -700,10 +763,18 @@ class renderer extends plugin_renderer_base {
      * @param display_options $displayoptions
      */
     public function summary_page($attemptobj, $displayoptions) {
+                global $DB;
+        //Customization for headings
+        //echo "<pre>"; print_r($attemptobj->get_quizobj()->get_course()->fullname);print_r($displayoptions); exit;
+        $objCS = $DB->get_record('course_sections',array('id' => $attemptobj->get_cm()->section),'name');
+//        $headings = format_string($attemptobj->get_quiz_name()).": ".format_string($objCS->name)."<br><span style='font-size:20px;'>".format_string($attemptobj->get_quizobj()->get_course()->fullname)."</span>";
+        $headings = get_string('assessmentc','quiz').format_string($objCS->name)."<br><span style='font-size:20px;'>".format_string($attemptobj->get_quizobj()->get_course()->fullname)."</span>";
+        
         $output = '';
         $output .= $this->header();
+        $output .= $this->heading($headings);
         $output .= $this->during_attempt_tertiary_nav($attemptobj->view_url());
-        $output .= $this->heading(format_string($attemptobj->get_quiz_name()));
+//        $output .= $this->heading(format_string($attemptobj->get_quiz_name()));
         $output .= $this->heading(get_string('summaryofattempt', 'quiz'), 3);
         $output .= $this->summary_table($attemptobj, $displayoptions);
         $output .= $this->summary_page_controls($attemptobj);
@@ -772,10 +843,10 @@ class renderer extends plugin_renderer_base {
             }
             if ($attemptobj->can_navigate_to($slot)) {
                 $row = [html_writer::link($attemptobj->attempt_url($slot),
-                        $attemptobj->get_question_number($slot) . $flag),
+                        format_string($attemptobj->get_question_attempt($slot)->get_question()->questiontext) . $flag),
                         $attemptobj->get_question_status($slot, $displayoptions->correctness)];
             } else {
-                $row = [$attemptobj->get_question_number($slot) . $flag,
+                $row = [format_string($attemptobj->get_question_attempt($slot)->get_question()->questiontext) . $flag,
                         $attemptobj->get_question_status($slot, $displayoptions->correctness)];
             }
             if ($markscolumn) {
@@ -796,7 +867,7 @@ class renderer extends plugin_renderer_base {
      * @param quiz_attempt $attemptobj
      */
     public function summary_page_controls($attemptobj) {
-        $output = '';
+        $output = ''; $flag = 0;
 
         // Return to place button.
         if ($attemptobj->get_state() == quiz_attempt::IN_PROGRESS) {
@@ -804,7 +875,7 @@ class renderer extends plugin_renderer_base {
                     new moodle_url($attemptobj->attempt_url(null, $attemptobj->get_currentpage())),
                     get_string('returnattempt', 'quiz'));
             $output .= $this->container($this->container($this->render($button),
-                    'controls'), 'submitbtns mdl-align');
+                    'controls'), 'submitbtns mdl-align inprogress');
         }
 
         // Finish attempt button.
@@ -816,7 +887,9 @@ class renderer extends plugin_renderer_base {
                 'cmid' => $attemptobj->get_cmid(),
                 'sesskey' => sesskey(),
         ];
-
+        
+        /*
+        # Original Starts
         $button = new single_button(
                 new moodle_url($attemptobj->processattempt_url(), $options),
                 get_string('submitallandfinish', 'quiz'));
@@ -831,6 +904,29 @@ class renderer extends plugin_renderer_base {
             $this->page->requires->js_call_amd('mod_quiz/submission_confirmation', 'init', [$totalunanswered]);
         }
         $button->type = \single_button::BUTTON_PRIMARY;
+        
+        # Original Ends
+        */
+
+        /* Custom section Start */
+        $slots = $attemptobj->get_slots();
+        foreach ($slots as $slot) {            
+            if($attemptobj->get_question_state_class($slot, null) == 'notyetanswered')
+                $flag = 1;            
+        }
+        
+        if($flag == 0) {
+            $button = new single_button(
+                    new moodle_url($attemptobj->processattempt_url(), $options),
+                    get_string('submitallandfinish', 'quiz'));
+
+            $button->id = 'responseform';
+            if ($attemptobj->get_state() == quiz_attempt::IN_PROGRESS) {
+                $button->add_action(new \confirm_action(get_string('confirmclose', 'quiz'), null,
+                        get_string('submitallandfinish', 'quiz')));
+            }
+        }        
+        /* Custom section Ends */
 
         $duedate = $attemptobj->get_due_date();
         $message = '';
@@ -864,6 +960,13 @@ class renderer extends plugin_renderer_base {
      * @return string HTML to display
      */
     public function view_page($course, $quiz, $cm, $context, $viewobj) {
+        // ----- customization_Naveen_Start --------//
+        $course_version = $course->course_version;
+        if(!empty($course_version) && ($course_version =='inclassroom_quiz')){
+            $viewobj->showbacktodashboard= true;
+            $viewobj->backtodashboardurl= "/my";
+        }       
+        // ----- customization_Naveen_End --------//
         $output = '';
 
         $output .= $this->view_page_tertiary_nav($viewobj);
@@ -924,7 +1027,15 @@ class renderer extends plugin_renderer_base {
                     get_string('backtocourse', 'quiz'), 'get',
                     ['class' => 'continuebutton']);
         }
-
+        
+        // ----- customization_Naveen_Start --------//
+        if ($viewobj->showbacktodashboard === true) {
+            $output .= $this->single_button($viewobj->backtodashboardurl,
+                    get_string('backtodashboard', 'quiz'), 'post',
+                    array('class' => 'continuebutton'));
+            unset($viewobj->showbacktocourse);
+        }
+        // ----- customization_Naveen_End --------//
         return $output;
     }
 
@@ -1004,7 +1115,7 @@ class renderer extends plugin_renderer_base {
         $guestno = html_writer::tag('p', get_string('guestsno', 'quiz'));
         $liketologin = html_writer::tag('p', get_string('liketologin'));
         $referer = get_local_referer(false);
-        $output .= $this->confirm($guestno . "\n\n" . $liketologin . "\n", get_login_url(), $referer);
+        $output .= $this->confirm($guestno . "\n\n" . $liketologin . "\n", get_login_url(), $referer, 1);
         return $output;
     }
 
@@ -1041,7 +1152,24 @@ class renderer extends plugin_renderer_base {
      * @return string HTML to output.
      */
     public function view_information($quiz, $cm, $context, $messages, bool $quizhasquestions = false) {
+        global $USER, $DB;
         $output = '';
+
+        // Print quiz name.
+        // Customization 
+        $objCS = $DB->get_record('course_sections',array('id' => $cm->section),'name');
+        $objCourseData = $DB->get_record('course',array('id' => $quiz->course),'fullname');
+        $headings = get_string('assessmentc','quiz').format_string($objCS->name)."<br><span style='font-size:20px;'>".format_string($objCourseData->fullname)."</span>";
+        $output .= $this->heading($headings,1,'course_seo_quiz');
+
+        // Print any activity information (eg completion requirements / dates).
+        $cminfo = cm_info::create($cm);
+        $completiondetails = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
+        $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
+        $output .= $this->output->activity_information($cminfo, $completiondetails, $activitydates);
+
+        // Print quiz description.
+        $output .= $this->quiz_intro($quiz, $cm);
 
         // Output any access messages.
         if ($messages) {
@@ -1078,7 +1206,7 @@ class renderer extends plugin_renderer_base {
             return '';
         }
 
-        return $this->box(format_module_intro('quiz', $quiz, $cm->id), 'generalbox', 'intro');
+        return $this->box(format_module_intro('quiz', $quiz, $cm->id, false), 'generalbox', 'intro');
     }
 
     /**
@@ -1194,6 +1322,13 @@ class renderer extends plugin_renderer_base {
             if ($viewobj->feedbackcolumn && $attemptobj->is_finished()) {
                 if ($attemptoptions->overallfeedback) {
                     $row[] = quiz_feedback_for_grade($attemptgrade, $quiz, $context);
+                    //Customize Sameer Start for background color red. orange and green
+                    if($quiz->passgrade <= $attemptgrade){
+                        $table->rowclasses[$attemptobj->get_attempt_number()] = 'passedrow';
+                    }
+                    else{
+                        $table->rowclasses[$attemptobj->get_attempt_number()] = 'failedrow';
+                    }
                 } else {
                     $row[] = '';
                 }

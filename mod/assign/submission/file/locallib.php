@@ -29,6 +29,7 @@ use core_external\external_value;
 // File areas for file submission assignment.
 define('ASSIGNSUBMISSION_FILE_MAXSUMMARYFILES', 5);
 define('ASSIGNSUBMISSION_FILE_FILEAREA', 'submission_files');
+define('ASSIGNSUBMISSION_FILE_MAXFILES',5);
 
 /**
  * Library class for file submission plugin extending submission plugin base class
@@ -89,7 +90,8 @@ class assign_submission_file extends assign_submission_plugin {
         $mform->addHelpButton('assignsubmission_file_maxfiles',
                               'maxfilessubmission',
                               'assignsubmission_file');
-        $mform->setDefault('assignsubmission_file_maxfiles', $defaultmaxfilesubmissions);
+        //$mform->setDefault('assignsubmission_file_maxfiles', $defaultmaxfilesubmissions);
+        $mform->setDefault('assignsubmission_file_maxfiles', ASSIGNSUBMISSION_FILE_MAXFILES);
         $mform->hideIf('assignsubmission_file_maxfiles', 'assignsubmission_file_enabled', 'notchecked');
 
         $choices = get_max_upload_sizes($CFG->maxbytes,

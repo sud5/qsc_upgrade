@@ -1,0 +1,305 @@
+* {
+	outline: none !important;
+}
+.topics * {
+	font-size: 12px !important;
+}
+.topics * {
+	box-sizing: border-box !important;
+}
+.topics img {
+	box-sizing: content-box !important;
+}
+.actions {
+	display: inline-block;
+	position: static !important;
+}
+.instancename {
+	display: inline-block;
+	padding-left: 0;
+}
+.editing .section .activity .contentwithoutlink, .editing .section .activity .activityinstance {
+	padding-left: 22px !important;
+}
+.right.side br {
+	display: none;
+}
+.topics .right.side {
+	float: right !important;
+	margin-right: 10px;
+	position: static !important;
+	text-align: right !important;
+	width: 100% !important;
+}
+
+.course-content .content h3 {
+    display: inline-block;
+    width: 98%;
+    padding-top: 0;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.topics .right.side a {
+	margin-left: 15px;
+}
+.topics .right.side {
+	/*padding: 10px 0 0 0 !important;*/
+}
+.course-content ul.topics li.section .content, .course-content ul.weeks li.section .content {
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 0;
+}
+.summary a img.iconsmall {
+	position: absolute;
+	right: 0;
+	top: -25px;
+}
+.course-content .topics li {
+	margin-bottom: 0 !important;
+}
+.filler {
+	display: none !important;
+}
+.editing .section .activity:hover, .editing .section .activity.action-menu-shown {
+	background-color: transparent !important;
+}
+.sectiondraggable .urlselect {
+	margin: 5px 0 !important;
+	width: 100%;
+}
+.sectiondraggable .urlselect .helptooltip {
+	float: left;
+	margin-left: 5px;
+}
+.something .menu.align-tr-br {
+	left: 0;
+	position: absolute !important;
+	top: 18px !important;
+	width: 200px !important;
+	padding-bottom: 10px !important;
+	padding-top: 10px !important;
+}
+
+.usermenu .menu.align-tr-br
+{
+padding:10px !important;
+}
+
+.menu.align-tr-br span {
+	border: medium none !important;
+	color: #555555;
+	font-family: arial;
+	font-size: 14px !important;
+}
+.menu.align-tr-br li a {
+	border: medium none;
+}
+.editing_move::before {
+	position: relative;
+	top: 2px;
+}
+.course-content ul li.section {
+	overflow: visible;
+}
+.dndupload-preview.dndupload-hidden {
+	display: none !important;
+}
+h3.sectionname a {
+	font-size: 16px !important;
+}
+.no-overflow, .no-overflow p {
+	font-size: 13px !important;
+}
+.instancename {
+	font-size: 13px !important;
+}
+.activityinstance {
+	float: left;
+	width: auto;
+}
+.actions {
+	float: right !important;
+	width: auto !important;
+}
+.course-content .no-overflow {
+	padding-bottom: 0;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+ul.topics li ul.menubar li, ul.topics li ul.custom_box_top li {
+	margin-right: 0 !important;
+}
+.activityinstance {
+	width: 100%;
+}
+.sectiondraggable .actions {
+	width: 100% !important;
+	margin: 5px 0;
+}
+.moodle-actionmenu.section-cm-edit-actions.commands {
+	float: right !important;
+}
+.course-content ul.topics li.section .summary {
+	position: relative;
+}
+.sectiondraggable .actions a {
+	padding-right: 0;
+}
+.course-content .no-overflow img {
+	max-width: 100%;
+}
+.moodle-actionmenu.show[data-enhanced] .menu a {
+	color: #333333;
+	display: block;
+	padding: 2px 1em 2px 20px;
+}
+.section.main.clearfix.sectiondraggable.yui3-dd-drop {
+	padding-bottom: 20px !important;
+	padding-top: 10px !important;
+}
+ul.topics li:not(:first-child) {
+	margin-right: 20px !important;
+}
+.section.main.clearfix.sectiondraggable.yui3-dd-drop {
+	width: 303px;
+}
+.course-content ul li.section:nth-child(3n + 1) {
+	margin-right: 0 !important;
+}
+.course-content ul.topics li.section.main.clearfix {
+	padding: 0 5px !important;
+	padding-bottom: 15px !important;
+	min-height: 630px;
+}
+input.titleeditor {
+	width: 100% !important;
+	line-height: 30px !important;
+	height: 30px !important;
+}
+.editinstructions {
+	display: inline-block !important;
+	width: 100%;
+	left: -10px;
+	top: 0px !important;
+	border: none !important;
+	box-shadow: none !important;
+}
+/*AJ 29-02-2016*/
+
+.something .section.img-text li {
+	width: 100%;
+}
+.something .section.img-text li .activityinstance {
+	width: 92% !important;
+}
+body.editing .something .section.img-text li .activityinstance {
+	width: 100% !important;
+}
+body.editing .actions {
+	float: left !important;
+	position: static !important;
+	width: auto !important;
+}
+.something .section.img-text li .actions li[role="presentation"] {
+	width: auto !important;
+}
+body.editing .something .section.img-text > li {
+	border-bottom: 1px dotted #bababa;
+	margin-bottom: 10px !important;
+	width: 100%;
+}
+body.editing .something .horizontal > .urlselect {
+	display: inline-block !important;
+	width: 100%;
+	margin-left:0;
+}
+body.editing .something .horizontal select {
+	float: left;
+	width: 90% !important;
+}
+body.editing .something .helptooltip {
+	float: right;
+	position: relative;
+	top: 10px;
+}
+
+body.editing .topics ul.section .editing_move.moodle-core-dragdrop-draghandle {
+cursor:move;
+z-index:9;
+}
+
+.section.sortable .activity .spinner {
+    left: 50%;
+    margin-left: -10px;
+    position: absolute;
+    vertical-align: text-bottom;
+}
+
+div#dock {
+display: inline !important;
+}
+/*End AJ CSS*/
+
+
+.alert-error
+{
+    margin: 10px 0 10px 0;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.session_confirm #notice {
+    width: 100%;
+    display: inline-block;
+}
+
+.session_confirm .buttons {
+   float: left; 
+}
+
+.session_confirm .buttons .singlebutton input
+ {
+    background: #0070c0 none repeat scroll 0 0 !important;
+    border: medium none !important;
+    border-radius: 0 !important;
+    color: #fff !important;
+    line-height: 22px !important;
+    margin-left: 0 !important;
+    margin-right: 10px !important;
+    padding: 6px 14px !important;
+    text-shadow: none !important;
+    font-size: 13px !important;
+}
+
+.session_confirm .buttons .singlebutton input:hover, .session_confirm .buttons .singlebutton input:active, .session_confirm .buttons .singlebutton input:focus
+{
+    background-color: #262626 !important;
+}
+
+.editing .left.side {
+    display: block;
+    position: absolute;
+    top: 33px;
+    left: 0;
+} 
+
+.editing .something .content h3
+{
+padding-left:25px;
+} 
+.fp-setlicense{
+		display: none;
+	}
+	
+.block_course_overview .categorypath {
+    padding-right: 20px;
+}
+
+.nav-section-nested-list li a {
+    width: 300px;
+}
+
+

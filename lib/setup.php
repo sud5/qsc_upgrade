@@ -915,9 +915,18 @@ if (!empty($CFG->profilingenabled)) {
 workaround_max_input_vars();
 
 // Process theme change in the URL.
-if (!empty($CFG->allowthemechangeonurl) and !empty($_GET['theme'])) {
+if (!empty($CFG->allowthemechangeonurl)) {
     // we have to use _GET directly because we do not want this to interfere with _POST
-    $urlthemename = optional_param('theme', '', PARAM_PLUGIN);
+
+    if(!empty($_GET['theme'])){
+        $urlthemename = optional_param('theme', '', PARAM_PLUGIN);
+    } else if ($_SERVER['REQUEST_URI'] == '/qsys.php' || $_SERVER['REQUEST_URI'] == '/qsys.php/' || $_SERVER['REQUEST_URI'] == '/qsys.php/?redirect=0'){
+        $urlthemename = 'meline29';
+    } else if (isset($SESSION->theme) && $SESSION->theme != 'adaptable') {
+        $urlthemename = 'adaptable';
+    }
+
+    // $urlthemename = optional_param('theme', '', PARAM_PLUGIN);
     try {
         $themeconfig = theme_config::load($urlthemename);
         // Makes sure the theme can be loaded without errors.

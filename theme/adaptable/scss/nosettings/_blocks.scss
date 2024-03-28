@@ -1,0 +1,153 @@
+//
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+//
+//
+// Adaptable Blocks styles style sheet
+//
+// @package    theme_adaptable
+// @copyright  2021 G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
+// @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+
+.adaptable-block-area {
+    background: #EEE;
+    border: 2px dashed #BFBDBD;
+    display: block;
+    min-height: 50px;
+}
+aside#block-region-side-post{
+section.block_settings{
+.header {
+  background: none #f4f4f4 !important;
+  border: 1px solid #ddd !important;
+    border-bottom-width: 1px !important;
+  .block_action{
+  margin-top: 0px !important;
+  }
+}
+.content {
+  padding: 15px;
+  border: 1px solid #ddd !important;
+    border-top-color: rgb(221, 221, 221) !important;
+    border-top-style: solid !important;
+    border-top-width: 1px !important;
+  border-top: 1px dashed #dcdcdc !important;
+  border-radius: 0 0 4px 4px !important;
+}
+}
+}
+
+.block_settings .header {
+ padding: 10px 0 !important;
+}
+.block .block-hider-show, .block .block-hider-hide {
+ width: auto !important;
+ margin-left: 8px;
+}
+.block .header .block_action {
+ margin-right: 8px !important;
+}
+.block_settings .title h2, .block .title h2 {
+ color: #444 !important;
+ font-size: 1em !important;
+ font-weight: 600 !important;
+ line-height: 20px !important;
+ margin: 0 !important;
+ padding: 0 10px !important;
+ text-shadow: none !important;
+ text-transform: uppercase !important;
+}
+.showblockicons .block_settings.block .header .title h2:before {
+display:none !important;
+}
+.block_settings .content {
+ padding: 10px !important;
+ margin-top: -2px !important;
+}
+.block_settings ul li p span, .block_settings ul li p.branch a {
+ color: #444 !important;
+}
+.block_settings .block_tree [aria-expanded="true"]:before, .block_navigation .block_tree [aria-expanded="true"]:before {
+ margin-right: 4px !important;
+ display: inline-block;
+ font: normal normal normal 14px/1 FontAwesome;
+ font-size: inherit;
+ text-rendering: auto;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-size: 16px;
+ width: 16px;
+ content: "\f07c " !important;
+color: #999 !important;
+}
+.block_settings .block_tree [aria-expanded="false"]:before, .block_navigation .block_tree [aria-expanded="false"]:before {
+ margin-right: 4px !important;
+ display: inline-block;
+ font: normal normal normal 14px/1 FontAwesome;
+ font-size: inherit;
+ text-rendering: auto;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
+ font-size: 16px;
+ width: 16px;
+ content: "\f07b " !important;
+ color: #999 !important;
+}
+.block_settings ul li a i {
+ color: #999999;
+}
+.block_settings ul li a i.fa.fa-square.navicon {
+ color: #999999;
+ font-size: 8px;
+ width: 10px;
+ vertical-align: middle;
+ height: 12px;
+}
+.block_settings .block_tree li {
+ line-height: 24px !important;
+}
+
+
+
+.block_settings .simplesearchform .btn {
+ border-radius: 0 4px 4px 0 !important;
+ color: #6c757d !important;
+ padding: 0 8px !important;
+ border-color: #b3b3b3 !important;
+}
+.block_settings .simplesearchform .input-group {
+ width: 100% !important;
+}
+.block_settings a:hover, .block_settings a:visited, .block_settings a:focus {
+ box-shadow: none !important;
+ background-color: inherit !important;
+}
+/*aside#block-region-side-post {
+    position: fixed;
+    top: 133px;
+    left: 32px;
+    z-index: 12000;
+    background-color: transparent;
+    //transform: rotateZ(270deg);
+    //margin-top: 105px;
+    .header{
+        //width: 70%;
+    }
+    .content{
+        //transform: rotateZ(90deg);
+        //margin-top: 90px;
+    }
+}*/

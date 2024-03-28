@@ -2442,3 +2442,12 @@ $string['registrationno'] = 'No, I do not wish to receive any emails';
 $string['createuserandpass'] = 'Choose your username and password';
 $string['descriptiona'] = 'Description: {$a}';
 $string['supplyinfo'] = 'More details';
+//Start - Grader dashborad column headigs
+$string['grader_studentname'] = 'Student Name';
+$string['grader_status'] = 'Status';
+$string['grader_coursename'] = 'Course Name';
+$string['grader_grade_view'] = 'Grade / View';
+$string['grader_last_modified'] = 'Last modified (submission)';
+$string['grader_file_submissions'] = 'File submissions';
+$string['grader_grader'] = 'Grader';
+//End - Grader dashborad column headigs

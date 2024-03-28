@@ -1,0 +1,531 @@
+#region-main-box.span12 {
+	border: 1px solid #ddd;
+	margin-bottom: 30px;
+	padding: 0 20px;
+}
+.clasroom-second-part {
+	margin-top: 30px;
+}
+.classroom-third-section-form-start label {
+	cursor: default;
+	display: block;
+	margin-bottom: 30px;
+	width: 100%;
+}
+.classroom-third-section-form-start input {
+	display: block;
+	margin-top: 10px;
+	width: 500px;
+}
+.classroom-third-section-form-start {
+	margin-top: 40px;
+	float: left;
+	width: 100%;
+}
+.classroom-third-section-form-start select {
+	display: block;
+	margin-top: 10px;
+	width: 300px;
+}
+.classroom-whole-section .submit-btn input {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+}
+.classroom-whole-section .submit-btn {
+	margin: 40px 0 30px;
+}
+.classroom-whole-section label {
+	color: #000;
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	line-height: 22px;
+}
+
+.test {
+    float: left;
+    width: 100%;
+}
+.label-width-classroom {
+	float: left;
+    width: 110px;
+}
+.page2_second-section {
+	margin-top: 10px;
+	float: left;
+	width: 100%;
+}
+.address-details-classroom {
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: top;
+}
+.address-details-classroom .intitutionname {
+	display: block;
+	margin-bottom: 5px;
+	color: #000;
+	font-weight: 600;
+}
+.day-date-classroom {
+	display: block;
+	margin-bottom: 5px;
+}
+.time-classroom {
+	display: block;
+	margin-bottom: 5px;
+}
+.classroom-whole-section.page-four4 {
+	display: inline-block;
+	width: 100%;
+	background: #f6f6f6;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+}
+.thumsupimg {
+	float: left;
+	margin-right: 10px;
+}
+.classroom-fourpg-right-part {
+	float: left;
+	margin-top: 30px;
+	width: 72%;
+}
+.rg-sucess-msg {
+	display: block;
+	font-size: 13px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	margin-bottom: 30px;
+}
+.thumsupimg {
+	float: left;
+	text-align: center;
+	width: 25%;
+}
+.rg-information-msg {
+	display: inline-block;
+	margin-bottom: 40px;
+}
+.final-button-classroom div {
+	display: inline-block;
+	margin-right: 10px;
+}
+.classroom-whole-section .submit-btn input:hover {
+	background: #333 none repeat scroll 0 0 !important;
+}
+.page-four4 .returendashboard-btn a, .page-four4 .editregs-btn a {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	line-height: 20px;
+	padding: 6px 14px;
+}
+.page-four4 .returendashboard-btn a:hover, .page-four4 .editregs-btn a:hover {
+	background: #333 none repeat scroll 0 0 !important;
+}
+.classroom-whole-section.page-two2 .fitemtitle label {
+	color: #000;
+	font-size: 12px;
+	font-weight: 500 !important;
+	letter-spacing: 0.5px;
+	line-height: 22px;
+	margin-bottom: 10px !important;
+}
+.classroom-whole-section.page-two2 .fitemtitle {
+	display: block !important;
+	text-align: left !important;
+	width: 100% !important;
+}
+.classroom-whole-section.page-two2 .felement.ftext, .classroom-whole-section.page-two2 .felement.fselect {
+	margin-left: 0 !important;
+}
+.classroom-whole-section.page-two2 input[type="submit"] {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	display: inline;
+	width: auto !important;
+}
+.classroom-whole-section.page-two2 input[type="submit"]:hover {
+	background-color: #262626 !important;
+}
+.classroom-whole-section.page-two2 .fitem.fitem_actionbuttons.fitem_fgroup {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
+	border: medium none !important;
+}
+.classroom-whole-section.page-two2 .fgroup {
+	margin-left: 0 !important;
+}
+.page2_second-section h4 {
+	margin-bottom: 15px !important;
+}
+.classroom-whole-section.page-two2 input {
+	width: 480px !important;
+}
+.classroom-whole-section.page-two2 select {
+	width: 495px !important;
+}
+.classroom-whole-section.page-two2 .fitem.fitem_ftext, .classroom-whole-section.page-two2 .felement.fselect {
+	margin-bottom: 20px;
+}
+.classroom-whole-section.page-two2 .fitem.fitem_actionbuttons.fitem_fgroup {
+	padding: 0 !important;
+	margin-top: 0 !important;
+}
+.classroom-whole-section.page-two1 h6 {
+	margin-bottom: 0;
+}
+.top_text_section p {
+	margin-bottom: 20px;
+}
+.infocom_img {
+	margin: 30px 0;
+}
+.class-room-sessions {
+	margin-top: 40px;
+}
+/*
+.resize-col td {
+    word-break: break-all;
+}
+.resize-col th.header.c0 {
+    width: 13%;
+}
+.resize-col .header.c1 {
+    width: 7%;
+}
+.resize-col th.header.c2 {
+    width: 6%;
+}	
+.resize-col th.header.c3 {
+    width: 11%;
+}
+.resize-col th.header.c4 {
+    width: 9%;
+}
+ .resize-col th.header.c5 {
+    width: 8%;
+}
+.resize-col th.header.c6 {
+    width: 7%;
+}
+.resize-col th.header.c7 {
+    width: 6%;
+}
+.resize-col th.header.c8 {
+    width: 6%;
+}
+.resize-col th.header.c9 {
+    width: 8%;
+}
+.resize-col th.header.c10 {
+    width: 4%;
+}
+.resize-col th.header.c11 {
+    width: 7%;
+}
+.resize-col th.header.c12.lastcol {
+    width: 10%;
+}
+*/
+.tbl_scroll_1, .tbl_scroll_2 {
+    overflow: auto;
+}
+.reserve-btn-seats input[type="submit"] {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	display: inline;
+	margin: 0 0 5px;
+	padding: 8px 30px;
+	width: auto !important;
+	font-size: 15px;
+}
+.reserve-btn-seats input[type="submit"]:hover {
+	background-color: #262626 !important;
+}
+.reserve-btn-seats {
+	display: inline-block;
+	float: right;
+	margin-top: 20px;
+}
+.reserve-btn-seats p {
+	text-align: center;
+}
+.classroom-whole-section.page-two2 .page2_second-section p {
+	display: inline-block;
+}
+.classroom-whole-section.page-two1 .page2_second-section p {
+	display: inline-block;
+}
+.classroom-whole-section.page-two1 .page2_second-section .reserve-btn-seats p {
+	display: inherit;
+	float: none;
+}
+.classroom-whole-section.page-two1 .page2_second-section .reserve-btn-seats a {
+	background: #0070c0 none repeat scroll 0 0;
+	border: medium none;
+	border-radius: 0;
+	color: #fff !important;
+	display: inline-block;
+	font-size: 13px;
+	margin: 0 0 5px;
+	padding: 8px 12px;
+	width: auto;
+}
+.classroom-whole-section.page-two1 .page2_second-section .reserve-btn-seats a:hover {
+	background-color: #262626 !important;
+	color: #fff !important;
+}
+.page2_second-section p img {
+	max-height: 100%;
+	max-width: 100%;
+}
+.page2_second-section.pg_one {
+	border-bottom: 1px solid #ddd;
+	float: left;
+	margin-top: 10px;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+.cancel_form_wrapper .fcontainer .fitem {
+	margin-top: 10px;
+}
+.cancel_form_wrapper .fcontainer .fitem .fitemtitle {
+	width: auto;
+	margin-right: 10px;
+}
+.cancel_form_wrapper .fcontainer .fitem .felement {
+	margin-left: 0;
+}
+.cancel_form_wrapper .fcontainer .fitem .felement input {
+	height: 30px;
+}
+.cancel_form_wrapper .fitem.fitem_actionbuttons.fitem_fgroup {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
+	border: medium none !important;
+	margin-top: 0 !important;
+	padding-top: 10px !important;
+}
+.cancel_form_wrapper .felement.fgroup input[type="submit"] {
+	padding-top: 4px !important;
+}
+.classroom-whole-section.page-two2 a:not(.simple) {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	display: inline;
+	float: left;
+	font-size: 13px;
+	margin-right: 20px;
+	margin-top: 20px;
+	padding: 8px 20px;
+}
+.class-room-sessions.pg_one a {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	display: inline;
+	float: left;
+	font-size: 13px;
+	margin-right: 20px;
+	margin-top: 20px;
+	padding: 8px 20px;
+}
+html body .cancel_form_wrapper div.felement.fgroup input[type="submit"] {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	display: inline;
+	font-size: 14px;
+	margin: 0 0 5px;
+	padding: 5px 10px !important;
+	width: auto !important;
+}
+html body .cancel_form_wrapper div.felement.fgroup input[type="submit"]:hover {
+	background-color: #262626 !important;
+}
+#notice.box.generalbox {
+	display: inline-block;
+	padding: 20px 10px;
+	width: 100%;
+}
+#notice.box.generalbox h5 {
+	font-weight: bold;
+}
+#notice.box.generalbox .singlebutton input[type="submit"] {
+	background: #0070c0 none repeat scroll 0 0 !important;
+	border: medium none !important;
+	border-radius: 0 !important;
+	color: #fff !important;
+	line-height: 20px;
+	padding: 6px 14px;
+	margin-left: 0;
+	margin-right: 10px;
+}
+#notice.box.generalbox .singlebutton input[type="submit"]:hover {
+	background-color: #262626 !important;
+}
+#notice.box.generalbox .singlebutton {
+	float: left;
+	margin-top: 20px;
+}
+
+/*********************************************Only Media Qureies Put Here***********************************/
+
+@media (max-width:980px) {
+/*.address-details-classroom {
+	width: 68%;
+}
+.reserve-btn-seats {
+	float: left;
+	margin-left: 10px;
+}*/
+
+.page2_second-section.pg_one {
+	position: relative;
+}
+.reserve-btn-seats {
+	position: absolute;
+	right: 0;
+	top: 20px;
+}
+}
+
+/*@media (max-width:730px) {
+.address-details-classroom {
+	width: 100%;
+}
+}*/
+
+
+@media (max-width:680px) {
+.address-details-classroom {
+	width: 100%;
+}
+.reserve-btn-seats {
+	position: static;
+	float: left;
+}
+}
+
+@media (max-width:580px) {
+.address-details-classroom {
+	margin-left: 0;
+	margin-top: 20px;
+	display: block;
+}
+.classroom-whole-section.page-two2 input {
+	width: 100% !important;
+	margin-top: 0 !important;
+}
+.classroom-whole-section.page-two2 select {
+	width: 100% !important;
+	margin-top: 0 !important;
+}
+.classroom-whole-section.page-two2 .fitem.fitem_actionbuttons.fitem_fgroup {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
+	border: medium none !important;
+	padding: 0 !important;
+}
+}
+
+
+/*********************************************Only Media Qureies Put Here***********************************/
+.fp-setlicense{
+		display: none;
+}
+
+/*sonali***css for 201*/
+.threecol{
+	width: 27%;
+    float: left;
+    margin: 0 0 0 5%;
+}
+
+.threecol h4{
+	font-weight: bold;
+	font-size:18px;
+	text-align: center;
+}
+.threecol .icon{
+	text-align:center;
+	margin:15px auto;	
+	height: 102px;
+}
+.threecol .icon img{
+	max-width:100%;
+}
+.threecol ul{
+	margin:0;
+	padding:0;
+}
+.gray-banner{
+	text-align: center;
+    margin: 50px auto;
+    padding: 20px 30px;
+    background: #ddd;
+    width: 60%;
+
+}
+.gray-banner h4{
+	font-weight: bold;
+	font-size: 18px;
+}
+.threecol ul li{
+	display: inline-block;
+    padding: 2px 2px 2px 10px;
+    /* line-height: 24px; */
+    /* list-style-type: disc; */
+    position: relative;
+}
+.threecol ul li:before{
+  content: "•";
+  position: absolute;
+  top: 0px;
+  left: 0;
+}
+/*Ends*/
+
+
+/*sonali***css for 201*/
+@media (max-width:768px) {
+	.threecol{
+		width: 80%;
+    display: block;
+    float: none;
+    margin: 0 auto;
+	}
+	.gray-banner{
+		text-align: center;
+    	margin: 50px auto;
+    	padding: 20px 14px;
+    	background: #ddd;
+    	width: 60%;
+	}
+	h4{
+		line-height: normal;
+	}
+
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  { 
+ .gray-banner h4{
+   font-size:16px;
+   line-height: normal;
+ }
+
+}
+/*Ends*/
+

@@ -828,6 +828,101 @@ function enrol_get_my_courses($fields = null, $sort = null, $limit = 0, $coursei
     return $courses;
 }
 
+//custom fn added for m29
+function enrol_get_my_courses_profile($fields = NULL, $sort = 'visible DESC,sortorder ASC', $limit = 0,$userid) {
+    global $DB;
+
+    // Guest account does not have any courses
+    if (isguestuser() or !isloggedin()) {
+        return(array());
+    }
+
+    $basefields = array('id', 'category', 'sortorder',
+                        'shortname', 'fullname', 'idnumber',
+                        'startdate', 'visible',
+                        'groupmode', 'groupmodeforce', 'cacherev');
+
+    if (empty($fields)) {
+        $fields = $basefields;
+    } else if (is_string($fields)) {
+        // turn the fields from a string to an array
+        $fields = explode(',', $fields);
+        $fields = array_map('trim', $fields);
+        $fields = array_unique(array_merge($basefields, $fields));
+    } else if (is_array($fields)) {
+        $fields = array_unique(array_merge($basefields, $fields));
+    } else {
+        throw new coding_exception('Invalid $fileds parameter in enrol_get_my_courses()');
+    }
+    if (in_array('*', $fields)) {
+        $fields = array('*');
+    }
+
+    $orderby = "";
+    $sort    = trim($sort);
+    if (!empty($sort)) {
+        $rawsorts = explode(',', $sort);
+        $sorts = array();
+        foreach ($rawsorts as $rawsort) {
+            $rawsort = trim($rawsort);
+            if (strpos($rawsort, 'c.') === 0) {
+                $rawsort = substr($rawsort, 2);
+            }
+            $sorts[] = trim($rawsort);
+        }
+        $sort = 'c.'.implode(',c.', $sorts);
+        $orderby = "ORDER BY $sort";
+    }
+
+    $wheres = array("c.id <> :siteid");
+    $params = array('siteid'=>SITEID);
+
+    $coursefields = 'c.' .join(',c.', $fields);
+    $ccselect = ', ' . context_helper::get_preload_record_columns_sql('ctx');
+    $ccjoin = "LEFT JOIN {context} ctx ON (ctx.instanceid = c.id AND ctx.contextlevel = :contextlevel)";
+    $params['contextlevel'] = CONTEXT_COURSE;
+    $wheres = implode(" AND ", $wheres);
+
+    //note: we can not use DISTINCT + text fields due to Oracle and MS limitations, that is why we have the subselect there
+    $sql = "SELECT $coursefields $ccselect
+              FROM {course} c
+              JOIN (SELECT DISTINCT e.courseid
+                      FROM {enrol} e
+                      JOIN {user_enrolments} ue ON (ue.enrolid = e.id AND ue.userid = :userid)
+                     WHERE ue.status = :active AND e.status = :enabled AND ue.timestart < :now1 AND (ue.timeend = 0 OR ue.timeend > :now2)
+                   ) en ON (en.courseid = c.id)
+           $ccjoin
+             WHERE $wheres
+          $orderby";
+    $params['userid']  = $userid;
+    $params['active']  = ENROL_USER_ACTIVE;
+    $params['enabled'] = ENROL_INSTANCE_ENABLED;
+    $params['now1']    = round(time(), -2); // improves db caching
+    $params['now2']    = $params['now1'];
+
+    $courses = $DB->get_records_sql($sql, $params, 0, $limit);
+
+    // preload contexts and check visibility
+    foreach ($courses as $id=>$course) {
+        context_helper::preload_from_record($course);
+        if (!$course->visible) {
+            if (!$context = context_course::instance($id, IGNORE_MISSING)) {
+                unset($courses[$id]);
+                continue;
+            }
+            if (!has_capability('moodle/course:viewhiddencourses', $context)) {
+                unset($courses[$id]);
+                continue;
+            }
+        }
+        $courses[$id] = $course;
+    }
+
+    //wow! Is that really all? :-D
+
+    return $courses;
+}
+
 /**
  * Returns course enrolment information icons.
  *

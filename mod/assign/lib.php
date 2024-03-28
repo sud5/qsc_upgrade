@@ -59,37 +59,6 @@ function assign_delete_instance($id) {
 }
 
 /**
- * This function is used by the reset_course_userdata function in moodlelib.
- * This function will remove all assignment submissions and feedbacks in the database
- * and clean up any related data.
- *
- * @param stdClass $data the data submitted from the reset course.
- * @return array
- */
-function assign_reset_userdata($data) {
-    global $CFG, $DB;
-    require_once($CFG->dirroot . '/mod/assign/locallib.php');
-
-    $status = array();
-    $params = array('courseid'=>$data->courseid);
-    $sql = "SELECT a.id FROM {assign} a WHERE a.course=:courseid";
-    $course = $DB->get_record('course', array('id'=>$data->courseid), '*', MUST_EXIST);
-    if ($assigns = $DB->get_records_sql($sql, $params)) {
-        foreach ($assigns as $assign) {
-            $cm = get_coursemodule_from_instance('assign',
-                                                 $assign->id,
-                                                 $data->courseid,
-                                                 false,
-                                                 MUST_EXIST);
-            $context = context_module::instance($cm->id);
-            $assignment = new assign($context, $cm, $course);
-            $status = array_merge($status, $assignment->reset_userdata($data));
-        }
-    }
-    return $status;
-}
-
-/**
  * This standard function will check all instances of this module
  * and make sure there are up-to-date events created for each of them.
  * If courseid = 0, then every assignment event in the site is checked, else
@@ -143,6 +112,37 @@ function assign_refresh_events($courseid = 0, $instance = null, $cm = null) {
     }
 
     return true;
+}
+
+/**
+ * This function is used by the reset_course_userdata function in moodlelib.
+ * This function will remove all assignment submissions and feedbacks in the database
+ * and clean up any related data.
+ *
+ * @param stdClass $data the data submitted from the reset course.
+ * @return array
+ */
+function assign_reset_userdata($data) {
+    global $CFG, $DB;
+    require_once($CFG->dirroot . '/mod/assign/locallib.php');
+
+    $status = array();
+    $params = array('courseid'=>$data->courseid);
+    $sql = "SELECT a.id FROM {assign} a WHERE a.course=:courseid";
+    $course = $DB->get_record('course', array('id'=>$data->courseid), '*', MUST_EXIST);
+    if ($assigns = $DB->get_records_sql($sql, $params)) {
+        foreach ($assigns as $assign) {
+            $cm = get_coursemodule_from_instance('assign',
+                                                 $assign->id,
+                                                 $data->courseid,
+                                                 false,
+                                                 MUST_EXIST);
+            $context = context_module::instance($cm->id);
+            $assignment = new assign($context, $cm, $course);
+            $status = array_merge($status, $assignment->reset_userdata($data));
+        }
+    }
+    return $status;
 }
 
 /**

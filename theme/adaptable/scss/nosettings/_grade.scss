@@ -1,0 +1,126 @@
+//
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+//
+//
+// Adaptable Grade override styles style sheet
+//
+// @package    theme_adaptable
+// @copyright  2021 G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
+// @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+
+.gradereport-grader-table img {
+    max-width: none;
+}
+
+.path-grade-report-grader #region-main {
+    min-width: auto;
+}
+#page-mod-assign-grading{
+.gradingtable{
+tr th:first-child {
+  width: 5%;
+}
+.moodle-actionmenu {
+    position: relative;
+}
+.moodle-actionmenu[data-enhanced] .menu {
+    display: none;
+
+}
+.moodle-actionmenu[data-enhanced].show .menu {
+    display: block;
+    position: absolute;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 5px 5px 20px 0 #666;
+    -moz-box-shadow: 5px 5px 20px 0 #666;
+    box-shadow: 5px 5px 20px 0 #666;
+top: 30px;
+}
+.menu {
+    padding:0;
+}
+.menu li{
+    list-style: none;
+line-height: 24px;
+}
+.menu li a {
+    color: #000;
+}
+.menubar {
+    padding: 0;
+}
+.menubar li {
+    list-style: none;
+}
+
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 4px solid #07d;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    content: "";
+}
+
+.moodle-actionmenu[data-enhance] .toggle-display.textmenu .caret {
+    margin-top: 8px;
+    margin-left: 2px;
+    border-top-color: #07d !important;
+}
+
+}
+
+}
+#page-mod-assign-grader,#page-mod-assign-grade{
+#fitem_id_speedtext{
+.felement{
+margin-left: 245px !important;
+.speedTextButton{
+    background: #fff none;
+    text-shadow: none;
+    border: 1px solid #c6c6c6;
+    box-shadow: none;
+    padding: 6px 14px;
+    opacity: 1;
+    color: #333 !important;
+}
+.speedTextButton:hover{
+color: #fff !important;
+}
+}
+}
+input#id_savegrade,input#id_cancelbutton{
+background: #fff none;
+    text-shadow: none;
+    border: 1px solid #c6c6c6;
+    box-shadow: none;
+    padding: 6px 14px;
+    opacity: 1;
+    color: #333 !important;
+}
+input#id_savegrade:hover,input#id_cancelbutton:hover,
+input#id_savegrade:focus,input#id_cancelbutton:focus{
+color: #fff !important;
+}
+}

@@ -70,7 +70,9 @@ if (!defined('PDF_CUSTOM_FONT_PATH')) {
 
 if (!defined('PDF_DEFAULT_FONT')) {
     /** Default font to be used. */
-    define('PDF_DEFAULT_FONT', 'FreeSerif');
+    /* US #830 start */
+    define('PDF_DEFAULT_FONT', 'futurahemapro');
+    /* US #830 end */
 }
 
 /** tell tcpdf it is configured here instead of in its own config file */
@@ -98,7 +100,8 @@ function tcpdf_init_k_font_path() {
             //   regular, bold, italic, etc.
 
             // Check for some standard font files if present and if not do not use the custom path.
-            $somestandardfiles = array('courier',  'helvetica', 'times', 'symbol', 'zapfdingbats', 'freeserif', 'freesans');
+            //US #830 freeserif fontname from the below
+            $somestandardfiles = array('courier',  'helvetica', 'times', 'symbol', 'zapfdingbats', 'freesans', 'droidsansfallback','kozgopromedium');
             $missing = false;
             foreach ($somestandardfiles as $file) {
                 if (!file_exists(PDF_CUSTOM_FONT_PATH . $file . '.php')) {

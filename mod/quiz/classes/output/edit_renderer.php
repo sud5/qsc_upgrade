@@ -187,8 +187,9 @@ class edit_renderer extends \plugin_renderer_base {
         $output .= html_writer::input_hidden_params($pageurl);
         $output .= html_writer::tag('label', get_string('maximumgrade') . ' ',
                 ['for' => 'inputmaxgrade']);
+         //Customization for readonly field make true
         $output .= html_writer::empty_tag('input', ['type' => 'text', 'id' => 'inputmaxgrade',
-                'name' => 'maxgrade', 'size' => ($structure->get_decimal_places_for_grades() + 2),
+                'name' => 'maxgrade', 'readonly'=>true, 'size' => ($structure->get_decimal_places_for_grades() + 2),
                 'value' => $structure->formatted_quiz_grade(),
                 'class' => 'form-control']);
         $output .= html_writer::empty_tag('input', ['type' => 'submit', 'class' => 'btn btn-secondary ml-1',
@@ -352,6 +353,7 @@ class edit_renderer extends \plugin_renderer_base {
      * @return string HTML to output.
      */
     public function total_marks($quiz) {
+        //Commented total marks span attr
         $totalmark = html_writer::span(quiz_format_grade($quiz, $quiz->sumgrades), 'mod_quiz_summarks');
         return html_writer::tag('span',
                 get_string('totalmarksx', 'quiz', $totalmark),
@@ -1124,7 +1126,8 @@ class edit_renderer extends \plugin_renderer_base {
                 'instancemaxmark decimalplaces_' . $structure->get_decimal_places_for_question_marks(),
                 ['title' => get_string('maxmark', 'quiz')]);
 
-        $output .= html_writer::span(
+        //Customization comment below editable section for marks
+        /*$output .= html_writer::span(
             html_writer::link(
                 new \moodle_url('#'),
                 $this->pix_icon('t/editstring', '', 'moodle', ['class' => 'editicon visibleifjs', 'title' => '']),
@@ -1134,7 +1137,7 @@ class edit_renderer extends \plugin_renderer_base {
                     'title' => get_string('editmaxmark', 'quiz'),
                 ]
             )
-        );
+        );*/
         return html_writer::span($output, 'instancemaxmarkcontainer');
     }
 

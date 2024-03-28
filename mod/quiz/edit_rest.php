@@ -164,10 +164,21 @@ switch($requestmethod) {
                             }
                         }
                         quiz_delete_previews($quiz);
+                        
+                        //Customization for average set again if any question deleted
+                        //Customisation Starts
+                        $cnt = $DB->count_records('quiz_slots', array("quizid" => $quiz->id));
+                        if ($cnt != 0) {
+                            // average
+                            $maxmark = 100 / $cnt;
+                            $DB->execute("UPDATE `mdl_quiz_slots` SET `maxmark` = '" . $maxmark . "' WHERE `mdl_quiz_slots`.`quizid` = ?", array($quiz->id));
+                        }
+                        //Customisation Ends
+                        
                         $gradecalculator->recompute_quiz_sumgrades();
 
                         $result = ['newsummarks' => quiz_format_grade($quiz, $quiz->sumgrades),
-                                'deleted' => true, 'newnumquestions' => $structure->get_question_count()];
+                                'deleted' => true, 'maxmark' => $maxmark, 'newnumquestions' => $structure->get_question_count()];
                         break;
 
                     case 'updatedependency':

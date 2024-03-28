@@ -413,6 +413,196 @@ function resize_image_from_image($original, $imageinfo, $width, $height, $forcec
     return $data;
 }
 
+
+// - - - - - - - - - - -Badge Image Crop Error - - - - -  - //
+function process_badge_icon($context, $component, $filearea, $itemid, $originalfile, $preferpng = false) {
+    global $CFG;
+
+    if (!is_file($originalfile)) {
+        return false;
+    }
+
+    $imageinfo = getimagesize($originalfile);
+    $imagefnc = '';
+
+    if (empty($imageinfo)) {
+        return false;
+    }
+
+    $image = new stdClass();
+    $image->width  = $imageinfo[0];
+    $image->height = $imageinfo[1];
+    $image->type   = $imageinfo[2];
+
+    $t = null;
+    switch ($image->type) {
+        case IMAGETYPE_GIF:
+            if (function_exists('imagecreatefromgif')) {
+                $im = imagecreatefromgif($originalfile);
+            } else {
+                debugging('GIF not supported on this server');
+                return false;
+            }
+            // Guess transparent colour from GIF.
+            $transparent = imagecolortransparent($im);
+            if ($transparent != -1) {
+                $t = imagecolorsforindex($im, $transparent);
+            }
+            break;
+        case IMAGETYPE_JPEG:
+            if (function_exists('imagecreatefromjpeg')) {
+                $im = imagecreatefromjpeg($originalfile);
+            } else {
+                debugging('JPEG not supported on this server');
+                return false;
+            }
+            // If the user uploads a jpeg them we should process as a jpeg if possible.
+            if (!$preferpng && function_exists('imagejpeg')) {
+                $imagefnc = 'imagejpeg';
+                $imageext = '.jpg';
+                $filters = null; // Not used.
+                $quality = 90;
+            }
+            break;
+        case IMAGETYPE_PNG:
+            if (function_exists('imagecreatefrompng')) {
+                $im = imagecreatefrompng($originalfile);
+            } else {
+                debugging('PNG not supported on this server');
+                return false;
+            }
+            break;
+        default:
+            return false;
+    }
+
+    // The conversion has not been decided yet, let's apply defaults (png with fallback to jpg).
+    if (empty($imagefnc)) {
+        if (function_exists('imagepng')) {
+            $imagefnc = 'imagepng';
+            $imageext = '.png';
+            $filters = PNG_NO_FILTER;
+            $quality = 1;
+        } else if (function_exists('imagejpeg')) {
+            $imagefnc = 'imagejpeg';
+            $imageext = '.jpg';
+            $filters = null; // Not used.
+            $quality = 90;
+        } else {
+            debugging('Jpeg and png not supported on this server, please fix server configuration');
+            return false;
+        }
+    }
+
+
+    $im1 = imagecreate($image->width, $image->height);
+    $im2 = imagecreate($image->width, $image->height);
+    $im3 = imagecreate(512, 512);
+
+    $cx = $image->width / 2;
+    $cy = $image->height / 2;
+
+    if ($image->width < $image->height) {
+        $half = floor($image->width / 2.0);
+    } else {
+        $half = floor($image->height / 2.0);
+    }
+    $originalwidth = $image->width;
+    $originalheight = $image->height;
+    $dstx = floor(($image->width - $image->width) / 2);
+    $dsty = floor(($image->height - $image->height) / 2);
+
+    imagecopybicubic($im1, $im, $dstx, $dsty, 0, 0, $originalwidth, $originalheight, $originalwidth, $originalheight);
+    imagecopybicubic($im2, $im, $dstx, $dsty, 0, 0, $originalwidth, $originalheight, $originalwidth, $originalheight);
+    imagecopybicubic($im3, $im, $dstx, $dsty, 0, 0, 512, 512, $originalwidth, $originalheight);
+
+    //imagecopybicubic($im1, $im, 0, 0, $cx - $half, $cy - $half, $image->width, $image->height, $image->width *2, $image->height *2);
+    //imagecopybicubic($im2, $im, 0, 0, $cx - $half, $cy - $half, $image->width, $image->height, $image->width*2 , $image->height *2);
+    //imagecopybicubic($im3, $im, 0, 0, $cx - $half, $cy - $half, 512, 512, $half * 2, $half * 2);
+
+    $fs = get_file_storage();
+
+    $icon = array('contextid'=>$context->id, 'component'=>$component, 'filearea'=>$filearea, 'itemid'=>$itemid, 'filepath'=>'/');
+
+    ob_start();
+    if (!$imagefnc($im1, NULL, $quality, $filters)) {
+        // keep old icons
+        ob_end_clean();
+        return false;
+    }
+    $data = ob_get_clean();
+    imagedestroy($im1);
+    $icon['filename'] = 'f1'.$imageext;
+    $fs->delete_area_files($context->id, $component, $filearea, $itemid);
+    $file1 = $fs->create_file_from_string($icon, $data);
+
+    ob_start();
+    if (!$imagefnc($im2, NULL, $quality, $filters)) {
+        ob_end_clean();
+        $fs->delete_area_files($context->id, $component, $filearea, $itemid);
+        return false;
+    }
+    $data = ob_get_clean();
+    imagedestroy($im2);
+    $icon['filename'] = 'f2'.$imageext;
+    $fs->create_file_from_string($icon, $data);
+
+    ob_start();
+    if (!$imagefnc($im3, NULL, $quality, $filters)) {
+        ob_end_clean();
+        $fs->delete_area_files($context->id, $component, $filearea, $itemid);
+        return false;
+    }
+    $data = ob_get_clean();
+    imagedestroy($im3);
+    $icon['filename'] = 'f3'.$imageext;
+    $fs->create_file_from_string($icon, $data);
+
+    return $file1->get_id();
+}
+
+//--- - - - - - - - - Start -Badges Zip File Feature Request - Nav- --  - - -//
+function process_badge_icon_zipfile($context, $component, $filearea, $itemid, $originalfile, $fextenion) {
+    global $CFG;
+
+    if (!is_file($originalfile)) {
+        return false;
+    }
+
+    $fs = get_file_storage();
+
+    $data = file_get_contents($originalfile);
+
+    $fileinfo = array(
+        'contextid' => $context->id, // ID of context
+        'component' => $component, // usually = table name
+        'filearea' => $filearea,     // usually = table name
+        'itemid' => $itemid,   // usually = ID of row in table
+        'filepath' => '/',           // any path beginning and ending in /
+        'filename' => 'f1.'.$fextenion); // any filename
+
+    $file = $fs->get_file($fileinfo['contextid'], $fileinfo['component'], $fileinfo['filearea'],
+            $fileinfo['itemid'], $fileinfo['filepath'], $fileinfo['filename']);
+
+    // Delete it if it exists
+    if ($file) {
+        $file->delete();
+    }
+
+    $file = $fs->create_file_from_string($fileinfo, $data);
+    $file = $fs->get_file($fileinfo['contextid'], $fileinfo['component'], $fileinfo['filearea'],
+                          $fileinfo['itemid'], $fileinfo['filepath'], $fileinfo['filename']);
+
+    // Read contents
+    if ($file) {
+      $contents = $file->get_content();
+      //var_dump($contents);
+    }
+    //exit("Call 33");
+    return $file->get_id();
+}
+//--- - - - - - - - - END -Badges Zip File Feature Request - Nav- --  - - -//
+
 /**
  * Generates a thumbnail for the given image
  *

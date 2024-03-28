@@ -117,3 +117,86 @@ $string['subplugintype_booktool_plural'] = 'Book tools';
 $string['removeallbooktags'] = 'Remove all book tags';
 $string['tagarea_book_chapters'] = 'Book chapters';
 $string['tagsdeleted'] = 'Book tags have been deleted';
+//2.9 version lang variables are added here
+$string['displaytime'] = 'Display Time';
+$string['headingExitExamPopUp'] = 'One More Step';
+//New modules added and Renewal Certification Process - START BY PAWAN
+//$string['summaryExitExamPopUp'] = 'Congratulations, you have completed the necessary assessments for this Course. The last thing you need to do is to successfully complete the exit exam for this course.';
+
+$string['summaryExitExamPopUp'] = 'Congratulations, you have completed the necessary assessments for this Course. Your final task is to successfully complete the exit exam for this course.';
+
+//New modules added and Renewal Certification Process - END BY PAWAN
+
+$string['assessment'] = 'Assessment';
+$string['cthumbnail'] = 'Current Thumbnail';
+$string['ccollapse'] = 'Collapse all';
+$string['cexpand'] = 'Expand all';
+$string['csearchresult'] = 'Close Search Results';
+/* ======== New modules added and Renewal Certification Process - START BY PAWAN ===================  */
+
+//$string['crenewexp'] = 'Its time to renew your certification. One or more modules have changed since you certified on ';
+
+$string['crenewexp'] = 'It’s time to renew your certification. One or more modules have changed since you received your certification on ';
+
+//$string['crenewmodules'] = 'Please complete the new modules with the <span class="span-notice-in-process"></span> icon, including retaking any quizzes.You will not need to resubmit a new final exam design.';
+$string['crenewmodules'] = 'Please complete the new modules marked with the <span class="span-notice-in-process"></span> icon. You will not need to resubmit a new final exam design.';
+
+/* ======== New modules added and Renewal Certification Process - END BY PAWAN ===================  */
+
+$string['crenewcert'] = 'Renew Your Certification';
+$string['ccongcourse'] = 'Congratulations, you have sucessfully completed this Course';
+$string['ccertsteps'] = 'Certification Steps Completed';
+$string['cfinalexamcomp'] = 'FINAL EXAM COMPLETED';
+$string['cfinalexamfor'] = 'the Final Exam for';
+/* ======== New modules added and Renewal Certification Process - START BY PAWAN ===================  */
+
+//$string['cdownloadcert'] = 'Download your Certificate for Completion';
+$string['cdownloadcert'] = 'Download your Certificate';
+
+/* ======== New modules added and Renewal Certification Process - END BY PAWAN ===================  */
+$string['cdowncert'] = 'Download Certificate';
+$string['cdownnewcert'] = 'Download Your new Certificate';
+$string['cdownnewcertcontent'] = '<strong>Congratulations, you have completed {$a}.</strong> <br/>On behalf of the entire QSC Training and Education department, we would like to congratulate you on the successful completion of {$a} !'; // added by lakhan for certificate pop-up
+
+$string['cproceedfinal'] = 'Proceed to the Final Exam Page';
+/* ======== New modules added and Renewal Certification Process - START BY PAWAN ===================  */
+//$string['cgeneratecert'] = 'Generating certificate after refresh same page in between 10-15 minutes, Download link is loading now...';
+$string['cgeneratecert'] = 'A download link containing your certificate is in process. Please refresh the page after a few minutes.';
+/* ======== New modules added and Renewal Certification Process - END BY PAWAN ===================  */
+
+
+$string['ccongsasscourse'] = 'Congratulations, you have sucessfully completed the necessary assesments for this Course';
+$string['ccongs'] = 'Congratulations,';
+$string['cnotcompcourse'] = 'You have not sucessfully completed the Final Exam for this Course';
+$string['cfinalexamon'] = 'Final Exam On Process';
+$string['cgetcert'] = 'Get Certificate';
+$string['newlyupdatedquiz'] = 'Newly Updated Quiz';
+$string['testrespass'] = 'Test Result Passed';
+$string['testresfail'] = 'Test Result Failed';
+$string['newmodadd'] = 'NEW MODULES ADDED';
+$string['proceedfinalexam'] = 'Proceed to the Final Exam Page';
+$string['proceedtofinalexam'] = 'proceed to final exam';
+
+//New modules added and Renewal Certification Process - START BY PAWAN
+
+/*$string['renewexam'] = 'Its time to renew your certification.<br>
+        One or more modules have changed since you certified on <b> "{$a}"</b>.<br>
+        Please complete the new modules with the <span class="span-notice-in-process"></span> icon, including retaking any quizzes.<br>
+        You will not need to resubmit a new final exam design.';*/
+
+$string['renewexam'] = 'It’s time to renew your certification.<br>
+        One or more modules have changed since you received your certification on <b> {$a}</b>.<br>
+        Please complete the new modules marked with the <span class="span-notice-in-process"></span> icon.<br>
+        You will not need to resubmit a new final exam design.';
+
+//New modules added and Renewal Certification Process - END BY PAWAN
+
+$string['newmodupdatedesc'] = '<p style="text-align:justify;">
+One or more modules in this course has been updated.  New modules are signified by a  <span class="star-img"></span> icon. </p>
+              <p> When your certification expires on "{$a}", you will be required to complete the updated curriculum.</p>';
+$string['disabledproceedexamstatus'] = 'You must first pass all course assessments to proceed';
+//Certificate Dates code start
+$string['crenewcourse'] = 'If you have completed the new modules, your certificate will be automatically renewed on the day of its expiration.';
+$string['certexpire'] = "Your Certificate Expired.";
+$string['creprintcert'] = 'Reprint Certificate';
+//Certificate Dates code end

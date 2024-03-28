@@ -834,6 +834,16 @@ abstract class moodleform {
             if (!$files = $fs->get_area_files($context->id, 'user', 'draft', $draftid, 'id DESC', false)) {
                 return false;
             }
+
+            //Customization Sameer Start
+            foreach ($files as $fileo) {
+            $fileurl = moodle_url::make_pluginfile_url($fileo->get_contextid(), $fileo->get_component(), $fileo->get_filearea(), $fileo->get_itemid(), $fileo->get_filepath(), $fileo->get_filename());
+                       $rt = $fileurl;
+                }
+
+            $_SESSION['lpath'] = $rt;
+            //Customization Ends
+
             $file = reset($files);
 
             return $file->copy_content_to($pathname);

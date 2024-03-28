@@ -74,7 +74,8 @@ var CSS = {
         SELECTALL: '#questionselectall',
         SHOW: 'a.' + CSS.SHOW,
         SLOTLI: 'li.slot',
-        SUMMARKS: '.mod_quiz_summarks'
+        SUMMARKS: '.mod_quiz_summarks',
+        MAXMARK: '.instancemaxmark'
     },
     BODY = Y.one(document.body);
 
@@ -142,8 +143,14 @@ Y.extend(TOOLBOX, Y.Base, {
 
                     // Run the callback if we have one.
                     if (responsetext.hasOwnProperty('newsummarks')) {
+                        //Y.one(SELECTOR.SUMMARKS).setHTML(responsetext.newsummarks);
                         Y.one(SELECTOR.SUMMARKS).setHTML(responsetext.newsummarks);
                     }
+                    //Customization start added if condition
+                    if (responsetext.hasOwnProperty('maxmark')) {
+                        Y.all(SELECTOR.MAXMARK).setHTML(responsetext.maxmark);
+                    }
+                    //Customisation end if condition
                     if (responsetext.hasOwnProperty('newnumquestions')) {
                         Y.one(SELECTOR.NUMQUESTIONS).setHTML(
                                 M.util.get_string('numquestionsx', 'quiz', responsetext.newnumquestions)

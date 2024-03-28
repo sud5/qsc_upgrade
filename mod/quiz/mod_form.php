@@ -401,6 +401,7 @@ class mod_quiz_mod_form extends moodleform_mod {
             } else {
                 $mform->setDefault($field . $whenname, 0);
             }
+            $mform->setDefault("attempt" . $whenname, 0);
         }
 
         if ($whenname != 'during') {
@@ -612,6 +613,17 @@ class mod_quiz_mod_form extends moodleform_mod {
             ['group' => 'cattempts']);
         $mform->disabledIf('completionattemptsexhausted', 'completionpassgrade', 'notchecked');
         $items[] = 'completionattemptsexhausted';
+        
+        //Customization for default settings
+        $group = [];
+        $group[] = $mform->createElement('advcheckbox', 'completionpass', null, get_string('completionpass', 'quiz'),
+        array('group' => 'cpass'), 1);
+        
+	$mform->setDefault('completionpass', 1);
+        $mform->addGroup($group, 'completionpassgroup', get_string('completionpass', 'quiz'), ' &nbsp; ', false);
+        $mform->addHelpButton('completionpassgroup', 'completionpass', 'quiz');
+        $items[] = 'completionpassgroup';
+        //Customization ends
 
         $group = [];
         $group[] = $mform->createElement('checkbox', 'completionminattemptsenabled', '',

@@ -1,0 +1,218 @@
+/*For News Page Only*/
+.maincontent .no-overflow {
+	width: 100%;
+	box-sizing: border-box;
+}
+div[role="main"] h2:first-of-type, .backup-restore .backup-section > h2.header, .backup-restore .backup-section .backup-sub-section h3 {
+	margin: 0;
+}
+div[role="main"] .content h2 img, #page-backup-restore div[role="main"] h2 img {
+	/*height: 100% !important;*/
+	margin-top: 10px;
+}
+table.forumheaderlist th, table.forumheaderlist td {
+	border: 1px solid #eeeeee !important;
+	box-sizing: border-box;
+	float: none !important;
+	padding: 10px !important;
+}
+#page-navbar_nav .breadcrumb-button {
+	margin-top: 8px;
+}
+
+table#form td.submit, .form-buttons, .path-admin .buttons, #fitem_id_submitbutton, .fp-content-center form + div, div.backup-section + form, #fgroup_id_buttonar
+{
+background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+border: medium none;
+float: left;
+margin: 20px 20px 20px 0;
+padding: 0;
+}
+
+.mform .fdescription.required {
+    float: left;
+    margin: 30px 0 0;
+}
+  
+/*End Css*/
+
+
+/*Traning PG*/
+
+.trainingpg .first
+{
+float:left;
+}
+
+.trainingpg .last
+{
+float:left;
+}
+
+/*End Css*/
+
+
+
+
+/*********************************Media Queries Start here***********************/
+
+@media (max-width:900px) {
+div[role="main"] {
+	width: 100% !important;
+	padding: 0 10px !important;
+	margin: 0 !important;
+	box-sizing: border-box !important;
+}
+.breadcrumb-nav {
+	float: none;
+	margin: 0 auto !important;
+	text-align: center;
+	width: 100%;
+}
+h1 {
+	font-size: 20px;
+	line-height: 28px;
+}
+h3.discussionname {
+	margin-bottom: 20px;
+	margin-top: 10px;
+	text-align: center;
+}
+.path-mod-forum .discussionsubscription {
+	float: none !important;
+	margin: 0 auto 10px;
+	text-align: center;
+	width: 100%;
+}
+.discussion-nav.clearfix {
+	float: none !important;
+	margin-bottom: 20px;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	margin-top: 0 !important;
+	text-align: center;
+	width: 100%;
+}
+.discussion-nav.clearfix li {
+	float: none !important;
+}
+#page-mod-forum-discuss .discussioncontrols {
+	margin: 0;
+	text-align: center;
+	width: 100%;
+}
+#page-mod-forum-discuss .discussioncontrols .discussioncontrol {
+	float: none;
+	width: auto !important;
+}
+.singleselect {
+	margin: 0 0 5px !important;
+}
+.navbar_nav.clearfix {
+	padding-bottom: 10px !important;
+}
+.invisiblefieldset {
+	margin-left: 0 !important;
+}
+.breadcrumb-button {
+	text-align: center;
+	width: 100%;
+}
+}
+
+ @media (max-width:768px) {
+ 
+.path-mod-forum .table-cover-section .forumheaderlist
+{
+max-width: inherit;
+width: 800px !important;	
+}
+
+.table-cover-section {
+overflow: scroll !important;
+width: 100%;
+}
+
+.path-mod-forum .table-cover-section .forumheaderlist th, .path-mod-forum .table-cover-section .forumheaderlist td
+{
+width:auto !important;
+}
+
+.table-cover-section table.forumheaderlist td.picture {
+    display: block !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+}
+
+@media (max-width:767px) {
+/*Traning PG*/
+
+.trainingpg .first
+{
+width:100% !important;
+}
+
+.trainingpg .last
+{
+width:100% !important;
+}
+/*End Css*/
+}
+
+
+ @media (max-width:640px) {
+.mform .fdescription.required {
+	margin-left: 0;
+	text-align: center;
+}
+.filemanager .fp-restrictions {
+	margin-bottom: 10px;
+	text-align: left;
+}
+.felement.fcheckbox input[type="checkbox"] {
+	margin: 0;
+	position: relative;
+	top: -6px;
+}
+
+table#form td.submit, .form-buttons, .path-admin .buttons, #fitem_id_submitbutton, .fp-content-center form + div, div.backup-section + form, #fgroup_id_buttonar
+{
+float: none;
+margin: 10px auto !important;
+text-align: center;
+width: 100%;
+}
+
+
+.mform .fdescription.required {
+    margin: 0;
+    text-align: center !important;
+    width: 100%;
+}
+legend
+{
+font-size:18px;
+}
+
+}
+
+
+ @media (max-width:480px) {
+#searchforums {
+	padding: 6px 8px !important;
+	font-size: 10px !important;
+}
+fieldset #id_subject {
+	width: 100%;
+	box-sizing: border-box;
+	height: 30px;
+}
+.dndupload-message {
+	font-size: 10px;
+}
+.mform .fdescription.required {
+    font-size: 11px;
+}
+}

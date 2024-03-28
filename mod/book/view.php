@@ -1,4 +1,16 @@
-<?php
+<style>
+.modal-dialog {
+    transform: inherit !important;
+}
+.modal-dialog .modal-content {
+    border-radius: 4px !important;
+    border: 0 none !important;
+}
+.modal-header {
+    display: block !important;
+    border-bottom: 1px solid #e9e9e9 !important;
+}
+</style><?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,6 +44,7 @@ $bid       = optional_param('b', 0, PARAM_INT);         // Book id
 $chapterid = optional_param('chapterid', 0, PARAM_INT); // Chapter ID
 $edit      = optional_param('edit', -1, PARAM_BOOL);    // Edit mode
 
+$pagenum = optional_param('pagenum', 0, PARAM_INT);        //pagenum=1 ID // updated by lakhan
 // =========================================================================
 // security checks START - teachers edit; students view
 // =========================================================================
@@ -47,7 +60,58 @@ if ($id) {
 }
 
 require_course_login($course, true, $cm);
+$isadmin = is_siteadmin($USER);
+//prev-start
+    if(!$isadmin && $USER->usertype != 'mainadmin' && $USER->usertype != 'graderasadmin'){
+    //prev-end
+// Checking with course completion criteria and get course first level id for checking completion
+if($course->category != 0){
+            $coursesData = $DB->get_records('course_completion_criteria', array('course'=>$course->id,'criteriatype'=>8),'','id, course, courseinstance');
 
+ foreach($coursesData as $keyCD){
+if($keyCD->courseinstance != ''){
+ $sql0m421 = 'SELECT *
+                  FROM {course_completions}
+                 WHERE course='.$keyCD->courseinstance.' AND userid ='.$USER->id.' AND timecompleted IS NULL';
+$completionParent = $DB->get_record_sql($sql0m421);
+                    if(is_object($completionParent)){
+                    }
+}
+            }
+        }
+    }
+
+//prev-start
+if((user_has_role_assignment($USER->id,5) != "" || user_has_role_assignment($USER->id,4) != "" || $USER->username == "guest") && $USER->id != 2 && $USER->usertype != 'mainadmin' && $USER->usertype != 'graderasadmin' ){
+//prev-end
+$facetofaceObj = $DB->get_record_sql('SELECT f.id,fsi.sessionid,fss.signupid,fss.statuscode FROM `mdl_facetoface` as f JOIN mdl_facetoface_sessions as fs ON f.id = fs.facetoface JOIN mdl_facetoface_signups as fsi ON fs.id=fsi.sessionid JOIN mdl_facetoface_signups_status as fss ON fsi.id=fss.signupid WHERE f.course=? AND fsi.userid = ? order by fss.timecreated desc LIMIT 0,1', array($course->id, $USER->id));
+//echo "<pre>";print_r($facetofaceObj); exit;
+    if(empty($facetofaceObj) || ($facetofaceObj->statuscode != 70 && $facetofaceObj->statuscode != 60)){
+        $classroomtypeflag=0;
+        require_once('module-lesson-view.php');
+    }
+    else{
+        $rssc3 = $DB->get_record('simplecertificate',array('course'=>$course->id),'id,certexpirydateinyear');
+      //echo "<pre>"; print_r($rs3); exit("rs3");
+        if($rssc3){
+          $sqlsc4 = 'SELECT id, userid, timecreated as timecompletion, timecreatedclassroom
+                          FROM {simplecertificate_issues}
+                         WHERE certificateid='.$rssc3->id.' AND userid ='.$USER->id.' order by id desc';
+          $rssc4 = $DB->get_record_sql($sqlsc4);
+
+//If certificate found means online version should be visible for classroom student
+          $cntFlag=0;
+          if($rssc4){
+            $classroomtypeflag=1;
+            require_once('module-lesson-view.php');
+            $cntFlag=1;
+          }
+}
+        if($cntFlag == 0)
+        require_once('module-lesson-view.php');
+    }
+}
+else{
 $context = context_module::instance($cm->id);
 require_capability('mod/book:read', $context);
 
@@ -119,8 +183,15 @@ if (!$chapterid) {
     book_view($book, $chapter, \mod_book\helper::is_last_visible_chapter($chapter->id, $chapters), $course, $cm, $context);
 
     echo $OUTPUT->header();
-
-    $renderer = $PAGE->get_renderer('mod_book');
+    echo $OUTPUT->heading(format_string($book->name));
+    $cminfo = cm_info::create($cm);
+    $cmcompletion = \core_completion\cm_completion_details::get_instance($cminfo, $USER->id);
+        $activitydates = \core\activity_dates::get_dates_for_module($cminfo, $USER->id);
+        echo $OUTPUT->activity_information($cminfo, $cmcompletion, $activitydates);
+        if ($book->intro) {
+            echo $OUTPUT->box(format_module_intro('book', $book, $cm->id), 'generalbox', 'intro');
+        }
+        $renderer = $PAGE->get_renderer('mod_book');
     $actionmenu = new \mod_book\output\main_action_menu($cm->id, $chapters, $chapter, $book);
     $renderedmenu = $renderer->render($actionmenu);
     echo $renderedmenu;
@@ -153,3 +224,15 @@ if (!$chapterid) {
     echo $renderedmenu;
 }
 echo $OUTPUT->footer();
+}
+//For navigation test
+if($isadmin){ ?>
+<script type="text/javascript">
+    $("#region-main-box").addClass('col-9');
+    $("#region-main-box").removeClass('col-12');
+    $(".block_book_toc").addClass('col-3');
+    $(".block_book_toc").insertAfter("#region-main-box");
+</script>
+<?php
+	//echo '<script src="/theme/meline29/javascript/nav-script.js"></script>';
+} ?>

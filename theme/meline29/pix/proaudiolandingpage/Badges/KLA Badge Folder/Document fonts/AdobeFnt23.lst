@@ -1,0 +1,72 @@
+%!Adobe-FontList 1.23
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:FuturaBT-Book
+FamilyName:Futura Bk BT
+StyleName:Book
+FullName:Futura Book BT
+MenuName:Futura Bk BT
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\KLA Badge Folder\Document fonts\Futura Book font.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:37688
+FileModTime:1469101252
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Futura Book BT
+NameArray:0,Win,1,Futura Bk BT
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:FuturaBT-Medium
+FamilyName:Futura Md BT
+StyleName:Medium
+FullName:Futura Medium BT
+MenuName:Futura Md BT
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\KLA Badge Folder\Document fonts\futura medium bt.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:38764
+FileModTime:1469101254
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Futura Medium BT
+NameArray:0,Win,1,Futura Md BT
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Futura-Bold
+FamilyName:Futura
+StyleName:Bold
+FullName:Futura Bold
+MenuName:Futura
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\KLA Badge Folder\Document fonts\unicode.futurab.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:79538
+FileModTime:1469101252
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Futura Bold
+NameArray:0,Win,1,Futura
+%EndFont
+

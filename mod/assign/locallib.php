@@ -213,6 +213,8 @@ class assign {
      *                      otherwise this class will load one from the context as required.
      */
     public function __construct($coursemodulecontext, $coursemodule, $course) {
+        global $SESSION;
+
         $this->context = $coursemodulecontext;
         $this->course = $course;
 
@@ -227,6 +229,10 @@ class assign {
 
         // Extra entropy is required for uniqid() to work on cygwin.
         $this->useridlistid = clean_param(uniqid('', true), PARAM_ALPHANUM);
+
+        if (!isset($SESSION->mod_assign_useridlist)) {
+            $SESSION->mod_assign_useridlist = [];
+        }
     }
 
     /**
@@ -485,8 +491,8 @@ class assign {
      * @return string - The page output.
      */
     public function view($action='', $args = array()) {
-        global $PAGE;
-
+        global $DB,$CFG,$OUTPUT,$USER,$PAGE;
+         $actualuserid = optional_param('userid',0,PARAM_INT);
         $o = '';
         $mform = null;
         $notices = array();
@@ -579,6 +585,7 @@ class assign {
                     $nextpageparams['action'] = 'grade';
                     $nextpageparams['rownum'] = optional_param('rownum', 0, PARAM_INT) + 1;
                     $nextpageparams['useridlistid'] = optional_param('useridlistid', $this->get_useridlist_key_id(), PARAM_ALPHANUM);
+                    $nextpageparams['userid'] = optional_param('suserid', 0, PARAM_INT);
                 }
             } else if (optional_param('nosaveandprevious', null, PARAM_RAW)) {
                 $action = 'redirect';
@@ -593,9 +600,205 @@ class assign {
             } else if (optional_param('savegrade', null, PARAM_RAW)) {
                 // Save changes button.
                 $action = 'grade';
-                if ($this->process_save_grade($mform)) {
+                /*if ($this->process_save_grade($mform)) { //by defualt 38
                     $action = 'redirect';
                     $nextpageparams['action'] = 'savegradingresult';
+                }*/
+                //echo 'hiii';
+                if ($this->process_save_grade($mform)) {
+                    $ssuserid = optional_param('suserid', 0, PARAM_INT);
+                    //if($ssuserid == 835018814){
+                    // echo $ssuserid; exit("Success");
+                    #828 start
+                    /*require_once($CFG->dirroot . '/lib/sfdclib.php');
+                    $keyCC->course = $this->course->id;
+                    $ssuserid = optional_param('suserid', 0, PARAM_INT);
+                    $ssuser = $DB->get_record('user', array('id'=>$ssuserid));
+                    $key = $ssuser;
+                    $sfdc_contact_id = show_contact_id($ssuser->username);
+                    // $show_sfdc_course = sfdc_show_courses($sfdc_contact_id, $this->course->id);
+                    // echo "\n TestCount4 ".$kj++." \n";
+                    if($show_sfdc_course){
+                        $course_sfdc_id = $show_sfdc_course['records'][0]['Id'];
+                    }else{
+                        $course_sfdc_id='';
+                    }
+                    $sqlsfdc12 = 'SELECT a.id as assignmentid, cm.id, cm.section, cm.instance, a.type FROM {course_modules} cm JOIN {assign} a ON cm.instance=a.id WHERE cm.course = ? AND cm.module = ?';
+
+                    $rscsfdc12 = $DB->get_record_sql($sqlsfdc12, array($this->course->id,  1));
+
+                    if($rscsfdc12->type == "classroom"){
+                        $version = "classroom";
+                    }else{
+                        $version = "online";
+                    }
+                    if($rscsfdc12){
+                        //NM start
+                        $submissionChkQuery = "SELECT id, status, timemodified,userid,assignment FROM {assign_submission} WHERE userid = $ssuserid AND assignment=" . $rscsfdc12->instance . " order by id desc limit 0,1";
+                        $submissionRes = $DB->get_record_sql($submissionChkQuery);
+                    }
+
+                    if(empty($course_sfdc_id) and !empty($sfdc_contact_id)){
+                        //echo "\n TestCount4Check cehk 111  \n";
+                        $dot = date("Y-m-d",$keyCC->timecreated);
+                        //echo "\n TestCount4Check cehk  \n";
+                        $ssname = $ssuser->firstname." ".$ssuser->lastname;
+                       // $course_sfdc_created_id = sfdc_create_course($sfdc_contact_id, format_string($ssname), $this->course->id, $version,$dot);
+                        //echo "\n";
+                        //echo "\n TestCount51 ".$kj++." \n";
+                        //$show_sfdc_course = sfdc_show_courses($sfdc_contact_id, $keyCC->course);
+                                    //$course_sfdc_id = $show_sfdc_course['records'][0]['Id'];
+                    }
+
+                    $sfdc_course_type = $show_sfdc_course['records'][0]["course_version_type__c"];
+
+                    $classFlag=1;
+
+                    $submissionChkQuery22 = "SELECT id, status, timemodified,userid,assignment FROM {assign_submission} WHERE userid = $ssuserid AND status='submitted' and assignment=" . $rscsfdc12->instance . " order by id desc limit 0,1";
+                    $submissionResult22 = $DB->get_record_sql($submissionChkQuery22);
+
+                    if(!empty($submissionResult22)){
+                        $exam_submission_status="Yes";
+                        $exam_time_modified = date('m/d/Y h:i:s',$submissionResult22->timemodified);
+                        date_default_timezone_set('GMT');
+                        $exam_date_modified = date("Y-m-d", $submissionResult22->timemodified);
+                        $exam_date_modified .= "T";
+                        $exam_date_modified .= date("H:i:s", $submissionResult22->timemodified);
+                        $exam_date_modified .= "Z";
+                        date_default_timezone_set('America/Los_Angeles');
+                    }
+                    $submissionChkQuery23 = "SELECT id, status, timemodified,userid,assignment FROM {assign_submission} WHERE userid = $ssuserid AND status='reopened' and assignment=" . $rscsfdc12->instance . " order by id desc limit 0,1";
+                    $submissionResult23 = $DB->get_record_sql($submissionChkQuery23);
+
+                    if(!empty($submissionResult23)){
+                        $exam_submission_status="Revision";
+                        $exam_time_modified = "N/A";
+                        date_default_timezone_set('GMT');
+                        $exam_date_modified = date("Y-m-d", $submissionResult22->timemodified);
+                        $exam_date_modified .= "T";
+                        $exam_date_modified .= date("H:i:s", $submissionResult22->timemodified);
+                        $exam_date_modified .= "Z";
+                        date_default_timezone_set('America/Los_Angeles');
+                    }
+
+                    if(empty($submissionResult23) and empty($submissionResult22)){
+                        $exam_submission_status="No";
+                        $exam_time_modified = "N/A";
+                        // $exam_date_modified = date('Y-m-d', $submissionRes->timemodified);
+                    }
+
+                    $sqlsfdc1 = "SELECT attemptnumber, grade, id FROM {assign_grades} WHERE userid = $ssuserid AND assignment=" .$rscsfdc12->instance . " order by id desc limit 0,1";
+                    $rscsfdc1 = $DB->get_record_sql($sqlsfdc1);
+                    //echo "<pre>"; print_r($rscsfdc1); exit;
+                    if ($rscsfdc1){
+                        if($key->qsc_training_id != ""){
+                            $sfdc_attemptnumber = $rscsfdc1->attemptnumber;
+                        }else{
+                            $sfdc_attemptnumber = $rscsfdc1->attemptnumber + 1;
+                        }
+                        $sfdc_assign_grade = $rscsfdc1->grade;
+                    }else{
+                        $sfdc_attemptnumber = 0;
+                        $sfdc_assign_grade = 0;
+                    }
+
+                    $cm_lms_id = $rscsfdc12->id;
+                    // Get data
+                    //$show_sfdc_exam_id = show_sfdc_exam($course_sfdc_id, $cm_lms_id);
+                    //echo "\n TestCount24 ".$kj++." \n";
+                    $exam_design_attempts = $sfdc_attemptnumber;
+                    $exam_grade = number_format($sfdc_assign_grade, 2);
+                    if($exam_grade >= 70){
+                        $exam_submission_status="Completed";
+                    }
+                    $instructor_feedback = "";
+                    $fchtml="N/A";
+                    if($rscsfdc1->id){
+                        $sqlsfdc123 = "SELECT id,assignment, grade, commenttext FROM {assignfeedback_comments} WHERE assignment =  $rscsfdc12->instance AND grade=" . $rscsfdc1->id . " order by id desc limit 0,1";
+                        $rscsfdc123 = $DB->get_record_sql($sqlsfdc123);
+
+                        //PP7 start
+                        $params12 = array('assignment'=> $rscsfdc12->instance, 'userid'=>$ssuserid);
+                        $grades12 = $DB->get_records('assign_grades', $params12, 'attemptnumber ASC', '*');
+                        $fchtml=0;
+                        if(!empty($grades12)){
+                            $fchtml = "<table border=2 cellpadding=0 cellspacing=0>";
+                            $fchtml .= "<thead><tr>";
+                            $fchtml .= "<th colspan=1 rowspan=1>Attempt Number</th>";
+                            $fchtml .= "<th colspan=1 rowspan=1>Message</th>";
+                            $fchtml .= "<th colspan=1 rowspan=1>Time</th>";
+                            $fchtml .= "</tr></thead><tbody>";
+                            foreach($grades12 as $grade12){
+                                $afc_params = array('grade'=>$grade12->id);
+                                $afcObj = $DB->get_record('assignfeedback_comments', $afc_params, '*');
+                                $fchtml .= "<tr>";
+                                $an = $grade12->attemptnumber + 1;
+                                $fchtml .= "<td>$an</td>";
+                                if($afcObj->commenttext != ''){
+                                    $fchtml .= "<td>".$afcObj->commenttext."</td>";
+                                }else{
+                                    $fchtml .= "<td>Empty</td>";
+                                }
+                                $fchtml .= "<td>".date("m/d/Y h:i:s", $grade12->timecreated)."</td>";
+                                $fchtml .= "</tr>";
+                            }
+                            $fchtml .= "</tbody></table>";
+                        }
+
+                        if($fchtml == 0){
+                            $instructor_feedback = format_string($rscsfdc123->commenttext);
+                        }else{
+                            $instructor_feedback = $fchtml;
+                        }
+                    }else{
+                        $instructor_feedback = "";
+                    }
+                    $instructor_feedback=$fchtml;
+                    //PP7 end
+                    $sec = $DB->get_record_sql('select name from {course_sections} where id=?', array(
+                        $rscsfdc12->section
+                    ));
+                    //$module_exam_name = format_string($sec->name) . " : Classroom";
+                    //New task
+                    $sqlc3 = "SELECT id, fullname FROM {course} WHERE id = $keyCC->course";
+                    $rsc32 = $DB->get_record_sql($sqlc3);
+                    if($version == "classroom"){
+                        $module_exam_name = format_string($rsc32->fullname) . " :: Classroom Exam";
+                    } else{
+                        $module_exam_name = format_string($rsc32->fullname) . " : Online";
+                    }
+                    //New changes dec 2018 start
+                    $sqlSCExam = 'SELECT id, course FROM {simplecertificate} sci WHERE course='.$keyCC->course;
+                    $resSCObjData = $DB->get_record_sql($sqlSCExam);
+                    if(empty($resSCObjData)){
+                        continue;
+                    }
+                    $sqlSCIExam = 'SELECT id, userid, certificateid, timecreated, timeexpired FROM {simplecertificate_issues} sci
+                            WHERE userid='.$ssuserid.' and certificateid='.$resSCObjData->id.' order by userid desc';
+                    $issueCertCompNotiObjExamDatas = $DB->get_record_sql($sqlSCIExam);
+                    if(!empty($issueCertCompNotiObjExamDatas)){
+                        $exam_submission_status="Completed";
+                    }
+                    //New changes dec 2018 END
+                    if (empty($show_sfdc_exam_id)){
+                        // insert
+                        $exam_sfdc_id = sfdc_create_exam($course_sfdc_id, $cm_lms_id, $module_exam_name, $exam_grade, $exam_design_attempts, $exam_time_modified, $instructor_feedback, $exam_submission_status,$sfdc_contact_id,$exam_date_modified, $rscsfdc12->instance, $key->id); ////Task 2524 - passing new argument value
+                        $exam_time_modified = "N/A";
+                        $exam_date_modified=null;
+
+                    }else{
+                        // update
+                        $exam_sfdc_id = sfdc_update_exam($show_sfdc_exam_id, $module_exam_name, $exam_grade, $exam_design_attempts, $exam_time_modified, $instructor_feedback,$exam_submission_status,$sfdc_contact_id,$exam_date_modified,$rscsfdc12->instance, $key->id); ////Task 2524 - passing new argument value
+                        $exam_time_modified = "N/A";
+                        $exam_date_modified=null;
+
+                    } //end else sfdc exam
+                    $instructor_feedback='';*/
+                    #828 end
+
+                    $action = 'redirect';
+                    $nextpageparams['action'] = 'savegradingresult';
+                    $nextpageparams['userid'] = optional_param('suserid', 0, PARAM_INT);
                 }
             } else {
                 // Cancel button.
@@ -650,19 +853,67 @@ class assign {
         } else if ($action == 'gradingpanel') {
             $o .= $this->view_single_grading_panel($args);
         } else if ($action == 'grade') {
-            $o .= $this->view_single_grade_page($mform);
-        } else if ($action == 'viewpluginassignfeedback') {
+            //echo 'ssss';
+            //print_object($USER->usertype);
+            //die;
+            //$o .= $this->view_single_grade_page($mform);
+            //Start - added for grader as admin previledge - lakhan - //prev-start
+            if($USER->usertype == 'grader' || $USER->usertype == 'graderasadmin'){
+                $sqlToGetUserid ="SELECT u.id as userid FROM mdl_assign_graders gr RIGHT JOIN mdl_user u ON u.id = gr.student_id LEFT JOIN mdl_course_modules cm ON gr.exam_id = cm.id AND cm.module =1 LEFT JOIN mdl_assign_submission s ON u.id = s.userid AND s.assignment = cm.instance LEFT JOIN mdl_course c ON c.id = cm.course LEFT JOIN mdl_assign_grades g ON u.id = g.userid AND g.assignment = cm.instance AND g.attemptnumber = s.attemptnumber WHERE s.status IS NOT NULL AND s.latest =1 AND s.status != 'new' AND gr.grader_id=".$USER->id." AND (g.grade IS NULL OR g.grade < (SELECT gi.gradepass from mdl_grade_items gi where gi.iteminstance=cm.instance AND gi.itemmodule='assign')) ORDER BY s.timemodified DESC";
+
+                $rsUserIdArray = $DB->get_records_sql($sqlToGetUserid);
+                if(is_array($rsUserIdArray) && in_array(required_param('userid', PARAM_INT), array_keys($rsUserIdArray))){
+                    //echo 'shiva';die;
+                    $o .= $this->view_single_grade_page($mform);
+                }else{
+                    redirect(new moodle_url('/local/assign/dashboard_grader.php'));
+                    return;
+                }
+            }else{
+                $o .= $this->view_single_grade_page($mform);
+            }
+            //End - added for grader as admin previledge - lakhan - //prev-end
+       } else if ($action == 'viewpluginassignfeedback') {
             $o .= $this->view_plugin_content('assignfeedback');
         } else if ($action == 'viewpluginassignsubmission') {
             $o .= $this->view_plugin_content('assignsubmission');
         } else if ($action == 'editsubmission') {
             $PAGE->add_body_class('limitedwidth');
             $o .= $this->view_edit_submission_page($mform, $notices);
-        } else if ($action == 'grader') {
-            $o .= $this->view_grader();
+        } else if ($action == 'grader' && $actualuserid) {
+            //Start - added for grader as admin previledge - lakhan - //prev-start
+            if($USER->usertype == 'grader' || $USER->usertype == 'graderasadmin'){
+                $sqlToGetUserid ="SELECT u.id as userid FROM mdl_assign_graders gr RIGHT JOIN mdl_user u ON u.id = gr.student_id LEFT JOIN mdl_course_modules cm ON gr.exam_id = cm.id AND cm.module =1 LEFT JOIN mdl_assign_submission s ON u.id = s.userid AND s.assignment = cm.instance LEFT JOIN mdl_course c ON c.id = cm.course LEFT JOIN mdl_assign_grades g ON u.id = g.userid AND g.assignment = cm.instance AND g.attemptnumber = s.attemptnumber WHERE s.status IS NOT NULL AND s.latest =1 AND s.status != 'new' AND gr.grader_id=".$USER->id." AND (g.grade IS NULL OR g.grade < (SELECT gi.gradepass from mdl_grade_items gi where gi.iteminstance=cm.instance AND gi.itemmodule='assign')) ORDER BY s.timemodified DESC";
+
+                $rsUserIdArray = $DB->get_records_sql($sqlToGetUserid);
+                if(is_array($rsUserIdArray) && in_array(required_param('userid', PARAM_INT), array_keys($rsUserIdArray))){
+                    //echo 'shiva';die;
+                    $o .= $this->view_single_grade_page($mform);
+                }else{
+                    redirect(new moodle_url('/local/assign/dashboard_grader.php'));
+                    return;
+                }
+            }else{
+                $o .= $this->view_single_grade_page($mform);
+            }
+            //End - added for grader as admin previledge - lakhan - //prev-end
+            //$o .= $this->view_grader();
+        }else if($action == 'grader'){
+           $o .= $this->view_grader();
         } else if ($action == 'grading') {
-            $o .= $this->view_grading_page();
-        } else if ($action == 'downloadall') {
+            //Start - added for grader as admin previledge - lakhan - //prev-start
+            if($USER->usertype == 'grader' || $USER->usertype == 'graderasadmin'){
+                redirect(new moodle_url('/local/assign/dashboard_grader.php'));
+                return true;
+            }elseif($USER->usertype == 'mainadmin' || is_siteadmin($USER)){
+                $o .= $this->view_grading_page();
+            }
+            //End - added for grader as admin previledge - lakhan - //prev-end
+        }// Customization start
+        else if ($action == 'grading_grader') {
+            $o .= $this->view_grading_page_grader();        
+        // Customization end 
+       } else if ($action == 'downloadall') {
             $o .= $this->download_submissions();
         } else if ($action == 'submit') {
             $o .= $this->check_submit_for_grading($mform);
@@ -686,6 +937,9 @@ class assign {
             $o .= $this->view_error_page(get_string('submitforgrading', 'assign'), $notices);
         } else if ($action == 'fixrescalednullgrades') {
             $o .= $this->view_fix_rescaled_null_grades();
+        }else if ($action == 'comment') {
+            $userid = required_param('userid', PARAM_INT);
+            $o .= $this->view_comment_submission_page($userid);   
         } else {
             $PAGE->add_body_class('limitedwidth');
             $o .= $this->view_submission_page();
@@ -717,6 +971,15 @@ class assign {
         $update->courseid = $formdata->course;
         $update->intro = $formdata->intro;
         $update->introformat = $formdata->introformat;
+        //Customisation start
+        //  echo "<pre>";
+        // print_r($formdata);
+        // exit("1");
+        $update->subeditor = $formdata->subeditor;
+        $update->sub = $formdata->sub;
+        $update->type = $formdata->type;
+        $update->downloaddetails = $formdata->downloaddetails;
+        //Customisation ends
         $update->alwaysshowdescription = !empty($formdata->alwaysshowdescription);
         if (isset($formdata->activityeditor)) {
             $update->activity = $this->save_editor_draft_files($formdata);
@@ -1534,7 +1797,16 @@ class assign {
         if (empty($update->markingworkflow)) { // If marking workflow is disabled, make sure allocation is disabled.
             $update->markingallocation = 0;
         }
-
+        //Customisation start
+        //  echo "<pre>";
+        // print_r($formdata);
+        // exit("2");
+          $update->subeditor = $formdata->subeditor;
+          $update->sub = $formdata->sub;
+          $update->type = $formdata->type;
+          $update->downloaddetails = $formdata->downloaddetails;
+        //$update->subeditor = $formdata->subeditor;
+        //Customisation ends
         $result = $DB->update_record('assign', $update);
         $this->instance = $DB->get_record('assign', array('id'=>$update->id), '*', MUST_EXIST);
 
@@ -1563,6 +1835,15 @@ class assign {
         $this->update_gradebook(false, $this->get_course_module()->id);
 
         $update = new stdClass();
+        //Customisation start
+        //  echo "<pre>";
+        // print_r($formdata);
+        // exit("3");
+        $update->subeditor = $formdata->subeditor;
+        $update->sub = $formdata->sub;
+        $update->type = $formdata->type;
+        $update->downloaddetails = $formdata->downloaddetails;
+        //Customisation ends
         $update->id = $this->get_instance()->id;
         $update->nosubmissions = (!$this->is_any_submission_plugin_enabled()) ? 1: 0;
         $DB->update_record('assign', $update);
@@ -1648,7 +1929,12 @@ class assign {
             if ($plugin->get_config('enabled') !== false) {
                 $default = $plugin->is_enabled();
             }
-            $mform->setDefault($plugin->get_subtype() . '_' . $plugin->get_type() . '_enabled', $default);
+            //Customization 23 Dec
+            $conditionSTR = $plugin->get_subtype() . '_' . $plugin->get_type();
+            if($conditionSTR != 'assignsubmission_onlinetext'){
+               $mform->setDefault($plugin->get_subtype() . '_' . $plugin->get_type() . '_enabled', $default);
+            }
+
 
             $plugin->get_settings($mform);
 
@@ -1759,7 +2045,7 @@ class assign {
      * @param int|null $userid the id of the user to load the assign instance for.
      * @return stdClass The settings
      */
-    public function get_instance(int $userid = null) : stdClass {
+    /*public function get_instance(int $userid = null) : stdClass {
         global $USER;
         $userid = $userid ?? $USER->id;
 
@@ -1773,6 +2059,26 @@ class assign {
         // Calculate properties which vary per user.
         $this->userinstances[$userid] = $this->calculate_properties($this->instance, $userid);
         return $this->userinstances[$userid];
+    }*/
+    public function get_instance() {
+        global $DB;
+        if ($this->instance) {
+            return $this->instance;
+        }
+        if ($this->get_course_module()) {
+            $params = array('id' => $this->get_course_module()->instance);
+            //Level 2 Submission Restriction start
+            //$this->instance = $DB->get_record('assign', $params, '*', MUST_EXIST);
+            $this->instance = $DB->get_record('assign', $params, '*');
+            //Level 2 Submission Restriction end
+        }
+        //Level 2 Submission Restriction start
+        /*if (!$this->instance) {
+            throw new coding_exception('Improper use of the assignment class. ' .
+                                       'Cannot load the assignment record.');
+        }*/
+        //Level 2 Submission Restriction end
+        return $this->instance;
     }
 
     /**
@@ -2798,7 +3104,7 @@ class assign {
                     }
                 }
                 $showusers = $submission->blindmarking && !$submission->revealidentities;
-                self::send_assignment_notification($grader,
+                /*self::send_assignment_notification($grader,
                                                    $user,
                                                    $messagetype,
                                                    $eventtype,
@@ -2809,7 +3115,7 @@ class assign {
                                                    $modulename,
                                                    $submission->name,
                                                    $showusers,
-                                                   $uniqueid);
+                                                   $uniqueid);*/
 
                 $flags = $DB->get_record('assign_user_flags', array('userid'=>$user->id, 'assignment'=>$submission->assignment));
                 if ($flags) {
@@ -2931,6 +3237,41 @@ class assign {
             $grade->attemptnumber = 0;
         }
         $DB->update_record('assign_grades', $grade);
+        //customisation on 29
+       /* $gradeVal=$grade->grade;
+        $assignmentVal=$this->get_instance()->id;
+
+        $sqlGradePass42 = 'SELECT * FROM {grade_items} WHERE courseid =42 AND itemmodule ="assign" AND iteminstance ='.$assignmentVal;
+        $rsGradePass42 = $DB->get_record_sql($sqlGradePass42);
+        if($gradeVal >= $rsGradePass42->gradepass && $assignmentVal==17){
+            $sql0m4221 = 'SELECT * FROM {course_completions} WHERE course=42 AND userid ='.$grade->userid.' AND timecompleted IS NULL';
+            $completionParents = $DB->get_record_sql($sql0m4221);
+            if($completionParents){
+                $courseCompCls = new stdClass();
+                $courseCompCls->id=$completionParents->id;
+                $courseCompCls->userid =$grade->userid;
+                $courseCompCls->course =42;
+                $courseCompCls->timecompleted =time();
+                $gid = $DB->update_record('course_completions', $courseCompCls);
+            }
+        }
+
+        $sqlGradePass4233 = 'SELECT * FROM {grade_items} WHERE courseid =67 AND itemmodule ="assign" AND iteminstance ='.$assignmentVal;
+        $rsGradePass4233 = $DB->get_record_sql($sqlGradePass4233);
+
+        if($gradeVal >= $rsGradePass4233->gradepass && $assignmentVal==33){
+            $sql0m4221 = 'SELECT * FROM {course_completions} WHERE course=67 AND userid ='.$grade->userid.' AND timecompleted IS NULL';
+            $completionParents = $DB->get_record_sql($sql0m4221);
+            if($completionParents){
+                $courseCompCls = new stdClass();
+                $courseCompCls->id=$completionParents->id;
+                $courseCompCls->userid =$grade->userid;
+                $courseCompCls->course =67;
+                $courseCompCls->timecompleted =time();
+                $gid = $DB->update_record('course_completions', $courseCompCls);
+            }
+        }*/
+        //customisation ends
 
         $submission = null;
         if ($this->get_instance()->teamsubmission) {
@@ -3760,9 +4101,10 @@ class assign {
      * @param int $userid The id of the user whose submission we want or 0 in which case USER->id is used
      * @param bool $create If set to true a new submission object will be created in the database with the status set to "new".
      * @param int $attemptnumber - -1 means the latest attempt
-     * @return stdClass|false The submission
+     * @param $assignmentId
+     * @return stdClass The submission
      */
-    public function get_user_submission($userid, $create, $attemptnumber=-1) {
+    public function get_user_submission($userid, $create, $attemptnumber=-1, $assignmentId=null) {
         global $DB, $USER;
 
         if (!$userid) {
@@ -3795,7 +4137,14 @@ class assign {
         }
         if ($create) {
             $submission = new stdClass();
-            $submission->assignment   = $this->get_instance()->id;
+            //Level 2 Submission Restriction start
+            if($assignmentId == null){
+                $submission->assignment   = $this->get_instance()->id;
+            }else{
+                $submission->assignment   = $assignmentId;
+            }
+            //Level 2 Submission Restriction end
+            //$submission->assignment   = $this->get_instance()->id;
             $submission->userid       = $userid;
             $submission->timecreated = time();
             $submission->timemodified = $submission->timecreated;
@@ -3828,6 +4177,20 @@ class assign {
                 $DB->set_field('assign_submission', 'latest', 0, $params);
             }
             $sid = $DB->insert_record('assign_submission', $submission);
+                        //$sid = $DB->insert_record('assign_submission', $submission);
+            //@ core custom on 29
+            $submission->groupid = 0;
+
+            $sec = $DB->get_record_sql('select id from {assign_submission} where assignment=? and userid=? and status=? order by id desc limit 0,1', array(
+                $submission->assignment, $submission->userid, $submission->status
+            ));
+
+            if (empty($sec)) {
+                $sid = $DB->insert_record('assign_submission', $submission);
+            } else {
+                $sid = $sec->id;
+            }
+            //@ends
             $transaction->allow_commit();
             return $DB->get_record('assign_submission', array('id' => $sid));
         }
@@ -3896,9 +4259,10 @@ class assign {
      * @param int $userid The user we are grading
      * @param bool $create If true the grade will be created if it does not exist
      * @param int $attemptnumber The attempt number to retrieve the grade for. -1 means the latest submission.
+     * @param int $assignmentId=null as core custom added on 29 version
      * @return stdClass The grade record
      */
-    public function get_user_grade($userid, $create, $attemptnumber=-1) {
+    public function get_user_grade($userid, $create, $attemptnumber=-1, $assignmentId=null) {
         global $DB, $USER;
 
         // If the userid is not null then use userid.
@@ -3906,14 +4270,32 @@ class assign {
             $userid = $USER->id;
         }
         $submission = null;
+        //Customization start for assignmentId NOT Nullable
+        if($assignmentId != '' && $assignmentId != null ){
+            $this->get_instance()->id = $assignmentId;
+            $gradeNum = 100;
+        }else{
+            $gradeNum = -1;
+        }
+        //Customization end for assignmentId NOT Nullable ($gradeNum should be intialize below)
+        //Level 2 Submission Restriction start
+        if($assignmentId != ''){
+            $params = array('assignment'=>$assignmentId, 'userid'=>$userid);
+        }else{
+            $params = array('assignment'=>$this->get_instance()->id, 'userid'=>$userid);
+        }
+        //Level 2 Submission Restriction end
 
-        $params = array('assignment'=>$this->get_instance()->id, 'userid'=>$userid);
+        //$params = array('assignment'=>$this->get_instance()->id, 'userid'=>$userid);
         if ($attemptnumber < 0 || $create) {
             // Make sure this grade matches the latest submission attempt.
             if ($this->get_instance()->teamsubmission) {
                 $submission = $this->get_group_submission($userid, 0, true, $attemptnumber);
             } else {
-                $submission = $this->get_user_submission($userid, true, $attemptnumber);
+                //$submission = $this->get_user_submission($userid, true, $attemptnumber);
+                //Level 2 Submission Restriction start 4th argument update
+                $submission = $this->get_user_submission($userid, true, -1, $assignmentId);
+                //Level 2 Submission Restriction end 4th argument update
             }
             if ($submission) {
                 $attemptnumber = $submission->attemptnumber;
@@ -3931,7 +4313,14 @@ class assign {
         }
         if ($create) {
             $grade = new stdClass();
-            $grade->assignment   = $this->get_instance()->id;
+            //$grade->assignment   = $this->get_instance()->id;
+            //Level 2 Submission Restriction start
+            if($assignmentId != ''){
+                $grade->assignment = $assignmentId;
+            }else{
+                $grade->assignment = $this->get_instance()->id;
+            }
+            //Level 2 Submission Restriction end
             $grade->userid       = $userid;
             $grade->timecreated = time();
             // If we are "auto-creating" a grade - and there is a submission
@@ -3942,14 +4331,62 @@ class assign {
             } else {
                 $grade->timemodified = $grade->timecreated;
             }
-            $grade->grade = -1;
-            // Do not set the grader id here as it would be the admin users which is incorrect.
-            $grade->grader = -1;
+            //$grade->grade = -1;
+            //Customization change value -1 to $gradeNum
+            $grade->grade = $gradeNum;
+            $grade->grader = $USER->id;
             if ($attemptnumber >= 0) {
                 $grade->attemptnumber = $attemptnumber;
             }
+            //Customization for SFDC import process
+            if(isset($_SESSION['attemptnumberimport'])){
+                $grade->attemptnumber = $_SESSION['attemptnumberimport'];
+                //$_SESSION['attemptnumberimport']=0;
+                //unset($_SESSION['attemptnumberimport']);
+            }
+            if(isset($_SESSION['gradeimport'])){
+                $grade->grade = $_SESSION['gradeimport'];
+                //$_SESSION['gradeimport']=0;
+                //unset($_SESSION['gradeimport']);
+            }
 
             $gid = $DB->insert_record('assign_grades', $grade);
+            $gradeVal=$grade->grade;
+            $assignmentVal=$this->get_instance()->id;
+           /* if($assignmentVal){
+                $sqlGradePass42 = 'SELECT * FROM {grade_items} WHERE courseid =42 AND itemmodule ="assign" AND iteminstance ='.$assignmentVal;
+                $rsGradePass42 = $DB->get_record_sql($sqlGradePass42);
+
+                if($gradeVal >= $rsGradePass42->gradepass && $assignmentVal==17){
+                    $sql0m4221 = 'SELECT * FROM {course_completions} WHERE course=42 AND userid ='.$grade->userid.' AND timecompleted IS NULL';
+                    $completionParents = $DB->get_record_sql($sql0m4221);
+                    if($completionParents){
+                        $courseCompCls = new stdClass();
+                        $courseCompCls->id=$completionParents->id;
+                        $courseCompCls->userid =$grade->userid;
+                        $courseCompCls->course =42;
+                        $courseCompCls->timecompleted =time();
+                        $gid = $DB->update_record('course_completions', $courseCompCls);
+                    }
+                }
+            }
+            if($assignmentVal){
+                $sqlGradePass4233 = 'SELECT * FROM {grade_items} WHERE courseid =67 AND itemmodule ="assign" AND iteminstance ='.$assignmentVal;
+                $rsGradePass4233 = $DB->get_record_sql($sqlGradePass4233);
+
+                if($gradeVal >= $rsGradePass4233->gradepass && $assignmentVal==33){
+                    $sql0m4221 = 'SELECT * FROM {course_completions} WHERE course=67 AND userid ='.$grade->userid.' AND timecompleted IS NULL';
+                    $completionParents = $DB->get_record_sql($sql0m4221);
+                    if($completionParents){
+                        $courseCompCls = new stdClass();
+                        $courseCompCls->id = $completionParents->id;
+                        $courseCompCls->userid = $grade->userid;
+                        $courseCompCls->course = 67;
+                        $courseCompCls->timecompleted =time();
+                        $gid = $DB->update_record('course_completions', $courseCompCls);
+                    }
+                }
+            }*/
             $grade->id = $gid;
             return $grade;
         }
@@ -3976,7 +4413,7 @@ class assign {
      * @return string
      */
     protected function view_single_grading_panel($args) {
-        global $DB, $CFG;
+        global $DB, $CFG, $SESSION, $PAGE;
 
         $o = '';
 
@@ -4061,7 +4498,7 @@ class assign {
                                                                      $this->get_grading_status($userid),
                                                                      $instance->preventsubmissionnotingroup,
                                                                      $usergroups,
-                                                                     $instance->timelimit);
+                                                                     $instance->timelimit,'');
             $o .= $this->get_renderer()->render($submissionstatus);
         }
 
@@ -4140,7 +4577,7 @@ class assign {
      * @return string
      */
     protected function view_single_grade_page($mform) {
-        global $DB, $CFG, $SESSION;
+        global $DB, $CFG, $SESSION,$USER;
 
         $o = '';
         $instance = $this->get_instance();
@@ -4217,6 +4654,68 @@ class assign {
         // Get the requested grade.
         $grade = $this->get_user_grade($userid, false, $attemptnumber);
         $flags = $this->get_user_flags($userid, false);
+        //core custom for 29 version
+        //PP3 start
+        $params = array('assignment'=>$this->get_instance()->id, 'userid'=>$userid);
+        $sql = 'select * from {assign_grades} where assignment='.$this->get_instance()->id.' and userid='.$userid.' and grade !=-1';
+        $grades = $DB->get_records_sql($sql);
+        $_SESSION['fchtml']='';
+        $_SESSION['feuserid']='';
+        //echo $userid;
+        //print_object($grades);die;
+        if(!empty($grades)){
+            $newText = "";
+            $fchtml = "<h3>Feedback Comments</h3>";
+            $fchtml .= "<table class=gradefeed>";
+            $fchtml .= "<tr>";
+            $fchtml .= "<td>Attempt Number</td>";
+            $fchtml .= "<td>Message</td>";
+            $fchtml .= "<td>Time</td>";
+            $fchtml .= "</tr>";
+            foreach($grades as $grade){
+                /*if($grade->grade == '-1'){
+                    continue;
+                }*/
+                $afc_params = array('grade'=>$grade->id);
+                $afcObj = $DB->get_record('assignfeedback_comments', $afc_params, '*');
+                $fchtml .= "<tr>";
+                $an = $grade->attemptnumber + 1;
+                $fchtml .= "<td>".$an."</td>";
+
+                //$newText = str_replace('"', "'", $afcObj->commenttext);
+                //$newText = str_replace("'", "", $afcObj->commenttext);
+                //$newText = substr($newText, 0, 5);
+                $output = preg_replace( '/style=(["\'])[^\1]*?\1/i', '', $afcObj->commenttext, -1 );
+                //$output = preg_replace('/(<[^>]+) style=".*?"/i', '$1', $newText);
+
+                $fchtml .= "<td>".$output."</td>";
+                $fchtml .= "<td>".date("m/d/Y h:i:s", $grade->timecreated)."</td>";
+                $fchtml .= "</tr>";
+            }
+            $fchtml .= "</table>";
+            $_SESSION['fchtml'] = str_replace("'","&apos;",$fchtml);
+            //PP4 start
+                    $_SESSION['feuserid'] = $userid;
+            //PP4 end
+            //      echo $fchtml;
+            //$o .= $this->get_renderer()->render($fchtml);
+        }
+        // - - - - -Start -Feature Request: "Speed Text" Buttons Nav - - - - - --//
+        $courseID = $this->get_course()->id;
+        $stQuery = "SELECT * FROM {speed_text} WHERE user_id = '".$USER->id."' AND course_id= '".$courseID."' ";
+        $speedtextDatas = $DB->get_records_sql($stQuery);
+        if(!empty($speedtextDatas)){
+           $sthtml = '';
+           foreach($speedtextDatas as $speedtextD){
+            //print_r($speedtextD->id);
+            //$sthtml .= "<span class ='btn-cancel' data=''>".$speedtextD->button_lable."</span>";
+            $sthtml .= '<input type="button" class="speedTextButton" id="'.$speedtextD->id.'" value="'.$speedtextD->button_lable.'">';
+           }
+           $sthtml .='';
+        }
+        $_SESSION['sthtml'] = str_replace("'","&apos;",$sthtml);
+        // - - - - -End -Feature Request: "Speed Text" Buttons Nav - - - - - --//
+        //PP3 end
         if ($this->can_view_submission($userid)) {
             $submissionlocked = ($flags && $flags->locked);
             $extensionduedate = null;
@@ -4225,8 +4724,53 @@ class assign {
             }
             $showedit = $this->submissions_open($userid) && ($this->is_any_submission_plugin_enabled());
             $viewfullnames = has_capability('moodle/site:viewfullnames', $this->get_context());
-            $usergroups = $this->get_all_groups($user->id);
-            $submissionstatus = new assign_submission_status($instance->allowsubmissionsfromdate,
+             //GradePanel - start
+            $sqlRole = "SELECT id FROM {role} WHERE shortname='grader'";
+            $rsRole = $DB->get_record_sql($sqlRole);
+
+            $sqlRoleAssignment = "SELECT contextid FROM {role_assignments} where userid=".$USER->id." AND roleid=".$rsRole->id;
+            $rsRoleAssignment = $DB->get_record_sql($sqlRoleAssignment);
+
+            if(!$rsRoleAssignment){ 
+
+            //GradePanel - end
+                $usergroups = $this->get_all_groups($user->id);
+                $submissionstatus = new assign_submission_status($instance->allowsubmissionsfromdate,
+                                                                 $instance->alwaysshowdescription,
+                                                                 $submission,
+                                                                 $instance->teamsubmission,
+                                                                 $teamsubmission,
+                                                                 $submissiongroup,
+                                                                 $notsubmitted,
+                                                                 $this->is_any_submission_plugin_enabled(),
+                                                                 $gradelocked,
+                                                                 $this->is_graded($userid),
+                                                                 $instance->duedate,
+                                                                 $instance->cutoffdate,
+                                                                 $this->get_submission_plugins(),
+                                                                 $this->get_return_action(),
+                                                                 $this->get_return_params(),
+                                                                 $this->get_course_module()->id,
+                                                                 $this->get_course()->id,
+                                                                 assign_submission_status::GRADER_VIEW,
+                                                                 $showedit,
+                                                                 false,
+                                                                 $viewfullnames,
+                                                                 $extensionduedate,
+                                                                 $this->get_context(),
+                                                                 $this->is_blind_marking(),
+                                                                 '',
+                                                                 $instance->attemptreopenmethod,
+                                                                 $instance->maxattempts,
+                                                                 $this->get_grading_status($userid),
+                                                                 $instance->preventsubmissionnotingroup,
+                                                                 $usergroups,
+                                                                 $instance->timelimit,0);
+                $o .= $this->get_renderer()->render($submissionstatus);
+            }
+            /*$usergroups = $this->get_all_groups($user->id);
+
+           $submissionstatus = new assign_submission_status($instance->allowsubmissionsfromdate,
                                                              $instance->alwaysshowdescription,
                                                              $submission,
                                                              $instance->teamsubmission,
@@ -4257,7 +4801,7 @@ class assign {
                                                              $instance->preventsubmissionnotingroup,
                                                              $usergroups,
                                                              $instance->timelimit);
-            $o .= $this->get_renderer()->render($submissionstatus);
+            $o .= $this->get_renderer()->render($submissionstatus);*/
         }
 
         if ($grade) {
@@ -4306,7 +4850,7 @@ class assign {
 
         if (count($allsubmissions) > 1 && $attemptnumber == -1) {
             $allgrades = $this->get_all_grades($userid);
-            $history = new assign_attempt_history($allsubmissions,
+            /*$history = new assign_attempt_history($allsubmissions,
                                                   $allgrades,
                                                   $this->get_submission_plugins(),
                                                   $this->get_feedback_plugins(),
@@ -4317,7 +4861,21 @@ class assign {
                                                   $useridlistid,
                                                   $rownum);
 
-            $o .= $this->get_renderer()->render($history);
+            $o .= $this->get_renderer()->render($history);*/
+            if($userid != 2){
+                $history = new assign_attempt_history($allsubmissions,
+                                                      $allgrades,
+                                                      $this->get_submission_plugins(),
+                                                      $this->get_feedback_plugins(),
+                                                      $this->get_course_module()->id,
+                                                      $this->get_return_action(),
+                                                      $this->get_return_params(),
+                                                      true,
+                                                      $useridlistid,
+                                                      $rownum,0);
+
+                $o .= $this->get_renderer()->render($history);
+            }
         }
 
         \mod_assign\event\grading_form_viewed::create_from_user($this, $user)->trigger();
@@ -4609,6 +5167,22 @@ class assign {
 
             $o .= $this->get_renderer()->render(new assign_form('quickgradingform', $quickgradingform));
         } else {
+            //Customization Start
+           /* $filter1="submitted";
+            $filter2="notsubmitted";
+            $filter3="require_grading";
+            $gradingtable = new assign_grading_table($this, $perpage, $filter, 0, false);
+            $gradingtable1 = new assign_grading_table($this, $perpage, $filter1, 0, false);
+            $gradingtable2 = new assign_grading_table($this, $perpage, $filter2, 0, false);
+            $gradingtable3 = new assign_grading_table($this, $perpage, $filter3, 0, false);*/
+           //echo $filter; exit("Success");
+           /*  $o .= "<h2>Action Required</h2>";
+            $o .= $this->get_renderer()->render($gradingtable3);
+
+            $o .= "<br><h2>Pending Student Action</h2>";
+            $o .= $this->get_renderer()->render($gradingtable2);*/
+
+            //$o .= "<br><h2>Passed</h2>";
             $gradingtable = new assign_grading_table($this, $perpage, $filter, 0, false);
             $o .= $this->get_renderer()->render($gradingtable);
         }
@@ -4971,7 +5545,7 @@ class assign {
         if (has_any_capability(array('mod/assign:viewgrades', 'mod/assign:grade'), $this->context)) {
             return true;
         }
-        if ($userid == $USER->id) {
+        if ($userid == $USER->id && has_capability('mod/assign:submit', $this->context)) {
             return true;
         }
         return false;
@@ -5391,7 +5965,9 @@ class assign {
                                                           $gradingstatus,
                                                           $instance->preventsubmissionnotingroup,
                                                           $usergroups,
-                                                          $instance->timelimit);
+                                                          $instance->timelimit,
+                                                          $this->get_feedback_plugins()
+                );
         return $submissionstatus;
     }
 
@@ -5541,7 +6117,7 @@ class assign {
                                               $this->get_return_params(),
                                               false,
                                               0,
-                                              0);
+                                              0,0);
         return $history;
     }
 
@@ -5554,7 +6130,6 @@ class assign {
      * @return string - the html summary
      */
     public function view_student_summary($user, $showlinks) {
-
         $o = '';
 
         if ($this->can_view_submission($user->id)) {
@@ -5929,6 +6504,8 @@ class assign {
             $summary = $this->get_assign_grading_summary_renderable();
             $o .= $this->get_renderer()->render($summary);
         }
+        $grade = $this->get_user_grade($USER->id, false);
+        $submission = $this->get_user_submission($USER->id, false);
 
         if ($this->can_view_submission($USER->id)) {
             $o .= $this->view_submission_action_bar($instance, $USER);
@@ -6567,7 +7144,8 @@ class assign {
             $info->username = fullname($userfrom, true);
         }
         $info->assignment = format_string($assignmentname, true, array('context'=>$context));
-        $info->url = $CFG->wwwroot.'/mod/assign/view.php?id='.$coursemodule->id;
+        //Customization for URL redirection change 28 July
+        $info->url = $CFG->wwwroot.'/mod/assign/view.php?id='.$coursemodule->id.'&action=grading';
         $info->timeupdated = userdate($updatetime, get_string('strftimerecentfull'));
 
         $postsubject = get_string($messagetype . 'small', 'assign', $info);
@@ -6717,7 +7295,7 @@ class assign {
      * @param stdClass $submission
      * @return void
      */
-    protected function notify_graders(stdClass $submission) {
+    protected function notify_graders(stdClass $submission, $flag=0) {
         global $DB, $USER;
 
         $instance = $this->get_instance();
@@ -6734,15 +7312,27 @@ class assign {
         } else {
             $user = $USER;
         }
+        // customized for graderasadmin to send email notification on assign submit to graders if assign else to admin - 21Dec2017
+        $cmid = $this->get_course_module()->id;
+        $graderQuery = "SELECT grader_id FROM {assign_graders} WHERE exam_id = $cmid AND student_id = $user->id";
+        $graderObjData = $DB->get_record_sql($graderQuery);
+        if($graderObjData->grader_id > 0){
+            $notifyuser = $DB->get_record('user', array('id'=>$graderObjData->grader_id), '*', MUST_EXIST);
+        }
 
-        if ($notifyusers = $this->get_notifiable_users($user->id)) {
-            foreach ($notifyusers as $notifyuser) {
+        //Flag customisation for speed loading
+        if(isset($notifyuser)) {
+            //if ($notifyusers = $this->get_notifiable_users($user->id) && $flag == 0) {
+            //foreach ($notifyusers as $notifyuser) {
                 $this->send_notification($user,
                                          $notifyuser,
                                          'gradersubmissionupdated',
                                          'assign_notification',
                                          $submission->timemodified);
-            }
+            //}
+        }else{
+            $notifyuser = $DB->get_record('user', array('id'=>2), '*', MUST_EXIST);
+            $this->send_notification($user,$notifyuser,'gradersubmissionupdated','assign_notification',$submission->timemodified);
         }
     }
 
@@ -7710,7 +8300,8 @@ class assign {
         }
 
         if (!$instance->submissiondrafts) {
-            $this->notify_student_submission_receipt($submission);
+            //$this->notify_student_submission_receipt($submission);
+            //print_r($submission);die;
             $this->notify_graders($submission);
             \mod_assign\event\assessable_submitted::create_from_submission($this, $submission, true)->trigger();
         }
@@ -7878,7 +8469,7 @@ class assign {
         $gradingdisabled = $this->grading_disabled($userid);
         $gradinginstance = $this->get_grading_instance($userid, $grade, $gradingdisabled);
 
-        $mform->addElement('header', 'gradeheader', get_string('gradenoun'));
+        //$mform->addElement('header', 'gradeheader', get_string('grade'));
         if ($gradinginstance) {
             $gradingelement = $mform->addElement('grading',
                                                  'advancedgrading',
@@ -7892,6 +8483,12 @@ class assign {
             }
         } else {
             // Use simple direct grading.
+            //US #2576 start
+            $optionsPF = array('0' => 'Select', '1' => 'Revisions Required', '2' => 'Passed') ;
+            $gradingPFelement = $mform->addElement('select', 'passfail', get_string('passfail','assign'), $optionsPF);
+            $mform->addRule('passfail', get_string('required'), 'required');
+            $mform->addHelpButton('passfail', 'passfailhelp', 'assign');
+            //US #2576 end
             if ($this->get_instance()->grade > 0) {
                 $name = get_string('gradeoutof', 'assign', $this->get_instance()->grade);
                 if (!$gradingdisabled) {
@@ -7956,8 +8553,9 @@ class assign {
             if (isset($gradinginfo->items[0]->grades[$userid]->grade)) {
                 $usergrade = $gradinginfo->items[0]->grades[$userid]->str_grade;
             }
-            $gradestring = $this->get_renderer()->action_link($url, $usergrade);
-        } else {
+            //$gradestring = $this->get_renderer()->action_link($url, $usergrade);
+            $gradestring = $usergrade;
+       } else {
             if (isset($gradinginfo->items[0]->grades[$userid]) &&
                     !$gradinginfo->items[0]->grades[$userid]->hidden) {
                 $usergrade = $gradinginfo->items[0]->grades[$userid]->str_grade;
@@ -8006,7 +8604,7 @@ class assign {
         }
 
         $gradestring = '<span class="currentgrade">' . $gradestring . '</span>';
-        $mform->addElement('static', 'currentgrade', get_string('currentgrade', 'assign'), $gradestring);
+        //$mform->addElement('static', 'currentgrade', get_string('currentgrade', 'assign'), $gradestring);
 
         if (count($useridlist) > 1) {
             $strparams = array('current'=>$rownum+1, 'total'=>count($useridlist));
@@ -8635,10 +9233,9 @@ class assign {
         $gradebookplugin = $adminconfig->feedback_plugin_for_gradebook;
 
         $feedbackmodified = false;
-
         // Call save in plugins.
         foreach ($this->feedbackplugins as $plugin) {
-            if ($plugin->is_enabled() && $plugin->is_visible()) {
+		if ($plugin->is_enabled() && $plugin->is_visible()) {
                 $gradingmodified = $plugin->is_feedback_modified($grade, $formdata);
                 if ($gradingmodified) {
                     if (!$plugin->save($grade, $formdata)) {
@@ -8656,6 +9253,9 @@ class assign {
                 }
             }
         }
+         //echo "<pre>"; print_r($grade);
+         //exit("dd");
+
 
         // We do not want to update the timemodified if no grade was added.
         if (!empty($formdata->addattempt) ||
@@ -8671,7 +9271,14 @@ class assign {
                 $formdata->workflowstate != ASSIGN_MARKING_WORKFLOW_STATE_RELEASED) {
             $formdata->sendstudentnotifications = false;
         }
+        if (!empty($grade) && $grade->grade !== null && $grade->grade >= 70) {
+            $record = $DB->get_record('assign', array('id'=>$grade->assignment), 'type, course');
+            if($record->type == 'classroom'){
+                $clsroom = $this->classroom_set_done_criteria($record, $grade, $userid);
+                //echo "<pre>"; print_r($record); print_r($grade); exit;
+            }
 
+        }
         // Note the default if not provided for this option is true (e.g. webservices).
         // This is for backwards compatibility.
         if (!isset($formdata->sendstudentnotifications) || $formdata->sendstudentnotifications) {
@@ -8808,6 +9415,7 @@ class assign {
                 $this->process_outcomes($member->id, $data, $userid);
             }
         } else {
+           // print_object($data);die;
             $this->apply_grade_to_user($data, $userid, $data->attemptnumber);
 
             $this->process_outcomes($userid, $data);
@@ -8823,7 +9431,7 @@ class assign {
      * @return bool - was the grade saved
      */
     protected function process_save_grade(&$mform) {
-        global $CFG, $SESSION;
+        global  $CFG,$DB,$USER,$COURSE,$SESSION;
         // Include grade form.
         require_once($CFG->dirroot . '/mod/assign/gradeform.php');
 
@@ -8834,6 +9442,32 @@ class assign {
         $attemptnumber = optional_param('attemptnumber', -1, PARAM_INT);
         $useridlistid = optional_param('useridlistid', $this->get_useridlist_key_id(), PARAM_ALPHANUM);
         $userid = optional_param('userid', 0, PARAM_INT);
+     /*   $suserid = optional_param('userid', 0, PARAM_INT);
+        $cache = cache::make_from_params(cache_store::MODE_SESSION, 'mod_assign', 'useridlist');
+        //Start - updated for grader deshboard feedback file upload - 29May2017
+
+        $sqlRole = "SELECT id FROM {role} WHERE shortname='grader'";
+        $rsRole = $DB->get_record_sql($sqlRole);
+
+        $sqlRoleAssignment = "SELECT contextid FROM {role_assignments} where userid=".$USER->id." AND roleid=".$rsRole->id;
+        $rsRoleAssignment = $DB->get_record_sql($sqlRoleAssignment);
+
+        if((count($rsRoleAssignment->contextid) > 0) || $USER->usertype == 'mainadmin' || $USER->usertype == 'graderasadmin' ){
+                $useridlistid = array($suserid);
+                $useridlist = array($suserid);
+                $cache->set($this->get_course_module()->id . '_' . $useridlistid, $useridlist);
+        }else{
+             if (!$userid) {
+                    if (!$useridlist = $cache->get($this->get_course_module()->id . '_' . $useridlistid)) {
+                        $useridlist = $this->get_grading_userid_list();
+                        $cache->set($this->get_course_module()->id . '_' . $useridlistid, $useridlist);
+                    }
+                } else {
+                    $useridlist = array($userid);
+                    $rownum = 0;
+                }
+        }
+        //End - updated for grader deshboard feedback file upload - 29May2017*/
         if (!$userid) {
             if (empty($SESSION->mod_assign_useridlist[$this->get_useridlist_key($useridlistid)])) {
                 // If the userid list is not stored we must not save, as it is possible that the user in a
@@ -8852,6 +9486,9 @@ class assign {
         if ($rownum == count($useridlist) - 1) {
             $last = true;
         }
+        if($suserid != 0 && $suserid != ''){
+           $userid = $suserid;
+        }
 
         $data = new stdClass();
 
@@ -8866,10 +9503,17 @@ class assign {
                                            '',
                                            array('class'=>'gradeform'));
 
+        //echo 'shiva';
+
+        //print_object($mform->get_data());
+        //echo 'd1';
+        //print_object(data_submitted());die;
         if ($formdata = $mform->get_data()) {
+
             return $this->save_grade($userid, $formdata);
         } else {
-            return false;
+
+            return $this->save_grade($userid, data_submitted());
         }
     }
 
@@ -9339,6 +9983,7 @@ class assign {
      * @return string returns the grading status
      */
     public function get_grading_status($userid) {
+        global $DB,$PAGE,$SESSION,$COURSE,$USER;
         if ($this->get_instance()->markingworkflow) {
             $flags = $this->get_user_flags($userid, false);
             if (!empty($flags->workflowstate)) {
@@ -9349,7 +9994,13 @@ class assign {
             $attemptnumber = optional_param('attemptnumber', -1, PARAM_INT);
             $grade = $this->get_user_grade($userid, false, $attemptnumber);
 
-            if (!empty($grade) && $grade->grade !== null && $grade->grade >= 0) {
+            //Need rectification for dynamic value of grade 70
+            if (!empty($grade) && $grade->grade !== null && $grade->grade >= 70) {
+                $record = $DB->get_record('assign', array('id'=>$grade->assignment), 'type, course');
+                if($record->type == 'classroom'){
+                    $clsroom = $this->classroom_set_done_criteria($record, $grade, $userid);
+                    //echo "<pre>"; print_r($record); print_r($grade); exit;
+                }
                 return ASSIGN_GRADING_STATUS_GRADED;
             } else {
                 return ASSIGN_GRADING_STATUS_NOT_GRADED;
@@ -9543,6 +10194,307 @@ class assign {
     public function set_most_recent_team_submission($submission) {
         $this->mostrecentteamsubmission = $submission;
     }
+
+    //modified by shiva all core custom functions should be write here
+    /**
+     * Set the most recent submission for the team.
+     * The most recent team submission is used to determine if another attempt should be created when allowing another
+     * attempt on a group assignment, and whether the gradebook should be updated.
+     *
+     * @since Moodle 3.8.6
+     * @param stdClass $userid.
+     */
+    protected function view_comment_submission_page($userid) {
+        global $CFG, $DB, $PAGE, $USER;
+        $instance = $this->get_instance();
+        $context = context_module::instance($this->get_course_module()->id);
+        $o = '';
+        $o .= $this->get_renderer()->render(new assign_header($instance,$context,0,0));
+        // Display plugin specific headers.
+        $plugins = array_merge($this->get_submission_plugins(), $this->get_feedback_plugins());
+
+        foreach ($plugins as $plugin) {
+            if ($plugin->is_enabled() && $plugin->is_visible()) {
+                $o .= $this->get_renderer()->render(new assign_plugin_header($plugin));
+            }
+        }
+        $submission = $this->get_user_submission($userid, false);
+        $grade = $this->get_user_grade($userid, false);
+        $submission = $this->get_user_submission($userid, false);
+        if ($this->can_view_submission($userid)) {
+            //GradePanel - start
+            $sql = "SELECT id FROM {role} WHERE shortname='grader'";
+            $roleobj = $DB->get_record_sql($sql);
+            $rolesql = "SELECT contextid FROM {role_assignments} where userid=".$USER->id." AND roleid=".$roleobj->id;
+            $user = \core_user::get_user($userid);
+            if(!$DB->record_exists_sql($rolesql)){
+                $o .= $this->view_student_summary($user, true);
+            }else{
+                $o .= $this->view_student_summary($user, true);
+            }
+            //GradePanel - end
+        }
+        // ---- Start  Exam Comment -- //
+        $useridlist = $this->get_grading_userid_list();
+        $allgrades = $this->get_all_grades($userid);
+        $allsubmissions = $this->get_all_submissions($userid);
+        $history = new assign_attempt_history($allsubmissions,
+                                              $allgrades,
+                                              $this->get_submission_plugins(),
+                                              $this->get_feedback_plugins(),
+                                              $this->get_course_module()->id,
+                                              $this->get_return_action(),
+                                              $this->get_return_params(),
+                                              false,$useridlist,0,$submission);
+        //Start - custom added by lakhan
+        foreach($allsubmissions as $assignmentData){
+           $asid = $assignmentData->assignment;
+        }
+        $o .= $this->generator_submission_link($userid,$this->get_course_module()->id,$asid);
+        //End - custom added by lakhan
+        $teamsubmission = null;
+        $submissiongroup = null;
+        $notsubmitted = array();
+        $gradelocked = true;
+        $instance = $this->get_instance();
+        $grade = $this->get_user_grade($userid, false);
+        $flags = $this->get_user_flags($userid, false);
+        $submission = $this->get_user_submission($userid, false);
+        $viewfullnames = has_capability('moodle/site:viewfullnames', $this->get_course_context());
+        $showedit = "";
+
+        $gradelocked = ($flags && $flags->locked) || $this->grading_disabled($userid, false);
+
+        // Grading criteria preview.
+        $gradingmanager = get_grading_manager($this->context, 'mod_assign', 'submissions');
+        $gradingcontrollerpreview = '';
+        if ($gradingmethod = $gradingmanager->get_active_method()) {
+            $controller = $gradingmanager->get_controller($gradingmethod);
+            if ($controller->is_form_defined()) {
+                $gradingcontrollerpreview = $controller->render_preview($PAGE);
+            }
+        }
+
+        $showsubmit = ($this->submissions_open($userid));
+        if (!empty($grade) && $grade->grade !== null && $grade->grade >= 70) {
+            $record = $DB->get_record('assign', array('id'=>$grade->assignment), 'type, course');
+            $gradingstatus = 'graded';
+        }else {
+            $gradingstatus = 'notgraded';
+        }
+        $extensionduedate = null;
+        // --  -- --- - -End - Exam Comment -  - -- - -  -- - - //
+
+        $o .= $this->get_renderer()->render($history);
+        $o .= $this->view_footer();
+        \mod_assign\event\submission_status_viewed::create_from_assign($this)->trigger();
+
+        return $o;
+    }//end function
+    /**
+     * Set the most recent submission for the team.
+     * The most recent team submission is used to determine if another attempt should be created when allowing another
+     * attempt on a group assignment, and whether the gradebook should be updated.
+     *
+     * @since Moodle 3.8.6
+     * @param stdClass $userid.
+     * @param stdClass $cmid.
+     * @param stdClass $asid.
+     */
+    public function generator_submission_link($userid,$cmid,$asid){
+        global $DB;$CFG;$OUTPUT;$USER;
+        // Added custom code - lakhan
+        $params = array('id' => $cmid,'action'=>'grade','userid'=>$userid,'rownum'=>0);
+        $gradeurl = new moodle_url("/mod/assign/view.php", $params);
+        $link = html_writer::link($gradeurl,'Grade'.html_writer::img($this->output->pix_url('arrow-right', 'theme'),'',array('title'=>'Grade','class'=>'icon')),array('title'=>'Grade'));
+
+        $component = 'assignsubmission_file';
+        $filearea = 'submission_files';
+
+        $sqlAssigSubQuery = "SELECT id,status, timemodified FROM {assign_submission} WHERE assignment = ".$asid." AND userid = ".$userid." AND status='submitted' ORDER BY timemodified DESC LIMIT 0,1";
+        $sqlAssigSubData = $DB->get_record_sql($sqlAssigSubQuery);
+
+        $submissionid = $sqlAssigSubData->id;
+        $context = context_module::instance($cmid);
+        $fs = get_file_storage();
+        $dir = $fs->get_area_tree($context->id, $component, $filearea, $submissionid);
+        foreach ($dir['files'] as $file) {
+            $file->portfoliobutton = '';
+            $filename = $file->get_filename();
+            $url = "";
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+
+            if($ext == 'pdf'){
+                $url = $this->output->pix_url('pdfsmall', 'theme');
+
+            }elseif($ext == 'doc' || $ext == 'docx'){
+                $url = $this->output->pix_url('word', 'theme');
+
+            }elseif( $ext == 'xlsx' || $ext == 'csv'){
+                $url = $this->output->pix_url('excel', 'theme');
+
+            }elseif( $ext == 'png' || $ext == 'jpeg' || $ext == 'jpg'){
+                $url = $this->output->pix_url('image', 'theme');
+            }elseif( $ext == 'txt' || $ext == 'sys' || $ext == 'qsys' || $ext == 'php'|| $ext == 'js'){
+                $url = $this->output->pix_url('otherfile', 'theme');
+
+            }
+
+            $newHtml .= "<img class='icon' alt='".$filename."' title='".$filename."' src=".$url.">";
+
+            $path = '/' .
+                    $context->id .
+                    '/' .
+                    $component .
+                    '/' .
+                    $filearea .
+                    '/' .
+                    $file->get_itemid() .
+                    $file->get_filepath() .
+                    $file->get_filename();
+            $url = file_encode_url("$CFG->wwwroot/pluginfile.php", $path, true);
+            //$filename = $file->get_filename();
+            if(strlen($filename) > 100){
+                substr($filename,0,100).'...';
+            }
+
+            $newHtml .= html_writer::link($url,$filename,array('title' => $filename));
+
+        }
+
+        $courseModule = $DB->get_record('course_modules', array('id'=>$cmid,'visible'=>1));
+        $userName = "";
+        $user = $DB->get_record('user', array('id'=>$userid));
+        $avatar = new user_picture($user);
+        $avatar->courseid = $courseModule->course;
+        $avatar->link = true;
+        $name = $user->firstname." ".$user->lastname;
+        $profileurl = new moodle_url('/user/view.php', array('id' => $userid,'course'=>$courseModule->course));
+        $userName .= html_writer::link($profileurl, $name);
+        return "<table class='generaltable'><tbody><tr class='lastrow'><td width='25%' class='cell c0'><div style='float:left'>".$this->output->render($avatar)."&nbsp&nbsp". $userName ."</div></td><td width='55%' class='cell c0'><div style='float:left'>Latest Submission - &nbsp&nbsp".$newHtml."</div></td><td width='10%' class='cell c0'><div style='float:left'></div></td><td width='10%' class='cell c0'><div style='float:left'>".$link."</div></td></tr></tbody></table>";
+    }//@ends
+    //custom fn
+    //
+    public function classroom_set_done_criteria($record, $grade, $userid,  $timemodified=null,$importflag=null) {
+        global $DB;
+        $examgradetime = $grade->timemodified;
+        // For Lessons Done Criteria
+       $cm_ids = $DB->get_records_sql('SELECT * FROM {course_modules} WHERE course = ? AND module = ? AND added <= ? AND visible=1', array($record->course,3,$examgradetime));
+        foreach($cm_ids as $keyCM){
+            $cmdObj = $DB->get_record('course_modules_completion', array('coursemoduleid' => $keyCM->id, 'userid' => $userid), '*');
+            if(empty($cmdObj)){
+        $datacmc = new stdClass();
+        $datacmc->coursemoduleid = $keyCM->id;
+        if($timemodified == '')
+            $datacmc->timemodified = time();
+            else
+                    $datacmc->timemodified = $timemodified;
+                $datacmc->completionstate = 1;
+                $datacmc->userid = $userid;
+                $datacmc->viewed = 1;
+                $DB->insert_record('course_modules_completion', $datacmc);
+                unset($datacmc);
+            }
+        }
+        unset($cm_ids);
+
+
+    // For Page Done Criteria
+        $cm_ids = $DB->get_records_sql('SELECT * FROM {course_modules} WHERE course = ? AND module = ? AND added <= ? AND visible=?', array($record->course,15,$examgradetime,1));
+        foreach($cm_ids as $keyCM){
+            $cmdObj = $DB->get_record('course_modules_completion', array('coursemoduleid' => $keyCM->id, 'userid' => $userid), '*');
+            if(empty($cmdObj)){
+        $datacmc = new stdClass();
+                $datacmc->coursemoduleid = $keyCM->id;
+
+
+//                $datacmc->timemodified = time();
+        if($timemodified == '')
+            $datacmc->timemodified = time();
+            else
+                    $datacmc->timemodified = $timemodified;
+                $datacmc->completionstate = 1;
+                $datacmc->userid = $userid;
+                $datacmc->viewed = 1;
+                $DB->insert_record('course_modules_completion', $datacmc);
+                unset($datacmc);
+            }
+        }
+        unset($cm_ids);
+
+
+        // For Quiz Done Criteria
+        $cm_ids = $DB->get_records_sql('SELECT * FROM {course_modules} WHERE course = ? AND module = ? AND visible = ? AND added <= ?', array($record->course,16,1,$examgradetime));
+        if($cm_ids){
+            foreach($cm_ids as $keyCMQ){
+                $cmdqObj = $DB->get_record('course_modules_completion', array('coursemoduleid' => $keyCMQ->id, 'userid' => $userid), '*');
+                if(empty($cmdqObj)){
+                    $datacmcq = new stdClass();
+                    $datacmcq->coursemoduleid = $keyCMQ->id;
+           if($timemodified == '')
+            $datacmcq->timemodified = time();
+            else
+                    $datacmcq->timemodified = $timemodified;
+//                    $datacmcq->timemodified = time();
+                    $datacmcq->completionstate = 1;
+                    $datacmcq->userid = $userid;
+                    $datacmcq->viewed = 1;
+                    //echo "Test<pre>";print_r($datacmcq); exit;
+                    $DB->insert_record('course_modules_completion', $datacmcq);
+                    unset($datacmcq);
+                    $quizGradeData = get_coursemodule_from_id('quiz', $keyCMQ->id, 0, false, MUST_EXIST);
+
+                    $dataqg = new stdClass();
+                    $dataqg->quiz = $quizGradeData->instance;
+                    $dataqg->timemodified = time();
+                    $dataqg->grade = 100;
+                    $dataqg->userid = $userid;
+                    //echo "Test<pre>";print_r($datacmcq); exit;
+                    $DB->insert_record('quiz_grades', $dataqg);
+                    unset($dataqg);
+                }
+            }
+            unset($cm_ids);
+        }
+
+        //Bug 1
+        if($record->course == 42 || $record->course == 67){
+            $courseType='classroom';
+        }
+        else{
+		$courseType=$record->type;//'online';
+	}
+
+
+        // For Assignment Done Criteria
+        $cm_ids = $DB->get_record_sql('SELECT a.id as assignmentid, cm.id as cmid FROM {course_modules} cm JOIN {assign} a ON cm.instance=a.id WHERE a.type=? AND cm.course = ? AND cm.module = ? AND cm.visible = ?', array($courseType,$record->course,1,1));
+//       echo "<pre>"; print_r($cm_ids); exit;
+
+
+        if($cm_ids){
+            if($importflag != 1){
+                $assigngrade = $this->get_user_grade($userid, true, 1, $cm_ids->assignmentid);
+            }
+            $cmdaObj = $DB->get_record('course_modules_completion', array('coursemoduleid' => $cm_ids->cmid, 'userid' => $userid), '*');
+            if(empty($cmdaObj)){
+                $datacmca = new stdClass();
+                $datacmca->coursemoduleid = $cm_ids->cmid;
+//                $datacmca->timemodified = time();
+                if($timemodified == '')
+            $datacmca->timemodified = time();
+            else
+                    $datacmca->timemodified = $timemodified;
+                $datacmca->completionstate = 1;
+                $datacmca->userid = $userid;
+                $datacmca->viewed = 1;
+                //echo "Test<pre>";print_r($datacmcq); exit;
+                $DB->insert_record('course_modules_completion', $datacmca);
+                unset($datacmca);
+            }
+            unset($cm_ids);
+        }
+        //echo "<pre>"; print_r($cm_ids); exit;
+    }// end of function
 
     /**
      * Return array of valid grading allocation filters for the grading interface.

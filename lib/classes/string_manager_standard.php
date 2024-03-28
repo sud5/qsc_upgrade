@@ -448,6 +448,51 @@ class core_string_manager_standard implements core_string_manager {
         return $countries;
     }
 
+    //Add state dropdown - Task #21837 start
+    function get_list_of_states(){
+        global $DB;
+        $queryState = "SELECT state_id, state_name, state_abbr FROM {us_state}";
+        $dataState = $DB->get_records_sql($queryState);
+        $stateArray = [];
+        foreach($dataState as $key=>$value){
+           $stateArray[$value->state_abbr] =  $value->state_name;
+        }
+        $queryState2 = "SELECT distinct state FROM {user} where country != 'USA' and country != 'US' and state != '' and state != 'test' and state != 'state'";
+        $dataState2 = $DB->get_records_sql($queryState2);
+
+        foreach($dataState2 as $key2=>$value2){
+            if(strlen($value2->state) > 2){
+               $stateArray[$value2->state] =  $value2->state;
+            }
+        }
+        return $stateArray;
+    }
+    //Add state dropdown - Task #21837 end
+
+
+    // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+    /**
+     * Returns a localised list of all tag names, sorted by  name.
+     *
+     * @param bool $returnall return all or just enabled
+     * @param string $lang moodle translation language, null means use current
+     * @return array two-letter country code => translated name.
+     */
+    public function get_list_of_tags(){
+        global $USER, $CFG, $DB;
+        $return = array();
+        $tagList = $DB->get_records_sql('Select id,tag_name from {tags_pc} ORDER BY tag_name ASC');
+        if(!empty($tagList)){
+
+            foreach ($tagList as $key => $Tagvalue) {
+                $id = $Tagvalue->id;
+                $tag = $Tagvalue->tag_name;
+               $return[$id] = $tag;
+            }
+        }
+        return $return;
+    }
+    // -- -  - - --  -End - Tag Search for Private Course Tag -Nav
     /**
      * Returns a localised list of languages, sorted by code keys.
      *

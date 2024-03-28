@@ -4,8 +4,8 @@ YUI.add('moodle-mod_assign-history', function (Y, NAME) {
 // Node instance:
 var CSS = {
         LINK: 'mod-assign-history-link',
-        OPEN: 'mod-assign-history-link-open',
-        CLOSED: 'mod-assign-history-link-closed',
+        OPEN: 'mod-assign-history-link-closed',
+        CLOSED: 'mod-assign-history-link-open',
         PANEL: 'mod-assign-history-panel'
     },
     COUNT = 0,
@@ -15,12 +15,14 @@ var CSS = {
         if (this.hasClass(CSS.OPEN)) {
             this.removeClass(CSS.OPEN);
             this.addClass(CSS.CLOSED);
-            this.setStyle('overflow', 'hidden');
-            panel.hide();
+            //this.setStyle('overflow', 'hidden');
+            panel.show();
         } else {
             this.removeClass(CSS.CLOSED);
             this.addClass(CSS.OPEN);
-            panel.show();
+            //panel.show();
+            this.setStyle('overflow', 'hidden');
+            panel.hide();
         }
     },
     HISTORY = function() {
@@ -59,7 +61,7 @@ var CSS = {
                 if (COUNT == 1) {
                     panel.show();
                 } else {
-                    panel.hide();
+                    //panel.hide();
                 }
                 link = null;
             } else {

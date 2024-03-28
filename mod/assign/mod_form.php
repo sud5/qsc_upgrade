@@ -57,14 +57,27 @@ class mod_assign_mod_form extends moodleform_mod {
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
 
         $this->standard_intro_elements(get_string('description', 'assign'));
+        //Customisation starts
+        $options = array(
+            'online' => get_string('onlineversion', 'assign'),
+            'classroom' => get_string('classroomexam', 'assign')            
+        );
 
-        // Activity.
-        $mform->addElement('editor', 'activityeditor',
-             get_string('activityeditor', 'assign'), array('rows' => 10), array('maxfiles' => EDITOR_UNLIMITED_FILES,
-            'noclean' => true, 'context' => $this->context, 'subdirs' => true));
-        $mform->addHelpButton('activityeditor', 'activityeditor', 'assign');
-        $mform->setType('activityeditor', PARAM_RAW);
+        $mform->addElement('select', 'type', get_string('type', 'assign'), $options);
+        $mform->addHelpButton('type', 'type', 'assign');
 
+        $mform->addElement('textarea', 'downloaddetails',  get_string('downloaddetails', 'assign'), array('rows' => 10,'cols'=>90));
+        $mform->setType('downloaddetails', PARAM_RAW); // no XSS prevention here, users must be trusted
+
+        $mform->addElement('text', 'sub', get_string('submissiontitle', 'assign'), array('size' => 64));
+        $mform->setType('sub', PARAM_TEXT);
+
+        //$this->standard_subeditor_elements(get_string('submissiondescription', 'assign'));
+        $mform->addElement('textarea', 'subeditor', get_string('submissiondescription', 'assign'), array('rows' => 10,'cols' => 90));
+        //$mform->addElement('textarea', 'subeditor', get_string('submissiondescription', 'assign'), array('size'=>'64'));
+        $mform->setType('subeditor', PARAM_TEXT);
+        
+        //Customisation ends
         $mform->addElement('filemanager', 'introattachments',
                             get_string('introattachments', 'assign'),
                             null, array('subdirs' => 0, 'maxbytes' => $COURSE->maxbytes) );
@@ -86,6 +99,8 @@ class mod_assign_mod_form extends moodleform_mod {
             $course = $DB->get_record('course', array('id'=>$this->current->course), '*', MUST_EXIST);
             $assignment->set_course($course);
         }
+
+        $config = get_config('assign');
 
         $mform->addElement('header', 'availability', get_string('availability', 'assign'));
         $mform->setExpanded('availability', true);
@@ -205,6 +220,12 @@ class mod_assign_mod_form extends moodleform_mod {
         $mform->addElement('selectyesno', 'sendstudentnotifications', $name);
         $mform->addHelpButton('sendstudentnotifications', 'sendstudentnotificationsdefault', 'assign');
 
+        // Plagiarism enabling form. To be removed (deprecated) with MDL-67526.
+        if (!empty($CFG->enableplagiarism)) {
+            require_once($CFG->libdir . '/plagiarismlib.php');
+            plagiarism_get_form_elements_module($mform, $ctx->get_course_context(), 'mod_assign');
+        }
+
         $this->standard_grading_coursemodule_elements();
         $name = get_string('blindmarking', 'assign');
         $mform->addElement('selectyesno', 'blindmarking', $name);
@@ -241,8 +262,8 @@ class mod_assign_mod_form extends moodleform_mod {
         $errors = parent::validation($data, $files);
 
         if (!empty($data['allowsubmissionsfromdate']) && !empty($data['duedate'])) {
-            if ($data['duedate'] <= $data['allowsubmissionsfromdate']) {
-                $errors['duedate'] = get_string('duedateaftersubmissionvalidation', 'assign');
+            if ($data['duedate'] < $data['allowsubmissionsfromdate']) {
+                $errors['duedate'] = get_string('duedatevalidation', 'assign');
             }
         }
         if (!empty($data['cutoffdate']) && !empty($data['duedate'])) {

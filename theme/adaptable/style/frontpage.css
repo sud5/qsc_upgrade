@@ -1,0 +1,567 @@
+/*Home Page CSS-Starts Here*/
+
+#page-site-index .home-page-blend-structure-starts .first-blend-area {
+	background: #eeeeee none repeat scroll 0 0 !important;
+	max-width: 100%;
+	width: 100% !important;
+}
+.home-page-blend-structure-starts .first-blend-area .first-blend-full-section, .home-page-blend-structure-starts .second-blend-area .second-blend-full-section, .home-page-blend-structure-starts .third-blend-area .third-blend-full-section, .home-page-blend-structure-starts .fourth-blend-area .fourth-blend-full-section {
+	margin: 0 auto !important;
+	max-width: 1280px !important;
+	width: 100%;
+}
+.first-blend-all-six-box {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 12px;
+}
+.first-blend-all-six-box .blend-box-one {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+.first-blend-all-six-box .blend-box-two {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+.first-blend-all-six-box .blend-box-three {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+.first-blend-all-six-box .blend-box-four {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+.first-blend-all-six-box .blend-box-five {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+.first-blend-all-six-box .blend-box-six {
+	float: left;
+	width: 33.33%;
+	margin: 20px 0;
+}
+#page-wrap.home-page-blend-structure-starts {
+	height: inherit !important;
+	margin: inherit !important;
+	min-height: inherit !important;
+}
+#page-site-index .home-page-blend-structure-starts .second-blend-area {
+	background: #cbcbcb none repeat scroll 0 0 !important;
+	max-width: 100%;
+	width: 100% !important;
+	padding: 0 !important;
+}
+#page-site-index .home-page-blend-structure-starts .third-blend-area {
+	background: #002859 none repeat scroll 0 0 !important;
+	max-width: 100%;
+	width: 100% !important;
+	padding: 0 !important;
+}
+#page-site-index .home-page-blend-structure-starts .fourth-blend-area {
+	background: #1f1f1f none repeat scroll 0 0 !important;
+	max-width: 100%;
+	width: 100% !important;
+	padding: 0 !important;
+}
+.fourth-blend-all-six-box .blend-box-one {
+	display: inline-block;
+	float: left;
+	width: 48%;
+}
+.fourth-blend-all-six-box .blend-box-two {
+	float: right;
+	width: 48%;
+}
+.fourth-blend-all-six-box {
+	float: left;
+	padding: 50px 0 !important;
+}
+.fourth-blend-all-six-box h2, .fourth-blend-all-six-box p {
+	color: #fff;
+}
+.fourth-blend-all-six-box p {
+	font-size: 13px;
+}
+.fourth-blend-all-six-box h2 {
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+.third-blend-full-section {
+	box-sizing: border-box;
+	padding: 50px 0;
+}
+.third-blend-full-section h2 {
+	color: #fff;
+	font-size: 40px;
+	font-weight: bold;
+	margin-bottom: 30px;
+	text-align: center;
+}
+.third-blend-all-six-box {
+	display: inline-block;
+	width: 100%;
+}
+.third-blend-all-six-box .blend-box-one img {
+	float: left;
+	margin-right: 40px;
+}
+.third-blend-all-six-box .blend-box-one p {
+	color: #FFF;
+	font-size: 12px;
+}
+.third-blend-area .blend-box-one {
+	float: none;
+	margin: 0 auto;
+	max-width: 80%;
+}
+.second-blend-all-six-box {
+	display: inline-block;
+	width: 100%;
+}
+.second-blend-full-section {
+	padding: 35px 0;
+}
+.second-blend-all-six-box .blend-box-one, .second-blend-all-six-box .blend-box-two, .second-blend-all-six-box .blend-box-three, .second-blend-all-six-box .blend-box-four {
+	float: left;
+	margin: 20px 0;
+	width: 50%;
+}
+
+.blocktext {
+    float: left;
+    margin-left: 2%;
+    width: 70%;
+}
+
+.blocktext h2 {
+	font-size: 18px;
+	line-height: 14px;
+	margin: 0 0 10px;
+	padding: 0;
+}
+.subh {
+font-size: 14px !important;
+    line-height: 12px !important;
+    margin: 0 0 5px 1px !important;
+}
+.blocktext p {
+	margin-top: 8px;
+	font-size: 11px;
+}
+.blockimg {
+	float: left;
+	width: 18%;
+}
+.blocktext span {
+	font-size: 14px;
+	font-style: italic;
+}
+.second-blend-full-section {
+	color: #000 !important;
+}
+.first-blend-all-six-box .textblock h2 {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: normal;
+	margin-bottom: 8px;
+}
+.first-blend-all-six-box .iconblock {
+	float: left;
+}
+.first-blend-all-six-box .textblock {
+	float: left;
+	margin-left: 15px;
+	width: 80%;
+}
+.first-blend-full-section h2 {
+	color: #191919;
+	font-weight: bold;
+}
+.second-blend-full-section h2 {
+	color: #000;
+	font-weight: bold;
+	line-height:22px !important;
+}
+
+
+    .courses .frontpage-course-list-all{
+        display: none;
+    }
+    .frontpage-available-course-list{
+        display: none !important;
+    }
+
+
+#block-region-frnt-market-a{
+    background: #eeeeee none repeat scroll 0 0 !important;    
+    max-width: 100%;
+    width: 100% !important;
+    padding-top: 30px;
+}
+
+#block-region-frnt-market-b{
+    background: #cbcbcb none repeat scroll 0 0 !important;
+    max-width: 100%;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+#block-region-frnt-market-c{
+    background: #002859 none repeat scroll 0 0 !important;
+    max-width: 100%;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.third-blend-all-six-box .blend-box-one p {
+    color: #FFF;
+    font-size: 16px;
+line-height: inherit;
+}
+
+
+#block-region-frnt-market-d{
+    background: #1f1f1f none repeat scroll 0 0 !important;
+    max-width: 100%;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.fourth-blend-all-six-box p, .third-blend-all-six-box .blend-box-one p {
+    font-size: 16px;
+    line-height: inherit;
+}
+
+.frontpage-available-course-list{
+	display: none !important;
+}
+
+ .courses {
+      display: none !important;
+}
+
+#main-slider .flex-direction-nav {
+    display:none;
+}
+#main-slider:hover .flex-direction-nav {
+    display: block;
+}
+
+
+.slidestyle2 .flex-direction-nav .flex-prev {
+    background: #00000000 url(/theme/adaptable/pix/arrow-left-blue.png) no-repeat 50% 50% !important;
+    background-size: auto 35px !important;
+    height: 35px;
+    left: 15px;
+    opacity: 1;
+    top: 46%;
+    width: 35px !important;
+}
+
+.slidestyle2 .flex-direction-nav .flex-prev:hover {
+    background: #00000000 url(/theme/adaptable/pix/arrow-left-yellow.png) no-repeat 50% 50% !important;
+    visibility: visible;
+    background-size: auto 35px !important;
+    height: 35px;
+    left: 15px;
+    opacity: 1;
+    top: 46%;
+    width: 35px !important;
+}
+
+.slidestyle2 .flex-direction-nav .flex-next {
+    background: #00000000 url(/theme/adaptable/pix/arrow-right-blue.png) no-repeat 50% 50% !important;
+    background-size: auto 35px !important;
+    height: 35px;
+    opacity: 1;
+    right: 15px;
+    top: 46%;
+    width: 35px !important;
+}
+.slidestyle2 .flex-direction-nav .flex-next:hover {
+    background: #00000000 url(/theme/adaptable/pix/arrow-right-yellow.png) no-repeat 50% 51% !important;
+    background-size: auto 35px !important;
+    height: 35px;
+    opacity: 1;
+    right: 15px;
+    top: 46%;
+    width: 35px !important;
+}
+
+
+#frontblockregion {
+    background-color: transparent;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+.slidewrap {
+    margin-bottom: 0;
+    margin-top: 15px;
+}
+
+#block-region-frnt-market-a {
+    background: #eeeeee none repeat scroll 0 0 !important;
+    max-width: 100%;
+    width: 100% !important;
+    padding-top: 20px;
+    
+}
+
+.second-blend-full-section {
+    padding: 35px 10px;
+}
+
+.first-blend-full-section h2 {
+    color: #191919;
+    font-size: 22px;
+}
+.first-blend-all-six-box .textblock h2 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: normal;
+    margin-bottom: 8px;
+}
+#block-region-frnt-market-d {
+    background: #1f1f1f !important;
+    max-width: 100%;
+    width: 100% !important;
+    padding: 0 !important;
+    display: inline-block;
+   padding-left: 15px !important;
+}
+.fourth-blend-all-six-box h2 {
+    font-weight: bold;
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+#page-site-index #page.container-fluid {
+    padding: 0 20px !important;
+    background: inherit;
+}
+
+.hidden-blocks{
+	display: none;
+}
+
+.menu-action img.icon {
+    display: none;
+}
+
+/*Media Query*/
+
+@media(max-width:1279px) {
+
+.courses {
+      display: none !important;
+}
+.home-page-blend-structure-starts .first-blend-area .first-blend-full-section, .home-page-blend-structure-starts .second-blend-area .second-blend-full-section, .home-page-blend-structure-starts .third-blend-area .third-blend-full-section, .home-page-blend-structure-starts .fourth-blend-area .fourth-blend-full-section {
+	box-sizing: border-box;
+	margin: 0 auto !important;
+	max-width: 100% !important;
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 100%;
+}
+.blockimg {
+	float: left;
+	width: 16%;
+}
+.blocktext {
+	float: left;
+	margin-left: 4%;
+	width: 75%;
+}
+.first-blend-all-six-box .iconblock {
+	float: left;
+	width: 16%;
+}
+.first-blend-all-six-box .textblock {
+	float: left;
+	margin-left: 4%;
+	width: 75%;
+}
+.third-blend-full-section h2 {
+	font-size: 30px;
+}
+.third-blend-area .blend-box-one {
+	max-width: 100%;
+}
+.fourth-blend-area .blend-box-two img {
+	position: relative;
+	top: 50%;
+}
+#page-site-index .home-page-blend-structure-starts .first-blend-area {
+	padding-left: 0 !important;
+	padding-right: 0 !important;
+}
+.blend-box-three:after
+{
+clear:both;
+}
+.first-blend-all-six-box .textblock h2
+{
+font-size:14px;
+}
+
+}
+
+@media (max-width: 859px){
+	.has-page-header.page-header-margin.header-style1 #page {
+	    margin-top: 0;
+	}
+}
+
+@media(max-width:767px) {
+
+.third-blend-all-six-box .blend-box-one img {
+    float: left;
+    margin-right: 20px;
+    width: 30%;
+}
+
+.third-blend-all-six-box .blend-box-one p {
+    color: #fff;
+    float: left;
+    font-size: 12px;
+    width: 65%;
+}
+.home-page-blend-structure-starts h2 {
+	font-size: 17px;
+}
+.first-blend-all-six-box .blend-box-one, .first-blend-all-six-box .blend-box-two, .first-blend-all-six-box .blend-box-three, .first-blend-all-six-box .blend-box-four, .first-blend-all-six-box .blend-box-five, .first-blend-all-six-box .blend-box-six {
+	width: 50%;
+}
+.fourth-blend-all-six-box h2 {
+ margin-bottom: 10px;
+}
+
+.second-blend-full-section .second-blend-all-six-box {}
+
+.second-blend-full-section .second-blend-all-six-box .second-sec {height: auto !important;margin: 10px 0;}
+
+.second-blend-full-section .second-blend-all-six-box .blockimg {
+    float: none;
+    width: 100%;
+}
+
+.second-blend-full-section .second-blend-all-six-box .blocktext {
+    width: 100%;
+    float: none;
+    margin: 5px 0 0;
+}
+
+.blend-box-one img {
+    width: 100% !important;
+}
+/*Q-SYS CSS*/
+.third-blend-all-six-box p {
+    margin: 0 !important;
+}
+
+.slidestyle2 .flex-direction-nav .flex-prev, .slidestyle2 .flex-direction-nav .flex-prev:hover,
+.slidestyle2 .flex-direction-nav .flex-next, .slidestyle2 .flex-direction-nav .flex-next:hover{
+
+    background-size: auto 20px !important;
+    height: 20px !important;
+    top: 38% !important;
+    width: 20px !important;
+}
+
+}
+
+
+@media(max-width:570px) {
+	
+.blocktext h2
+{
+line-height:24px;
+}	
+	
+.first-blend-all-six-box .blend-box-one, .first-blend-all-six-box .blend-box-two, .first-blend-all-six-box .blend-box-three, .first-blend-all-six-box .blend-box-four, .first-blend-all-six-box .blend-box-five, .first-blend-all-six-box .blend-box-six {
+	width: 100%;
+}
+.second-blend-all-six-box .blend-box-one, .second-blend-all-six-box .blend-box-two, .second-blend-all-six-box .blend-box-three, .second-blend-all-six-box .blend-box-four {
+	float: left;
+	margin: 20px 0;
+	width: 100%;
+}
+.blockimg {
+	float: left;
+	width: 22%;
+}
+.blocktext {
+	float: left;
+	margin-left: 4%;
+	width: 70%;
+}
+.third-blend-all-six-box .blend-box-one p {
+	color: #fff;
+	float: left;
+	font-size: 12px;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.third-blend-area .blend-box-one
+{
+text-align:center;
+}
+
+.third-blend-area .blend-box-one p
+{
+	text-align:left;
+}
+
+.third-blend-full-section h2
+{
+margin-bottom:15px;
+}
+
+.third-blend-all-six-box .blend-box-one img {
+	float: none;
+	margin-right: 0px;
+	margin:0 auto;
+	
+}
+.fourth-blend-all-six-box p {
+	font-size: 10px;
+}
+.fourth-blend-all-six-box .blend-box-one {
+	display: inline-block;
+	float: left;
+	width: 100%;
+}
+.fourth-blend-all-six-box h2 {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.fourth-blend-all-six-box .blend-box-two {
+	float: right;
+	width: 100%;
+	margin-top: 20px;
+}
+.fourth-blend-area .blend-box-two img {
+	width: 100%;
+}
+
+}
+
+/*Responsile Slider By Amit*/
+@media (max-width: 859px){
+.slidewrap {
+    margin-top: 0px;
+}
+
+}
+
+/*End Css*/
+
+
+
+
+/*End Css*/

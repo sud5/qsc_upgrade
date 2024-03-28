@@ -1635,7 +1635,7 @@ class quiz_attempt {
 
         $this->attempt->timemodified = $timestamp;
         if ($this->attempt->state == self::FINISHED) {
-            $this->attempt->sumgrades = $this->quba->get_total_mark();
+            $this->attempt->sumgrades = number_format($this->quba->get_total_mark(),2);
         }
         if ($becomingoverdue) {
             $this->process_going_overdue($timestamp, true);
@@ -1757,7 +1757,7 @@ class quiz_attempt {
 
         $this->attempt->timemodified = $timestamp;
         $this->attempt->timefinish = $timefinish ?? $timestamp;
-        $this->attempt->sumgrades = $this->quba->get_total_mark();
+        $this->attempt->sumgrades = number_format($this->quba->get_total_mark(),2);
         $this->attempt->state = self::FINISHED;
         $this->attempt->timecheckstate = null;
         $this->attempt->gradednotificationsenttime = null;

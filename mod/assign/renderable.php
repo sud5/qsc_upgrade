@@ -373,7 +373,9 @@ class assign_attempt_history implements renderable {
     public $useridlistid = 0;
     /** @var int rownum - The rownum of the user in the useridlistid - this plus useridlistid determines the userid */
     public $rownum = 0;
-
+    // --  -- --- - -Start - Exam Comment - - - -- - -//
+    public $submission = array();
+    // --  -- --- - -End - Exam Comment - - - -- - -//
     /**
      * Constructor
      *
@@ -387,6 +389,7 @@ class assign_attempt_history implements renderable {
      * @param bool $cangrade
      * @param int $useridlistid
      * @param int $rownum
+     * @param array $submission
      */
     public function __construct($submissions,
                                 $grades,
@@ -397,7 +400,8 @@ class assign_attempt_history implements renderable {
                                 $returnparams,
                                 $cangrade,
                                 $useridlistid,
-                                $rownum) {
+                                $rownum,
+                                $submission) {
         $this->submissions = $submissions;
         $this->grades = $grades;
         $this->submissionplugins = $submissionplugins;
@@ -408,6 +412,9 @@ class assign_attempt_history implements renderable {
         $this->cangrade = $cangrade;
         $this->useridlistid = $useridlistid;
         $this->rownum = $rownum;
+        // --  -- --- - -Start - Exam Comment - - - -- - -//
+        $this->submission = $submission;
+        // --  -- --- - -End - Exam Comment - - - -- - -//
     }
 }
 

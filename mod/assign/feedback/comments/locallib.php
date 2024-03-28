@@ -21,7 +21,7 @@
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+use \local_assign\locallib as assignobj;
 use core_external\external_single_structure;
 use core_external\external_value;
 
@@ -229,6 +229,8 @@ class assign_feedback_comments extends assign_feedback_plugin {
             $feedbackcomment->commentformat = FORMAT_HTML;
             $feedbackcomment->grade = $grade->id;
             $feedbackcomment->assignment = $this->assignment->get_instance()->id;
+            //modifed by shiva for TASk 7834
+            assignobj::sendemail($userid,$grade->assignment,$quickgradecomments,$this->assignment->get_instance()->id);
             return $DB->insert_record('assignfeedback_comments', $feedbackcomment) > 0;
         }
     }
@@ -408,6 +410,8 @@ class assign_feedback_comments extends assign_feedback_plugin {
         if ($feedbackcomment) {
             $feedbackcomment->commenttext = $data->assignfeedbackcomments;
             $feedbackcomment->commentformat = $data->assignfeedbackcommentsformat;
+            //modifed by shiva for TASk 7834
+            assignobj::sendemail($grade->userid,$grade->assignment,$data->assignfeedbackcomments,$data->id);
             return $DB->update_record('assignfeedback_comments', $feedbackcomment);
         } else {
             $feedbackcomment = new stdClass();
@@ -415,6 +419,9 @@ class assign_feedback_comments extends assign_feedback_plugin {
             $feedbackcomment->commentformat = $data->assignfeedbackcommentsformat;
             $feedbackcomment->grade = $grade->id;
             $feedbackcomment->assignment = $this->assignment->get_instance()->id;
+            //modifed by shiva for TASk 7834
+            assignobj::sendemail($grade->userid,$grade->assignment,$data->assignfeedbackcomments,$data->id);
+
             return $DB->insert_record('assignfeedback_comments', $feedbackcomment) > 0;
         }
     }

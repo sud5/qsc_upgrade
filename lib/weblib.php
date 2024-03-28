@@ -1147,15 +1147,23 @@ function page_get_doc_link_path(moodle_page $page) {
  * @return boolean
  */
 function validate_email($address) {
-    global $CFG;
-
-    if ($address === null || $address === false || $address === '') {
-        return false;
-    }
-
-    require_once("{$CFG->libdir}/phpmailer/moodle_phpmailer.php");
-
-    return moodle_phpmailer::validateAddress($address ?? '') && !preg_match('/[<>]/', $address);
+//    global $CFG;
+//
+//    if ($address === null || $address === false || $address === '') {
+//        return false;
+//    }
+//
+//    require_once("{$CFG->libdir}/phpmailer/moodle_phpmailer.php");
+//
+//    return moodle_phpmailer::validateAddress($address ?? '') && !preg_match('/[<>]/', $address);
+    
+        // updated by adding + in first regex for QSCID
+    return (preg_match('#^[-!\#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+'.
+                 '(\.[-!\#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+)*'.
+                  '@'.
+                  '[-!\#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.'.
+                  '[-!\#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$#',
+                  $address));
 }
 
 /**
@@ -2957,8 +2965,14 @@ function notice ($message, $link='', $course=null) {
         echo $OUTPUT->container_end_all(false);
     }
 
+//Customization sameer for adding new div tags start
+    echo "<div class='signup-confirmation'>";
+//Customization sameer for adding new div tags end
     echo $OUTPUT->box($message, 'generalbox', 'notice');
+//Customization sameer for adding new div tags start
     echo $OUTPUT->continue_button($link);
+//Customization sameer for adding new div tags end
+    echo "</div>";
 
     echo $OUTPUT->footer();
     exit(1); // General error code.
@@ -3080,18 +3094,10 @@ function redirect($url, $message='', $delay=null, $messagetype = \core\output\no
     $url = str_replace('&amp;', '&', $encodedurl);
 
     if (!empty($message)) {
-        if (!$debugdisableredirect && !headers_sent()) {
-            // A message has been provided, and the headers have not yet been sent.
-            // Display the message as a notification on the subsequent page.
-            \core\notification::add($message, $messagetype);
-            $message = null;
-            $delay = 0;
-        } else {
-            if ($delay === -1 || !is_numeric($delay)) {
-                $delay = 3;
-            }
-            $message = clean_text($message);
+        if ($delay === -1 || !is_numeric($delay)) {
+            $delay = 3;
         }
+        $message = clean_text($message);
     } else {
         $message = get_string('pageshouldredirect');
         $delay = 0;

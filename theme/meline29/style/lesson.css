@@ -1,0 +1,1111 @@
+/** Path: **/
+
+/*Lesson-page-css-here*/
+
+.htmlnewcreation.new-lessong-page {
+	width: 100%;
+	margin: 0;
+}
+.htmlnewcreation.new-lessong-page .heading-container {
+	margin-top: 0;
+}
+.htmlnewcreation.new-lessong-page .heading-container h2 {
+	color: #666666;
+	font-family: "FuturaPT-Book";
+	font-size: 34px !important;
+	/*margin-bottom: 30px !important;*/
+	margin-right: 0 !important;
+	background: inherit;
+	border: inherit;
+}
+.htmlnewcreation.new-lessong-page .heading-container {
+	font-size: 20px;
+	margin-bottom: 30px;
+	margin-top: 0px;
+	line-height:30px;
+}
+.social-icons {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 30px;
+}
+.two-buttons-right {
+	float: right;
+}
+.social-share li:first-child {
+	margin-right: 20px;
+}
+.share-icon {
+	background: url("/theme/image.php?theme=meline29&component=theme&image=social-icon-img");
+	display: inline-block;
+	height: 45px;
+	width: 45px;
+	background-repeat: no-repeat;
+	background-position: 0;
+}
+.fb-icon {
+	background: url("/theme/image.php?theme=meline29&component=theme&image=social-icon-img")no-repeat scroll -62px -4px;
+	display: inline-block;
+	height: 45px;
+	width: 45px;
+}
+.twitter-icon {
+	background: url("/theme/image.php?theme=meline29&component=theme&image=social-icon-img")no-repeat scroll -122px -4px;
+	display: inline-block;
+	height: 45px;
+	width: 45px;
+}
+.in-icon {
+	background: url("/theme/image.php?theme=meline29&component=theme&image=social-icon-img")no-repeat scroll -182px -4px;
+	display: inline-block;
+	height: 45px;
+	width: 45px;
+}
+.gplus-icon {
+	background: url("/theme/image.php?theme=meline29&component=theme&image=social-icon-img")no-repeat scroll -242px -4px;
+	display: inline-block;
+	height: 45px;
+	width: 45px;
+}
+.social-icons ul li {
+	list-style: outside none none;
+	display: inline-block;
+}
+.social-share span {
+	opacity: 0.8;
+}
+.social-share li:first-child span {
+	opacity: 1;
+}
+.social-share span:hover {
+	opacity: 1;
+}
+.em-buttons-left {
+	float: left;
+}
+.left-cover-area {
+	border-right: 1px solid #dddddd;
+	float: left;
+	overflow: hidden;
+	position: relative;
+	width: 35%;
+	z-index: 1;
+	box-sizing: border-box;
+	height: 800px;
+}
+.below-search-part {
+	height: 690px;
+	overflow: auto;
+	position: relative;
+	width: 100%;
+}
+.right-cover-area .tab-content {
+	padding: 0 10px;
+}
+.right-cover-area {
+	box-sizing: border-box;
+	float: left;
+	width: 65%;
+}
+.expandAll a:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=expanad-all");
+	margin-right: 5px;
+	position: relative;
+	top: 3px;
+}
+.collapseAll a:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=collapse-all");
+	margin-right: 5px;
+	position: relative;
+	top: 3px;
+}
+.closeAll a:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=close-search");
+	margin-right: 5px;
+	position: relative;
+	top: 3px;
+}
+ul.toggleContent {
+	clear: both;
+	padding-left: 40px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+.toggleAll a {
+	color: #777777 !important;
+	font-family: "FuturaPT-Book";
+	font-size: 14px;
+	font-weight: normal !important;
+	outline: none !important;
+}
+.tab-content h1 {
+	color: #666666;
+	font-family: "FuturaPT-Book";
+	font-size: 24px;
+	font-weight: normal;
+}
+.right-second-heading {
+	background: #f7f7f7 none repeat scroll 0 0;
+	border: 1px solid #dddddd;
+	/*margin-bottom: 20px;*/
+	padding: 10px;
+}
+.right-second-heading span.main-text {
+	color: #777777;
+	font-family: "FuturaPT-Book";
+	font-size: 20px;
+	font-weight: 400;
+}
+.right-second-heading span.main-time {
+	color: #adadb0;
+	font-family: "FuturaPT-Book";
+	font-size: 15px;
+	margin-left: 10px;
+}
+.toggleContent > li, .toggleContent > li a {
+	color: #777777;
+	font-family: "FuturaPT-Book";
+	font-size: 16px;
+	line-height: 30px;
+	list-style-type: lower-alpha;
+	line-height: 20px;
+	font-weight: 200;
+	clear: both;
+}
+.selected-part > a {
+	background: #3496c7 none repeat scroll 0 0 !important;
+	border-radius: 2px;
+	box-sizing: border-box;
+	color: #ffffff !important;
+	font-weight: normal !important;
+	padding: 4px 10px;
+	text-decoration: none;
+}
+.selected-part > a:hover {
+	text-decoration: underline;
+}
+.toggleContent > li a {
+	margin-bottom: 10px;
+}
+.toggleContent > li a {
+	width: 68%;
+	display: inline-block;
+	vertical-align: top;
+}
+.assesment_cls a {
+	margin-bottom: 2px !important;
+}
+.new-search {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0 1px 0px;
+	position: relative;
+	box-sizing: border-box;
+	background: #fff;
+	float: left;
+	width: 100%;
+}
+.new-search input[type="text"] {
+	border-right: 0 none;
+	float: left;
+	font-size: 14px !important;
+	padding: 6px 5px 6px 10px;
+	width: 72%;
+	height:32px;
+}
+.new-search input[type="submit"] {
+	background: #3496c7 none repeat scroll 0 0;
+	border: 1px solid #3496c7;
+	color: #ffffff;
+	float: left;
+	margin: 0 !important;
+	font-size: 14px;
+}
+.new-search input {
+	border-radius: 0;
+}
+.right-cover-area .nav.nav-tabs {
+	border-bottom: 1px solid #ccc;
+	background: #fff;
+	font-size: 15px;
+}
+.right-cover-area #tabs {
+	margin-bottom: 10px;
+}
+.time-for-tree-part a {
+	width: inherit !important;
+}
+.right-cover-area p {
+	color: #777777 !important;
+	font-family: "FuturaPT-Book";
+	font-size: 14px;
+	font-weight: normal !important;
+	line-height: 24px;
+	text-align: justify;
+}
+.right-cover-area .nav.nav-tabs > li > a {
+	border: 1px solid rgba(0, 0, 0, 0);
+	border-radius: 0;
+	line-height: 20px;
+	padding-bottom: 17px;
+	padding-top: 17px;
+	border-right: 1px solid #ddd;
+	color: #777;
+	margin-right: 0;
+	font-weight: normal;
+	font-size:18px;
+}
+#tabs li:last-child a {
+	border-right: medium none !important;
+}
+.right-cover-area .nav.nav-tabs > .active > a {
+	background-color: #3496c7;
+	color: #FFF;
+}
+.right-cover-area .nav > li > a:hover, .right-cover-area .nav > li > a:focus {
+	background-color: #3496c7;
+	color: #FFF !important;
+}
+iframe, object, embed {
+	max-width: 100%;
+}
+/*Expand*/
+
+.expandAll, .collapseAll, .closeAll {
+	font-size: 14px;
+	margin-right: 15px;
+}
+.titleTrigger {
+	background: #f6f6f6 none repeat scroll 0 0;
+	clear: both;
+	margin-bottom: 0px;
+	padding: 5px 10px;
+	font-weight: 500;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-right: none;
+	border-left: none;
+	border-bottom: none;
+}
+.titleTrigger.active {
+	border: 1px solid #ddd;
+}
+.right-part {
+	float: right;
+}
+.right-part span.right-img:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=right-icon");
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+	float: left;
+}
+.right-part span.in-process::before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=in_progress");
+	float: left;
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+}
+
+.right-part span.star-in-process::before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=star-icon_xl");
+	float: left;
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+}
+
+.right-part .total-time {
+	color: #777777;
+	font-family: "FuturaPT-Book";
+	font-size: 15px;
+	position: relative;
+	top: 10px;
+}
+.time-for-tree-part {
+	float: right;
+}
+.time-for-tree-part .total-time {
+	color: #777777;
+	font-family: "FuturaPT-Book";
+	font-size: 14px;
+	position: relative;
+	margin-right: 10px;
+	display: inline-block;
+	width: 60px;
+}
+.time-for-tree-part span.eye-img:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=eye-icon");
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+	float: left;
+}
+.time-for-tree-part span.notice-img:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=error22");
+	margin-right: 12px;
+	position: relative;
+	top: 0px;
+	float: left;
+}
+.time-for-tree-part span.check-img:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=check-mark");
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+	float: left;
+}
+.first-part.modules .titleTrigger h3 {
+	color: #777777;
+	font-family: "FuturaPT";
+	font-size: 16px !important;
+	float: left;
+	font-weight: normal;
+}
+.titleTrigger:nth-of-type(even) {
+/*background: #f90;*/
+}
+.titleTrigger.active {
+	clear: both;
+}
+.toggleContent {
+	display: block;
+}
+.toggleAll {
+	border-bottom: 1px solid #cccccc;
+	box-sizing: border-box;
+	clear: both;
+	float: left;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 100%;
+}
+.assesment_cls {
+	background: #f1a245 none repeat scroll 0 0;
+	padding: 2px 10px;
+}
+.assesment_cls a, .assesment_cls a:hover {
+	color: #fff !important;
+}
+.toggleAll, .toggleAll a:hover, .toggleAll a:active {
+	color: #777777 !important;
+	outline: medium none;
+}
+.test-result {
+	clear: both;
+	margin-bottom: 10px;
+	padding: 5px 10px;
+	font-weight: 500;
+	float: left;
+	width: 100%;
+	box-sizing: border-box;
+}
+.test-result span {
+	color: #6fa916;
+	display: inline-block;
+	font-family: "FuturaPT-Book";
+	font-size: 18px;
+	padding: 8px 0;
+	font-weight: 400;
+}
+/*.bottom-section {
+	float: left;
+	position: relative;
+	top: -5px;
+	width: 100%;
+}*/
+/*Green Blade changes*/
+.bottom-section { float: left; position: relative; top: 0px; width: 100%; }
+/*.no-overflow {
+	position: relative;
+	padding-bottom: 56.25%;*/ /* 16:9 */
+	/*padding-top: 25px;
+	height: 0;
+	color: #777;
+	font-size: 11px;
+}*/
+
+
+
+.no-overflow {
+    color: #777;
+    font-size: 14px;
+    height: 600px;
+    margin-bottom: 40px;
+    padding-top: 25px;
+    position: relative;
+}
+
+
+.no-overflow iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+#clicky {
+	display: none;
+}
+*:focus, a {
+	outline: 0 !important;
+}
+.new-search form {
+	border: 1px solid #cccccc !important;
+	display: inline-block;
+	height: 34px;
+	margin-bottom: 5px;
+	width: 95%;
+}
+.new-search input[type="text"] {
+	border: medium none;
+	float: left;
+	font-size: 13px !important;
+	padding: 6px 5px 6px 10px;
+	width: 70%;
+	height: auto;
+}
+.new-search input[type="submit"] {
+	float: right;
+	width: 25%;
+}
+.new-search input[type="text"]:focus {
+	outline: none;
+	box-shadow: none;
+	border: none;
+}
+.result_cls_pass {
+	color: #6fa916 !important;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	letter-spacing: 0.5px;
+	list-style: outside none none !important;
+	margin-bottom: 10px !important;
+	margin-top: 10px;
+	margin-right: 10px;
+	text-align: right;
+}
+.result_cls_fail {
+	color: #ff0000 !important;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	letter-spacing: 0.5px;
+	list-style: outside none none !important;
+	margin-bottom: 10px !important;
+	margin-top: 10px;
+	margin-right: 10px;
+	text-align: right;
+}
+.first-part {
+	border-bottom: 1px solid #dddddd;
+	border-left: 1px solid #dddddd;
+	display: inline-block;
+	margin-bottom: 18px;
+	width: 100%;
+	box-sizing: border-box;
+}
+/* Renew Exam Start */
+
+
+.notice-module .assesment_cls {
+	padding-right: 0;
+}
+.notice-in-process:after {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=error");
+	float: left;
+	margin-right: 5px;
+	position: relative;
+	top: 8px;
+}
+.first-part.renew-exam .titleTrigger, .first-part.notice-module .titleTrigger {
+	background: #f6e6e6 none repeat scroll 0 0;
+}
+.first-part.renew-exam span.span-notice-in-process {
+	display: inline !important;
+	float: none;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.first-part.renew-exam span.span-notice-in-process:after {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=error24");
+	position: relative;
+	top: 3px;
+}
+.renew-exam h3::before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=error");
+	margin-right: 10px;
+	position: relative;
+	top: 6px;
+}
+.renew-exam h3 {
+	color: #00 !important;
+	font-size: 18px !important;
+}
+.first-part.renew-exam span {
+	display: block;
+	padding: 0 15px;
+	clear: both;
+	color: #777;
+	font-size: 14px;
+}
+.first-part.renew-exam .congrts-text {
+	float: left;
+	margin: 10px 0 !important;
+}
+.first-part.renew-exam .Proceed-link {
+	margin: 0 0 20px;
+}
+.first-part.renew-exam span.Proceed-link a {
+	font-size: 14px;
+	text-decoration: underline;
+}
+/* Renew Exam End */
+
+/*Scenario 3 start*/
+
+.third-scenario h3:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=star-icon_xl");
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+}
+.third-scenario h3 {
+	color: #42AB30 !important;
+	font-size: 18px !important;
+}
+.first-part.third-scenario .congrts-text {
+	float: left;
+	margin: 10px 0 !important;
+}
+.first-part.third-scenario span, .first-part.third-scenario p.third-scenario-p {
+	clear: both;
+	color: #777;
+	display: block;
+	font-size: 14px;
+	padding: 0 15px;
+}
+/*Scenario 3 end*/
+
+/*Scenario 2 start*/
+
+.second-scenario h3:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=star-icon_xl");
+	margin-right: 10px;
+	position: relative;
+	top: 5px;
+}
+.second-scenario h3 {
+	color: #42AB30 !important;
+	font-size: 18px !important;
+}
+.first-part.second-scenario .congrts-text {
+	float: left;
+	margin: 10px 0 !important;
+}
+.first-part.second-scenario span, .first-part.second-scenario p.second-scenario-p {
+	clear: both;
+	color: #777;
+	display: block;
+	font-size: 14px;
+	padding: 0 15px;
+}
+.star-img-icon:after {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=star-icon_lsize");
+	position: relative;
+	top: 5px;
+}
+.star-img-icon {
+	display: inline-block !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.star-img:after {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=star-icon_msize");
+	position: relative;
+	top: 5px;
+	margin-right: 12px;
+}
+
+.congrts-text .star-img::after {
+    margin-right: 0;
+}
+
+.star-img {
+	display: inline-block !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+/*Scenario 2 end*/
+
+.proceed-exam h3:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=proceed_arrow");
+	margin-right: 10px;
+	position: relative;
+	top: 3px;
+}
+.proceed-exam h3 {
+	color: #3496c7 !important;
+	font-size: 18px !important;
+}
+.first-part.proceed-exam span {
+	display: block;
+	padding: 0 15px;
+	clear: both;
+	color: #777;
+	font-size: 14px;
+}
+.first-part.proceed-exam .congrts-text {
+	float: left;
+	margin: 10px 0 !important;
+}
+.first-part.proceed-exam .Proceed-link {
+	margin: 0 0 20px;
+}
+.first-part.proceed-exam span.Proceed-link a {
+	font-size: 14px;
+	text-decoration: underline;
+}
+/*Final exam*/
+
+.final-exam h3:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=right-icon");
+	margin-right: 10px;
+	position: relative;
+	top: 7px;
+}
+.final-exam h3 {
+	color: #539f44 !important;
+	font-size: 18px !important;
+}
+
+.proceed-exam-disabled h3 {
+	color: #777777 !important;
+	font-size: 18px !important;
+}
+.first-part.final-exam span {
+	display: block;
+	padding: 0 15px;
+	clear: both;
+	color: #777;
+	font-size: 14px;
+}
+.first-part.final-exam .congrts-text {
+	float: left;
+	margin: 10px 0 !important;
+}
+.first-part.final-exam .Proceed-link {
+	margin: 0 0 20px;
+}
+.first-part.final-exam span.download-certificate-link a {
+	color: #539f44 !important;
+	text-decoration: underline;
+}
+.download-certificate-link {
+	margin-bottom: 10px;
+}
+.first-part.final-exam span.Proceed-link a {
+	font-size: 14px;
+	text-decoration: underline;
+}
+.final-exam-onprocess h3::before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=in_progress");
+	margin-right: 10px;
+	position: relative;
+	top: 9px;
+}
+.first-part.final-exam .toggleContent {
+	width: 100%;
+}
+
+
+.social-icons .social-shares li span img {
+    margin-left: 3px;
+    margin-right: 3px;
+    vertical-align: inherit !important;
+}
+
+.social-icons .social-shares li span img:hover {
+
+opacity:0.75;
+}
+
+
+/*AJ-16-04-2016*/
+
+
+.caption-line .caption-line-time {
+    color: #333;
+    display: inline-block;
+    float: left;
+     width: 8%;
+	 margin-bottom:5px;
+	 }
+
+.caption-line .caption-line-text {
+    float: left;
+    width: 90%;
+	margin-bottom:5px;
+}
+
+.caption-line {
+    clear: both;
+    display: inline-block;
+    width: 100%;
+    cursor:pointer;
+}
+
+
+.proceed-exam.proceed-exam-disabled h3
+{
+color:#c3c3c3 !important;
+line-height: 26px;
+padding-top:5px;
+}
+
+.proceed-exam.proceed-exam-disabled .congrts-text {
+	font-family: "FuturaPT-Book";
+	color: #888;
+	font-size: 16px;
+	margin-top: 0 !important;
+	padding-left: 30px !important;
+}
+
+
+
+
+/*End Css*/
+
+
+/*end final exam css*/
+
+/*************************************************Media Query start here********************************************************************/
+
+
+@media (max-width: 1200px) and (min-width: 768px) {
+.new-search input[type="text"] {
+	width: 48%;
+}
+.toggleAll a {
+	font-size: 13px;
+}
+.right-cover-area {
+	width: 52%;
+}
+.left-cover-area {
+	width: 48%;
+}
+.titleTrigger h3 {
+	font-size: 15px;
+}
+ul.toggleContent {
+	padding-left: 22px;
+}
+.toggleContent > li a {
+	width: 60%;
+}
+.time-for-tree-part {
+	float: right;
+	margin-right: 2%;
+	text-align: right;
+	width: 38%;
+}
+.time-for-tree-part span.eye-img::before {
+	float: right;
+}
+.time-for-tree-part span.notice-img::before {
+	float: right;
+}
+.time-for-tree-part span.check-img::before {
+	float: right;
+}
+.toggleContent > li a {
+	width: 60%;
+}
+.right-cover-area .nav-tabs li {
+	width: 100%;
+}
+.right-cover-area .nav-tabs li a {
+	border-right: none !important;
+}
+.right-cover-area .tab-content {
+	padding: 0 0 0 10px;
+}
+.toggleContent > li, .toggleContent > li a {
+	font-size: 14px;
+}
+.test-result span {
+	font-size: 16px;
+}
+#page {
+	padding: 0 !important;
+	padding-left:10px !important;
+	padding-right:10px !important;
+}
+}
+
+@media (max-width:1024px) {
+.htmlnewcreation.new-lessong-page div[role="main"] {
+	width: 100% !important;
+	margin: 0;
+}
+.htmlnewcreation.new-lessong-page.span9.pull-right {
+	padding: 0 10px;
+}
+}
+
+@media (max-width:768px) {
+.bottom-section {
+	border-bottom: 1px solid #dddddd;
+}
+}
+
+@media (max-width:767px) {
+.right-cover-area .nav-tabs li {
+	width: 100%;
+}
+#clicky {
+	display: inline-block;
+	cursor: pointer;
+	float:right;
+}
+#clicky:before {
+	content: url("/theme/image.php?theme=meline29&component=theme&image=toggle-expand-alt_basic_blue");
+	display: inline-block;
+	margin: 20px 0 !important;
+	width: 100%;
+	text-align: right;
+}
+#clicky.close_cls::before {
+	/*content:url("/theme/image.php?theme=meline29&component=theme&image=close-new");*/
+	content: url("/theme/image.php?theme=meline29&component=theme&image=toggle-expand-alt_basic_blue");
+	display: inline-block;
+	margin: 20px 0 !important;
+	width: 100%;
+	text-align: right;
+}
+#slide {
+	background: #ffffff none repeat scroll 0 0;
+	border: 1px solid #ddd;
+	position: absolute;
+	width: 100%;
+	display: none;
+	box-sizing: border-box;
+	padding: 0 10px;
+	z-index: 1;
+	-moz-box-shadow: 3px 7px 4px #ccc;
+	-webkit-box-shadow: 3px 7px 4px #ccc;
+	box-shadow: 3px 7px 4px #ccc;
+	
+	
+}
+.htmlnewcreation.new-lessong-page.span9.pull-right {
+	padding: 0 10px;
+}
+.right-cover-area {
+	width: 100%;
+}
+.left-cover-area {
+	width: 100%;
+}
+.htmlnewcreation.new-lessong-page .heading-container h2 {
+	text-align: center;
+	font-size: 28px !important;
+}
+.new-lessong-page .em-buttons-left {
+	float: none;
+	margin-bottom: 20px;
+}
+.new-lessong-page .two-buttons-right {
+	float: none;
+}
+.new-lessong-page .two-buttons-right input {
+	margin: 0 15px;
+}
+.new-lessong-page .social-icons {
+	text-align: center;
+}
+.right-cover-area {
+	border: 1px solid #ddd;
+}
+}
+
+@media (max-width:640px) {
+.left-cover-area {
+	width: 100%;
+	border-right: none;
+}
+.right-cover-area {
+	width: 100%;
+}
+.right-cover-area .nav.nav-tabs > li > a {
+	border-right: none;
+}
+.new-search form {
+	width: 100%;
+}
+.titleTrigger {
+	border-right: 1px solid #ddd;
+}
+.social-icons ul li {
+	margin-right: 5px;
+}
+.social-icons, .htmlnewcreation.new-lessong-page .heading-container h2 {
+	margin-bottom: 10px;
+}
+.htmlnewcreation.new-lessong-page .heading-container {
+	margin-top: 10px;
+}
+.navbar .btn-navbar {
+	margin-right: 0;
+}
+.login-link-sectin .usermenu {
+	float: right;
+}
+.htmlnewcreation.new-lessong-page div[role="main"] {
+	width: 100% !important;
+	margin: 0;
+}
+
+.below-search-part
+{
+height:605px;
+}
+.right-second-heading span.main-text
+{
+line-height:30px;
+}
+}
+
+@media (max-width:480px) {
+.toggleContent > li a {
+	width: 55%;
+}
+.new-search input[type="text"] {
+	width: 68%;
+}
+.new-search input[type="submit"] {
+	padding: 6px 4px !important;
+}
+#slide {
+	padding: 0 5px;
+	z-index: 1;
+}
+.toggleContent > li, .toggleContent > li a {
+	font-size: 12px;
+}
+.titleTrigger h3 {
+	font-size: 14px;
+}
+ul.toggleContent {
+	padding-left: 25px;
+}
+.result_cls_pass, .result_cls_fail {
+	font-size: 13px !important;
+	margin-right: 15px;
+}
+
+.toggleAll span
+{
+display:block;
+width:100%;
+margin:10px 0;
+}
+
+}
+
+/*Ony for Video*/
+
+@media (min-width: 900px) and (max-width: 1024px) {
+.video-overflow {
+	height: 500px !important;
+}
+}
+
+@media (min-width: 768px) and (max-width: 899px) {
+.video-overflow {
+	height: 400px !important;
+}
+
+.caption-line .caption-line-text {
+    float: left;
+    margin-bottom: 5px;
+    width: 88%;
+}
+
+
+.caption-line .caption-line-time {
+    color: #333;
+    display: inline-block;
+    float: left;
+    margin-bottom: 5px;
+    width: 10%;
+}
+
+
+}
+
+@media (min-width: 600px) and (max-width: 767px) {
+.video-overflow {
+	height: 350px !important;
+}
+}
+
+@media (min-width: 480px) and (max-width: 599px) {
+.video-overflow {
+	height: 275px !important;
+}
+}
+
+@media (min-width: 320px) and (max-width: 479px) {
+.video-overflow {
+	height: 200px !important;
+}
+
+.caption-line .caption-line-text {
+    float: left;
+    margin-bottom: 5px;
+    width: 85%;
+}
+.caption-line .caption-line-time {
+    color: #333;
+    display: inline-block;
+    float: left;
+    margin-bottom: 5px;
+    width: 15%;
+}
+
+} 
+
+@media (min-width: 768px)
+{
+#slide
+{
+display:block !important;
+}
+}
+
+.highlight{background-color:#3496c7;color:#fff;}
+
+/*End Css*/
+
+
+/*End Css*/
+
+
+/**************/
+
+
+.loadingImage {
+    float: left;
+    height: 50px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+
+
+.toggleAll span:last-child {
+    margin-right: 0;
+}

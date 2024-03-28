@@ -100,6 +100,8 @@ class assign_submission_status implements \renderable {
     public $timelimit = 0;
     /** @var bool */
     public $caneditowner;
+    /** @var array feedbackplugins - The list of feedback plugins to render the previous attempts */
+    public $feedbackplugins = array();
 
     /**
      * Constructor
@@ -135,6 +137,7 @@ class assign_submission_status implements \renderable {
      * @param bool $preventsubmissionnotingroup Prevent submission if user is not in a group.
      * @param array $usergroups Array containing all groups the user is assigned to.
      * @param int $timelimit The time limit for the assignment.
+     * @param array feedbackplugins
      */
     public function __construct(
         $allowsubmissionsfromdate,
@@ -167,8 +170,10 @@ class assign_submission_status implements \renderable {
         $gradingstatus,
         $preventsubmissionnotingroup,
         $usergroups,
-        $timelimit
+        $timelimit,
+        $feedbackplugins
     ) {
+        $this->feedbackplugins = $feedbackplugins;
         $this->allowsubmissionsfromdate = $allowsubmissionsfromdate;
         $this->alwaysshowdescription = $alwaysshowdescription;
         $this->submission = $submission;

@@ -1,0 +1,61 @@
+//
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+//
+//
+// Adaptable button style sheet
+//
+// @package    theme_adaptable
+// @copyright  2022 G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
+// @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+//
+
+// Login page button.
+.loginbtn.btn {
+    font-size: larger;
+    height: 50px;
+}
+#page-mod-assign-grade{
+input#id_savegrade, input#id_cancelbutton{
+background-color: #fff;
+border: 1px solid #ccc;
+color: #000 !important;
+}
+input#id_savegrade:hover, input#id_cancelbutton:hover{
+color: #fff !important;
+}
+
+}
+#page-local-assign-speedtext, #page-local-assign-edit_stext{
+.buttonCenter input, input#btnDelete, .buttonCenter_edit input[type=button]{
+background-color: #fff;
+border: 1px solid #ccc;
+color: #000 !important;
+border-radius: 4px;
+font-size:16px !important;
+}
+.buttonCenter_edit input[type=button]{
+margin-left: 10px;
+}
+.buttonCenter input:hover,
+input#btnDelete:hover, 
+.buttonCenter_edit input[type=button]:hover,
+.buttonCenter input:focus,
+input#btnDelete:focus, 
+.buttonCenter_edit input[type=button]:focus{
+color: #fff !important;
+}
+
+}

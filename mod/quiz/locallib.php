@@ -1322,6 +1322,7 @@ function quiz_send_notification($recipient, $submitter, $a) {
 
     // ... and send it.
     return message_send($eventdata);
+    //return 0;
 }
 
 /**
@@ -1770,7 +1771,21 @@ function quiz_add_quiz_question($questionid, $quiz, $page = 0, $maxmark = null) 
     // Add the new instance.
     $slot = new stdClass();
     $slot->quizid = $quiz->id;
+    
+    //Customisation Starts
+    $cnt = $DB->count_records('quiz_slots', array("quizid"=>$quiz->id));
 
+    if($cnt == 0){
+        $maxmark = 100.00;
+    }
+    else{
+        // average
+        $cnt = $cnt + 1;
+        $maxmark = 100/$cnt;
+        $DB->execute("UPDATE `mdl_quiz_slots` SET `maxmark` = '".$maxmark."' WHERE `mdl_quiz_slots`.`quizid` = ?", array($quiz->id));
+    }
+    //Customisation Ends
+    
     if ($maxmark !== null) {
         $slot->maxmark = $maxmark;
     } else {

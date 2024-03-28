@@ -27,7 +27,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 
-$string['notavailable'] = 'This quiz is currently not available.';
+//$string['notavailable'] = 'This quiz is not currently available';
+$string['notavailable'] = 'You have failed this assessment too many times. You will be blocked from attempting this quiz for one hour. Please use this time to go back and review the videos associated with this quiz.';
 $string['pluginname'] = 'Open and close date access rule';
 $string['privacy:metadata'] = 'The Open and close date quiz access rule plugin does not store any personal data.';
 

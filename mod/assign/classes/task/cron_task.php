@@ -53,7 +53,8 @@ class cron_task extends \core\task\scheduled_task {
                 $class::cron();
             }
         }
-        $plugins = \core_component::get_plugin_list('assignfeedback');
+        //commented by shiva as per m29
+        /*$plugins = \core_component::get_plugin_list('assignfeedback');
 
         foreach ($plugins as $name => $plugin) {
             $disabled = get_config('assignfeedback_' . $name, 'disabled');
@@ -62,7 +63,7 @@ class cron_task extends \core\task\scheduled_task {
                 require_once($CFG->dirroot . '/mod/assign/feedback/' . $name . '/locallib.php');
                 $class::cron();
             }
-        }
+        }*/
 
         return true;
     }

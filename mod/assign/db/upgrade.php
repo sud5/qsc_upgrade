@@ -34,8 +34,209 @@ function xmldb_assign_upgrade($oldversion) {
 
     $dbman = $DB->get_manager();
 
+    // Automatically generated Moodle v3.6.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    if ($oldversion < 2018120500) {
+        // Define field hidegrader to be added to assign.
+        $table = new xmldb_table('assign');
+        $field = new xmldb_field('hidegrader', XMLDB_TYPE_INTEGER, '2', null, XMLDB_NOTNULL, null, '0', 'blindmarking');
+
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+
+        // Assignment savepoint reached.
+        upgrade_mod_savepoint(true, 2018120500, 'assign');
+    }
+
+    // Automatically generated Moodle v3.7.0 release upgrade line.
+    // Put any upgrade step following this.
+
+    // Automatically generated Moodle v3.8.0 release upgrade line.
+    // Put any upgrade step following this.
+
     // Automatically generated Moodle v3.9.0 release upgrade line.
     // Put any upgrade step following this.
+
+    // Automatically generated Moodle v3.10.0 release upgrade line.
+    // Put any upgrade step following this.
+    // added by shiva
+    if ($oldversion < 2018120500) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('speed_text');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user_id', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('course_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('exam_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('button_lable', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        $table->add_field('comment_text', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        $table->add_field('created_date', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2018120500, 'assign');
+    }
+    if ($oldversion < 2018120500) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('assign_graders');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('grader_id', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('exam_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('student_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('timeassigned', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+  
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2018120500, 'assign');
+    }
+    if ($oldversion < 2018120500) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('exam_not_exist_on_certified_users');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('userid', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('assignid', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('courseid', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2018120500, 'assign');
+    }
+    if ($oldversion < 2018120500) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('exam_not_exist_on_certified_users_copy');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('userid', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('assignid', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('courseid', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2018120500, 'assign');
+    }
+    if ($oldversion < 2021051701.2) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('log_assign_graders');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('request_step', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('grader_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('exam_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('student_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('request_data', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        $table->add_field('created_date', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2021051701.2, 'assign');
+    }
+    if ($oldversion < 2021051701.1) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('comment_reports');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('assignmentid', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('firstname', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('lastname', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('exam_name', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('grade', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('attempt_no', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('sender_name', XMLDB_TYPE_CHAR, '255', null, null, null, null);
+        $table->add_field('comment', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        $table->add_field('comment_type', XMLDB_TYPE_TEXT, 'big', null, null, null, null);
+        $table->add_field('timestamp', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2021051701.1, 'assign');
+    }
+    if ($oldversion < 2021051701.1) {
+
+        // Define table assign_overrides to be created.
+        $table = new xmldb_table('course_user_assign_notifications');
+
+        // Adding fields to table assign_overrides.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('user_id', XMLDB_TYPE_CHAR, '225', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('course_id', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('assign_notification', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        $table->add_field('timeduration', XMLDB_TYPE_CHAR, '225', null, null, null, null);
+        // Adding keys to table assign_overrides.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+    
+
+        // Conditionally launch create table for assign_overrides.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Assign savepoint reached.
+        upgrade_mod_savepoint(true, 2021051701.1, 'assign');
+    }
 
     if ($oldversion < 2021110901) {
         // Define field activity to be added to assign.

@@ -1,0 +1,80 @@
+%!Adobe-FontList 1.23
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:EurostileNextLTPro-BoldExt
+FamilyName:Eurostile Next LT Pro
+StyleName:Bold Extended
+FullName:Eurostile Next LT Pro Bold Extended
+MenuName:Eurostile Next LT Pro Extended
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\CP Badge Folder\Document fonts\Linotype - EurostileNextLTPro-BoldExt.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:76824
+FileModTime:1464056006
+WeightClass:700
+WidthClass:7
+AngleClass:0
+NameArray:0,Mac,18,Eurostile Next LT Pro Bold Ext
+NameArray:0,Mac,4,Eurostile Next LT Pro Bold Extended
+NameArray:0,Win,1,Eurostile Next LT Pro Extended
+NameArray:0,Win,16,Eurostile Next LT Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:EurostileNextLTPro-LightExt
+FamilyName:Eurostile Next LT Pro
+StyleName:Light Extended
+FullName:Eurostile Next LT Pro Light Extended
+MenuName:Eurostile Next LT Pro Light Ext
+StyleBits:0
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\CP Badge Folder\Document fonts\Linotype - EurostileNextLTPro-LightExt.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:76580
+FileModTime:1464056006
+WeightClass:300
+WidthClass:7
+AngleClass:0
+NameArray:0,Mac,18,Eurostile Next LT Pro Light Ext
+NameArray:0,Mac,4,Eurostile Next LT Pro Light Extended
+NameArray:0,Win,1,Eurostile Next LT Pro Light Ext
+NameArray:0,Win,16,Eurostile Next LT Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:TrueType
+FontName:Futura-Bold
+FamilyName:Futura
+StyleName:Bold
+FullName:Futura Bold
+MenuName:Futura
+StyleBits:2
+WritingScript:Roman
+OutlineFileName:C:\Users\jason.fernandez\Documents\Live sound LMS landing page refresh\Assets for Beyond key\Badges\CP Badge Folder\Document fonts\unicode.futurab.ttf
+DataFormat:sfntData
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:79538
+FileModTime:1469101252
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Futura Bold
+NameArray:0,Win,1,Futura
+%EndFont
+

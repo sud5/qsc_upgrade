@@ -356,6 +356,7 @@ table.quizreviewsummary th.cell {
 table.quizreviewsummary td.cell {
     padding: 1px 1em 1px 0.5em;
     text-align: left;
+    left: 10em;
     background: #fafafa;
 }
 
@@ -1192,4 +1193,173 @@ table#categoryquestions {
     #page-mod-quiz-review .que {
         page-break-inside: avoid;
     }
+}
+section#mod_quiz_navblock .header {
+    background: #f4f4f4;
+    border-color: #ddd;
+    border-radius: 4px 4px 0 0;
+    padding: 10px 0;
+    border: 1px solid #ddd;
+}
+section#mod_quiz_navblock .content {
+    margin-top: -1px;
+}
+.block>.content, #dockeditempanel .dockeditempanel_bd {
+    border-color: #dddddd;
+    border-style: dashed;
+    /* padding: 10px 5px; */
+    font-weight: 400;
+    background: #FFFFFE;
+    border-radius: 0 0 4px 4px;
+}
+
+.block .content {
+    padding: 15px !important;
+    border: 1px solid #ddd !important;
+    border-top: 1px dashed #dcdcdc !important;
+    border-radius: 0 0 4px 4px !important;
+}
+
+.singlebutton .btn-secondary {
+    color: #000;
+}
+form#responseform .submitbtns input {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #000 !important;
+    border-radius: 4px;
+}
+form#responseform .submitbtns input:hover, form#responseform .submitbtns input:focus {
+    color: #fff !important;
+    border-color: #000;
+}
+.que .qtext {
+    margin-bottom: 0;
+}
+.editquestion a i {
+    color: #8a8a8a;
+}
+.editquestion a:focus {
+    background: transparent;
+    box-shadow: none;
+}
+.que .formulation {
+    color: #001a1e;
+    background-color: #d9edf7;
+    border-color: #b8dce2;
+}
+.answer div label {
+    margin-bottom: 0;
+}
+.answer div input, .answer div label {
+    cursor: pointer !important;
+}
+.qtext {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+div[role="main"] h2:first-of-type {
+    margin-bottom: 30px !important;
+    padding-bottom: 20px;
+}
+form#responseform .que {
+    margin-top: 30px;
+}
+
+/*modal changes*/
+.moodle-dialogue-wrap {
+    border-radius: 6px;
+    border: 0 !important;
+}
+.moodle-dialogue-wrap .moodle-dialogue-hd {
+    border-radius: 6px 6px 0 0;
+    align-items: center;
+}
+.moodle-dialogue-hd h1 {
+    margin: 0;
+}
+.moodle-dialogue-hd span {
+    top: inherit !important;
+}
+.confirmation-dialogue .confirmation-message {
+    text-align: center;
+    margin-bottom: 20px !important;
+}
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons {
+    position: absolute !important;
+}
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd h1, .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd h5, .moodle-dialogue h3 {
+ text-shadow: none !important;
+ color: #000 !important;
+}
+/*.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd, .moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd.yui3-widget-hd {
+ background: #f4f4f4 !important;
+ border-color: #ddd !important;
+}*/
+.moodle-dialogue-base .closebutton::after {
+    color: #fff !important;
+}
+.moodle-dialogue-base .moodle-dialogue-wrap .moodle-dialogue-hd .yui3-widget-buttons button {
+ background: transparent !important;
+ font-size: 24px !important;
+ width: auto !important;
+}
+.confirmation-buttons input.btn {
+ background: #fff;
+ border: 1px solid #ddd;
+ color: #000 !important;
+}
+.confirmation-buttons input.btn:hover {
+ color: #fff !important;
+}
+.moodle-dialogue-hd h1{
+color: #000 !important;
+text-shadow: none !important;
+font-size: 18px !important;
+font-family: "Futura PT" !important;
+}
+
+// Quiz css changes 3.11
+input#repaginatecommand {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #000 !important;
+}
+input#repaginatecommand:hover {
+    color: #fff !important;
+}
+input#repaginatecommand {
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #000 !important;
+}
+input#repaginatecommand:hover {
+    color: #fff !important;
+}
+input#inputmaxgrade {
+    width: 100px;
+}
+th.header.c12 {
+    width: 145px;
+}
+
+input.submitbutton.btn {
+ background: #0b77b8 !important;
+}
+input.addcancel.btn {
+ border: 1px solid #b1b1b1;
+ color: #000 !important;
+}
+.moodle-dialogue-hd {
+    font-size: 20px !important;
+}
+
+.choosercontainer #chooseform .option label{
+    width: 100%;
+}
+
+#page-mod-quiz-attempt .submitbtns input {
+    line-height: inherit !important;
+    vertical-align: middle;
+    margin-right: 8px;
 }

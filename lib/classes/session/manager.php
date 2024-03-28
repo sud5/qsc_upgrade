@@ -1507,4 +1507,35 @@ class manager {
         // making sure to use the largest array first, so that all keys are considered.
         return array_udiff_uassoc($largest, $smallest, $valcompare, $keycompare);
     }
+    
+        /**
+     * Louout as another user - no security checks here.
+     * @param int $userid
+     * @param \context $context
+     * @return void
+     */
+    public function logoutFromUser($userid, \context $context)
+    {
+        global $CGF, $USER;
+       // Switch to fresh new $_SESSION.
+        //$_SESSION = array();
+        self::load_handler();
+        self::$handler->kill_session($_SESSION['USER']->id);
+        unset($_SESSION['USER']);
+
+        // Create the new $USER object with all details and reload needed capabilities.
+        $_SESSION['USER'] = $_SESSION['REALUSER'];
+        $GLOBALS['SESSION'] = new \stdClass();
+        $_SESSION['SESSION'] =& $GLOBALS['SESSION'];
+        $GLOBALS['USER'] = $_SESSION['USER']; 
+       
+        $user = get_complete_user_data('id', $userid);
+        
+        $user->context = $context;
+        
+        // // Set up global $USER.
+        \core\session\manager::set_user($user);
+        //$event->trigger(); 
+        unset($_SESSION['REALUSER']);
+    }
 }

@@ -241,8 +241,8 @@ M.mod_quiz.nav.init = function(Y) {
             if (questionidmatch) {
                 form.set('action', form.get('action') + questionidmatch[0]);
             }
-
-            nav_to_page(pageno);
+//Customize sameer for below line commenting
+//            nav_to_page(pageno);
         }, document.body, '.qnbutton');
     }
 

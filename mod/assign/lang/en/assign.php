@@ -29,6 +29,9 @@ $string['activitydate:submissionsopened'] = 'Opened:';
 $string['activityeditor'] = 'Activity instructions';
 $string['activityeditor_help'] = 'The actions you would like the student to complete for this assignment. This is only shown on the submission page where a student edits and submits their assignment.';
 $string['activityoverview'] = 'You have assignments that need attention';
+$string['allowederrors'] = 'If grade is in passing mode then attempt allowed set to NO';
+$string['addsubmission'] = 'Add submission';
+$string['continuesubmission'] = 'Continue';
 $string['addattempt'] = 'Allow another attempt';
 $string['addnewattempt'] = 'Add a new attempt';
 $string['addnewattempt_help'] = 'This will create a new blank submission for you to work on.';
@@ -44,6 +47,8 @@ $string['allowsubmissions'] = 'Allow the user to continue making submissions to 
 $string['allowsubmissionsshort'] = 'Allow submission changes';
 $string['allowsubmissionsfromdate'] = 'Allow submissions from';
 $string['allowsubmissionsfromdate_help'] = 'If enabled, students will not be able to submit before this date. If disabled, students will be able to start submitting right away.';
+$string['allowsubmissionsfromdatesummary'] = 'This assignment will accept submissions from <strong>{$a}</strong>';
+$string['allowsubmissionsanddescriptionfromdatesummary'] = 'The assignment details and submission form will be available from <strong>{$a}</strong>';
 $string['alwaysshowdescription'] = 'Always show description';
 $string['alwaysshowdescription_help'] = 'If disabled, the assignment description above will only become visible to students on the "Allow submissions from" date.';
 $string['applytoteam'] = 'Apply grades and feedback to entire group';
@@ -59,7 +64,7 @@ $string['assign:receivegradernotifications'] = 'Receive grader submission notifi
 $string['assign:releasegrades'] = 'Release grades';
 $string['assign:revealidentities'] = 'Reveal student identities';
 $string['assign:reviewgrades'] = 'Review grades';
-$string['assign:viewblinddetails'] = 'View student identities when anonymous submissions are enabled';
+$string['assign:viewblinddetails'] = 'View student identities when blind marking is enabled';
 $string['assign:viewgrades'] = 'View grades';
 $string['assign:showhiddengrader'] = 'See the identity of a hidden grader';
 $string['assign:submit'] = 'Submit assignment';
@@ -89,12 +94,12 @@ $string['attemptheading'] = 'Attempt {$a->attemptnumber}: {$a->submissionsummary
 $string['attempthistory'] = 'Previous attempts';
 $string['attemptnumber'] = 'Attempt number';
 $string['attemptsettings'] = 'Attempt settings';
-$string['attemptreopenmethod'] = 'Additional attempts';
-$string['attemptreopenmethod_help'] = 'This setting determines whether a student can make additional attempts at the assignment. For each attempt, the grade and feedback are saved, and can be viewed by the teacher and the student. The available options are:
+$string['attemptreopenmethod'] = 'Attempts reopened';
+$string['attemptreopenmethod_help'] = 'Determines how student submission attempts are reopened. The available options are:
 
-* Never - Only one attempt is possible.
-* Manually - Additional attempts may be allowed by a teacher.
-* Automatically until pass - Additional attempts are allowed automatically until the student achieves the grade to pass set in the gradebook for this assignment.';
+* Never - The submission cannot be reopened.
+* Manually - The submission can be reopened by a teacher.
+* Automatically until pass - The submission is automatically reopened until the student achieves the grade to pass set in the gradebook for this assignment.';
 $string['attemptreopenmethod_manual'] = 'Manually';
 $string['attemptreopenmethod_none'] = 'Never';
 $string['attemptreopenmethod_untilpass'] = 'Automatically until pass';
@@ -162,6 +167,8 @@ $string['defaultteam'] = 'Default group';
 $string['deleteallsubmissions'] = 'Delete all submissions';
 $string['description'] = 'Description';
 $string['disabled'] = 'Disabled';
+$string['submissiondescription'] = 'Submission Description';
+$string['submissiontitle'] = 'Submission Heading';
 $string['downloadall'] = 'Download all submissions';
 $string['download all submissions'] = 'Download all submissions in a zip file.';
 $string['downloadasfolders'] = 'Download submissions in folders';
@@ -241,6 +248,7 @@ $string['gradersubmissionupdatedsmall'] = '{$a->username} has updated their subm
 $string['gradeuser'] = 'Grade {$a}';
 $string['grantextension'] = 'Grant extension';
 $string['grantextensionforusers'] = 'Grant extension for {$a} students';
+$string['enabled'] = 'Enabled';
 $string['groupsubmissionsettings'] = 'Group submission settings';
 $string['errornosubmissions'] = 'There are no submissions to download';
 $string['errorquickgradingvsadvancedgrading'] = 'The grades were not saved because this assignment is currently using advanced grading';
@@ -280,9 +288,9 @@ $string['filternone'] = 'No filter';
 $string['filternotsubmitted'] = 'Not submitted';
 $string['filterrequiregrading'] = 'Requires grading';
 $string['filtersubmitted'] = 'Submitted';
-$string['graded'] = 'Graded';
+$string['graded'] = 'Passing Score!';
 $string['gradedby'] = 'Graded by';
-$string['gradedfollowupsubmit'] = 'Graded - resubmitted';
+$string['gradedfollowupsubmit'] = 'Graded - follow up submission received';
 $string['gradedon'] = 'Graded on';
 $string['gradebelowzero'] = 'Grade must be greater than or equal to zero.';
 $string['gradebreakdown'] = 'Grade breakdown';
@@ -382,7 +390,7 @@ $string['multipleteams_desc'] = 'The assignment requires submission in groups. Y
 $string['multipleteamsgrader'] = 'Member of more than one group, so unable to make submissions.';
 $string['nextuser'] = "Next user";
 $string['newsubmissions'] = 'Assignments submitted';
-$string['noattempt'] = 'No attempt';
+$string['noattempt'] = 'Awaiting Student Submission';
 $string['noclose'] = 'No close date';
 $string['nofilters'] = 'No filters';
 $string['nofiles'] = 'No files. ';
@@ -397,7 +405,7 @@ $string['nouseroverrides'] = 'There are currently no user overrides.';
 $string['nosavebutnext'] = 'Next';
 $string['nosubmission'] = 'Nothing has been submitted for this assignment';
 $string['nosubmissionyet'] = 'No submissions have been made yet';
-$string['noteam'] = 'Not a member of any group';
+$string['noteam'] = 'You\'re not a member of any group, please contact your teacher.';
 $string['noteam_desc'] = 'This assignment requires submission in groups. You are not a member of any group, so you cannot create a submission. Please contact your teacher to be added to a group.';
 $string['noteamgrader'] = 'Not a member of any group, so unable to make submissions.';
 $string['notgraded'] = 'Not graded';
@@ -438,7 +446,7 @@ $string['preventsubmissionsshort'] = 'Prevent submission changes';
 $string['previous'] = 'Previous';
 $string['previoususer'] = 'Previous user';
 $string['privacy:attemptpath'] = 'attempt {$a}';
-$string['privacy:blindmarkingidentifier'] = 'The identifier used for anonymous submissions';
+$string['privacy:blindmarkingidentifier'] = 'The identifier used for blind marking';
 $string['privacy:gradepath'] = 'grade';
 $string['privacy:metadata:assigndownloadasfolders'] = 'A user preference for whether multiple file submissions should be downloaded into folders';
 $string['privacy:metadata:assignfeedbackpluginsummary'] = 'Feedback data for the assignment.';
@@ -469,9 +477,11 @@ $string['quickgradingresult'] = 'Quick grading';
 $string['quickgradingchangessaved'] = 'The grade changes were saved';
 $string['quickgrading_help'] = 'Quick grading allows you to assign grades (and outcomes) directly in the submissions table. Quick grading is not compatible with advanced grading and is not recommended when there are multiple markers.';
 $string['relativedatessubmissiontimeleft'] = 'Calculated for each student';
+$string['relativedatessubmissionduedateafter'] = '{$a->datediffstr} after course start';
+$string['relativedatessubmissionduedatebefore'] = '{$a->datediffstr} before course start';
 $string['removeallgroupoverrides'] = 'Delete all group overrides';
 $string['removealluseroverrides'] = 'Delete all user overrides';
-$string['reopenuntilpassincompatiblewithblindmarking'] = 'Reopen until pass option is incompatible with anonymous submissions, because the grades are not released to the gradebook until the student identities are revealed.';
+$string['reopenuntilpassincompatiblewithblindmarking'] = 'Reopen until pass option is incompatible with blind marking, because the grades are not released to the gradebook until the student identities are revealed.';
 $string['requiresubmissionstatement'] = 'Require that students accept the submission statement';
 $string['requiresubmissionstatement_help'] = 'Require that students accept the submission statement for all submissions to this assignment.';
 $string['requireallteammemberssubmit'] = 'Require all group members submit';
@@ -488,7 +498,7 @@ $string['revealidentitiesconfirm'] = 'Are you sure you want to reveal student id
 $string['reverttodefaults'] = 'Revert to assignment defaults';
 $string['reverttodraftforgroup'] = 'Revert submission to draft for group {$a}.';
 $string['reverttodraftforstudent'] = 'Revert submission to draft for student: (id={$a->id}, fullname={$a->fullname}).';
-$string['reverttodraft'] = 'Revert the submission to draft status';
+$string['reverttodraft'] = 'Revert the submission to draft status.';
 $string['reverttodraftshort'] = 'Revert the submission to draft';
 $string['reviewed'] = 'Reviewed';
 $string['save'] = 'Save';
@@ -584,7 +594,7 @@ $string['submissionstatus_draft'] = 'Draft (not submitted)';
 $string['submissionstatusheading'] = 'Submission status';
 $string['submissionstatus_marked'] = 'Graded';
 $string['submissionstatus_new'] = 'No submission';
-$string['submissionstatus_reopened'] = 'Reopened';
+$string['submissionstatus_reopened'] = 'Revisions requested by Instructor';
 $string['submissionstatus_'] = 'No submission';
 $string['submissionstatus'] = 'Submission status';
 $string['submissionstatus_submitted'] = 'Submitted for grading';
@@ -621,7 +631,7 @@ $string['timemodified'] = 'Last modified';
 $string['timeremaining'] = 'Time remaining';
 $string['timeremainingcolon'] = 'Time remaining: {$a}';
 $string['togglezoom'] = 'Zoom in/out of region';
-$string['ungroupedusers'] = 'The setting \'Require group to make submission\' is enabled and some users are either not a member of any group, or are a member of more than one group, so are unable to make submissions.';
+$string['ungroupedusers'] = 'The setting \'Require group to make submission\' is turned on and some users are not allocated to groups, this will prevent them from submitting assignments.';
 $string['ungroupedusersoptional'] = 'The setting \'Students submit in groups\' is enabled and some users are either not a member of any group, or are a member of more than one group. Please be aware that these students will submit as members of the \'Default group\'.';
 $string['unlocksubmissionforstudent'] = 'Allow submissions for student: (id={$a->id}, fullname={$a->fullname}).';
 $string['unlocksubmissions'] = 'Unlock submissions';
@@ -668,3 +678,34 @@ $string['allowsubmissionsfromdatesummary'] = 'This assignment will accept submis
 $string['allowsubmissionsanddescriptionfromdatesummary'] = 'The assignment details and submission form will be available from <strong>{$a}</strong>';
 $string['relativedatessubmissionduedateafter'] = '{$a->datediffstr} after course start';
 $string['relativedatessubmissionduedatebefore'] = '{$a->datediffstr} before course start';
+//
+$string['submissiontypes'] = 'Submission types';
+$string['feedbacktypes'] = 'Feedback types';
+$string['groupsubmissionsettings'] = 'Group submission settings';
+$string['submissionlog'] = 'Student: {$a->fullname}, Status: {$a->status}';
+$string['onlineversion'] = 'Online Final Exam';
+$string['classroomexam'] = 'Classroom Exam';
+$string['type'] = 'Exam Type';
+$string['type_help'] = 'Select if course provided classroom training too.';
+$string['downloaddetails'] = 'Download Certificate Content';
+$string['downloaddetails_help'] = 'Display content in the exam page download certificate contents';
+$string['changegradewarning'] = 'This assignment has graded submissions and changing the grade will not automatically re-calculate existing submission grades. You must re-grade all existing submissions, if you wish to change the grade.';
+
+$string['indicator'] = 'Loading <img src=/theme/meline29/pix/loading.gif>';
+
+$string['course_name'] = 'Course Name';
+/* ======== New modules added and Renewal Certification Process - START BY PAWAN ===================  */
+
+/*$string['downloadlink'] = 'Download your Certification of Completion'; */
+$string['downloadlink'] = 'Download your Certificate';
+
+$string['downloadlink2'] = 'Download your Certificate';
+
+$string['reaggregatedownloadlink'] = 'A download link containing your certificate is in process. Please refresh the page after a few minutes.';
+
+/* ======== New modules added and Renewal Certification Process - END BY PAWAN ===================  */
+//US #2576 start
+$string['passfail'] = 'Pass/Fail';
+$string['passfailhelp']='Grade';
+$string['passfailhelp_help'] = 'Select option Passed or Revision Required';
+//US #2576 end

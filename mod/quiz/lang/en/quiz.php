@@ -21,6 +21,7 @@
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+$string['noinformationaboutgrading'] = 'No information about grading listed';
 
 $string['accessnoticesheader'] = 'You can preview this quiz, but if this were a real attempt, you would be blocked because:';
 $string['action'] = 'Action';
@@ -122,7 +123,7 @@ $string['attempttitlepaged'] = '{$a->name} (page {$a->currentpage} of {$a->total
 $string['autosaveperiod'] = 'Auto-save delay';
 $string['autosaveperiod_desc'] = 'Responses can be saved automatically during quiz attempts. The responses are saved whenever one is changed, and then after this delay. There is a trade-off: a shorter delay increases the server load, but reduces the chance that students lose their work. If you are going to make this delay much shorter, you should change the value gradually and monitor the server load. If the load gets too high, make the delay longer again. Setting the delay to 0 turns off auto-saving.';
 $string['back'] = 'Back to preview question';
-$string['backtocourse'] = 'Back to the course';
+//$string['backtocourse'] = 'Back to the course';
 $string['backtoquestionlist'] = 'Back to question list';
 $string['backtoquiz'] = 'Back to quiz editing';
 $string['bestgrade'] = 'Best grade';
@@ -802,6 +803,7 @@ $string['quiz:view'] = 'View quiz information';
 $string['quiz:viewreports'] = 'View quiz reports';
 $string['quiztimer'] = 'Quiz Timer';
 $string['quizwillopen'] = 'This quiz will open {$a}';
+$string['quiz_answer_blank'] = 'Answer should be required';
 $string['random'] = 'Random question';
 $string['randomcreate'] = 'Create random questions';
 $string['randomediting'] = 'Editing a random question';
@@ -1084,3 +1086,17 @@ $string['completionpass_help'] = 'If enabled, this activity is considered comple
 $string['completiondetail:passgrade'] = 'Receive a pass grade';
 $string['gradetopassnotset'] = 'This quiz does not yet have a grade to pass set. It may be set in the Grade section of the quiz settings.';
 $string['basicideasofquiz'] = 'The basic ideas of quiz-making';
+
+// New Custom Text
+$string['assessmentc'] = "Assessment : ";
+$string['send'] = "Send";
+$string['explanation'] = "Please provide an explanation on which concepts you are having trouble with. We will reset your exam and offer you a little guidance on the topic.";
+
+// ----- Assessment Manually Pass ---  Nav
+$string['manuallypass'] = 'Manually Pass';
+$string['quizgrage_help'] = 'Manually Pass';
+// ----- customization_Naveen_Start --------//
+$string['backtodashboard'] = 'Back to the dashboard';
+// ----- customization_Naveen_End --------//
+
+$string['backtocourse'] = 'Return to course';

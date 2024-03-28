@@ -44,6 +44,7 @@ class completion_regular_task extends scheduled_task {
      * Throw exceptions on errors (the job will be retried).
      */
     public function execute() {
+
         global $CFG, $COMPLETION_CRITERIA_TYPES, $DB;
 
         if ($CFG->enablecompletion) {

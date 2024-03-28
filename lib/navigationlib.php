@@ -4086,6 +4086,10 @@ class flat_navigation_node extends navigation_node {
                     }
                 }
             }
+            // - - - - -Start -Feature Request: "Speed Text" Buttons Nav - - - - - --//
+            $url = new moodle_url('/mod/assign/speedtext.php', array('cid'=>$course->id));
+            $coursenode->add(get_string('addspeedtext'), $url, self::TYPE_SETTING, null, 'addspeedtext', new pix_icon('i/settings', ''));
+            // - - - - -End -Feature Request: "Speed Text" Buttons Nav - - - - - --//
         }
         return $this->isactive;
     }
@@ -4635,7 +4639,12 @@ class settings_navigation extends navigation_node {
             $coursenode->add(get_string('settings'), $url, self::TYPE_SETTING, null,
                 'editsettings', new pix_icon('i/settings', ''));
         }
-
+        
+        // - - - - -Start -Feature Request: "Speed Text" Buttons Nav - - - - - --//
+            $url = new moodle_url('/local/assign/speedtext.php', array('cid'=>$course->id));
+            $coursenode->add(get_string('addspeedtext','local_assign'), $url, self::TYPE_SETTING, null, 'addspeedtext', new pix_icon('i/settings', ''));
+        // - - - - -End -Feature Request: "Speed Text" Buttons Nav - - - - - --//
+            
         if ($adminoptions->editcompletion) {
             // Add the course completion settings link
             $url = new moodle_url('/course/completion.php', array('id' => $course->id));
