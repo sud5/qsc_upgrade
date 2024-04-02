@@ -2120,6 +2120,14 @@ class core_renderer extends renderer_base {
                 $continue->type = single_button::BUTTON_PRIMARY;
             }
         } else if (is_string($continue)) {
+            
+            if ($flag == 0) {
+                $continue = new single_button(new moodle_url($continue), $displayoptions['continuestr'], 'post',
+                $displayoptions['type'] ?? single_button::BUTTON_PRIMARY);
+            } else {
+                $continue = new single_button(new moodle_url($continue), $displayoptions['continuestr_custom'], 'post',
+                $displayoptions['type'] ?? single_button::BUTTON_PRIMARY);
+            }
             $continue = new single_button(new moodle_url($continue), $displayoptions['continuestr'], 'post',
                 $displayoptions['type'] ?? single_button::BUTTON_PRIMARY);
         } else if ($continue instanceof moodle_url) {
@@ -3517,7 +3525,7 @@ EOD;
 
         $loginpage = $this->is_login_page();
         $loginurl = get_login_url();
-
+        //Start - updated for QSCID-SSO
         // Get some navigation opts.
         $opts = user_get_user_navigation_info($user, $this->page);
 
@@ -3525,16 +3533,22 @@ EOD;
             $returnstr = get_string($opts->unauthenticateduser['content'], 'moodle');
             // If not logged in, show the typical not-logged-in string.
             if (!$loginpage && (!$opts->unauthenticateduser['guest'] || $withlinks)) {
-                $returnstr .= " (<a href=\"$loginurl\">" . get_string('login') . '</a>)';
+//                $returnstr .= " (<a href=\"$loginurl\">" . get_string('login') . '</a>)';
+                require_once($CFG->dirroot . '/auth/googleoauth2/lib.php'); 
+                auth_googleoauth2_display_buttons();
             }
 
-            return html_writer::div(
-                html_writer::span(
-                    $returnstr,
-                    'login nav-link'
-                ),
-                $usermenuclasses
-            );
+//            return html_writer::div(
+//                html_writer::span(
+//                    $returnstr,
+//                    'login nav-link'
+//                ),
+//                $usermenuclasses
+//            );
+            
+            return;
+            
+             //end -updated for QSCID-SSO
         }
 
         $avatarclasses = "avatars";
@@ -3588,77 +3602,77 @@ EOD;
             );
         }
 
-        $returnstr .= html_writer::span(
-            html_writer::span($usertextcontents, 'usertext mr-1') .
-            html_writer::span($avatarcontents, $avatarclasses),
-            'userbutton'
-        );
-
-        // Create a divider (well, a filler).
-        $divider = new action_menu_filler();
-        $divider->primary = false;
-
-        $am = new action_menu();
-        $am->set_menu_trigger(
-            $returnstr,
-            'nav-link'
-        );
-        $am->set_action_label(get_string('usermenu'));
-        $am->set_nowrap_on_items();
-        if ($withlinks) {
-            $navitemcount = count($opts->navitems);
-            $idx = 0;
-            foreach ($opts->navitems as $key => $value) {
-
-                switch ($value->itemtype) {
-                    case 'divider':
-                        // If the nav item is a divider, add one and skip link processing.
-                        $am->add($divider);
-                        break;
-
-                    case 'invalid':
-                        // Silently skip invalid entries (should we post a notification?).
-                        break;
-
-                    case 'link':
-                        // Process this as a link item.
-                        $pix = null;
-                        if (isset($value->pix) && !empty($value->pix)) {
-                            $pix = new pix_icon($value->pix, '', null, array('class' => 'iconsmall'));
-                        } else if (isset($value->imgsrc) && !empty($value->imgsrc)) {
-                            $value->title = html_writer::img(
-                                $value->imgsrc,
-                                $value->title,
-                                array('class' => 'iconsmall')
-                            ) . $value->title;
-                        }
-
-                        $al = new action_menu_link_secondary(
-                            $value->url,
-                            $pix,
-                            $value->title,
-                            array('class' => 'icon')
-                        );
-                        if (!empty($value->titleidentifier)) {
-                            $al->attributes['data-title'] = $value->titleidentifier;
-                        }
-                        $am->add($al);
-                        break;
-                }
-
-                $idx++;
-
-                // Add dividers after the first item and before the last item.
-                if ($idx == 1 || $idx == $navitemcount - 1) {
-                    $am->add($divider);
-                }
-            }
-        }
-
-        return html_writer::div(
-            $this->render($am),
-            $usermenuclasses
-        );
+//        $returnstr .= html_writer::span(
+//            html_writer::span($usertextcontents, 'usertext mr-1') .
+//            html_writer::span($avatarcontents, $avatarclasses),
+//            'userbutton'
+//        );
+//
+//        // Create a divider (well, a filler).
+//        $divider = new action_menu_filler();
+//        $divider->primary = false;
+//
+//        $am = new action_menu();
+//        $am->set_menu_trigger(
+//            $returnstr,
+//            'nav-link'
+//        );
+//        $am->set_action_label(get_string('usermenu'));
+//        $am->set_nowrap_on_items();
+//        if ($withlinks) {
+//            $navitemcount = count($opts->navitems);
+//            $idx = 0;
+//            foreach ($opts->navitems as $key => $value) {
+//
+//                switch ($value->itemtype) {
+//                    case 'divider':
+//                        // If the nav item is a divider, add one and skip link processing.
+//                        $am->add($divider);
+//                        break;
+//
+//                    case 'invalid':
+//                        // Silently skip invalid entries (should we post a notification?).
+//                        break;
+//
+//                    case 'link':
+//                        // Process this as a link item.
+//                        $pix = null;
+//                        if (isset($value->pix) && !empty($value->pix)) {
+//                            $pix = new pix_icon($value->pix, '', null, array('class' => 'iconsmall'));
+//                        } else if (isset($value->imgsrc) && !empty($value->imgsrc)) {
+//                            $value->title = html_writer::img(
+//                                $value->imgsrc,
+//                                $value->title,
+//                                array('class' => 'iconsmall')
+//                            ) . $value->title;
+//                        }
+//
+//                        $al = new action_menu_link_secondary(
+//                            $value->url,
+//                            $pix,
+//                            $value->title,
+//                            array('class' => 'icon')
+//                        );
+//                        if (!empty($value->titleidentifier)) {
+//                            $al->attributes['data-title'] = $value->titleidentifier;
+//                        }
+//                        $am->add($al);
+//                        break;
+//                }
+//
+//                $idx++;
+//
+//                // Add dividers after the first item and before the last item.
+//                if ($idx == 1 || $idx == $navitemcount - 1) {
+//                    $am->add($divider);
+//                }
+//            }
+//        }
+//
+//        return html_writer::div(
+//            $this->render($am),
+//            $usermenuclasses
+//        );
     }
 
     /**
@@ -3667,11 +3681,11 @@ EOD;
      * @return string
      */
     public function secure_layout_login_info() {
-        if (get_config('core', 'logininfoinsecurelayout')) {
-            return $this->login_info(false);
-        } else {
-            return '';
-        }
+//        if (get_config('core', 'logininfoinsecurelayout')) {
+//            return $this->login_info(false);
+//        } else {
+//            return '';
+//        }
 
         return html_writer::div(
             $this->render($am),
@@ -4590,7 +4604,31 @@ EOD;
      *
      * @return string HTML to display the main header.
      */
-    public function full_header() {
+        public function full_header() {
+        global $USER, $DB;
+        $html = html_writer::start_tag('header', array('id' => 'page-header', 'class' => 'clearfix'));
+        $html .= $this->context_header();
+        $html .= html_writer::start_div('clearfix', array('id' => 'page-navbar'));
+        $isadmin = is_siteadmin($USER);
+
+        $sqlRole = "SELECT id FROM {role} WHERE shortname='grader'";
+        $rsRole = $DB->get_record_sql($sqlRole);
+
+        $sqlRoleAssignment = "SELECT contextid FROM {role_assignments} where userid=" . $USER->id . " AND roleid=" . $rsRole->id;
+        $rsRoleAssignment = $DB->get_record_sql($sqlRoleAssignment);
+
+        $flag_breacrumb_instructor_role = $_SESSION['instructorrole_breadcrumb_flag'];
+        if ($flag_breacrumb_instructor_role == 1 || $isadmin || !empty($rsRoleAssignment) || $USER->usertype == 'mainadmin' || $USER->usertype == 'graderasadmin') {
+            $html .= html_writer::tag('nav', $this->navbar(), array('class' => 'breadcrumb-nav'));
+            $html .= html_writer::div($this->page_heading_button(), 'breadcrumb-button');
+        }        
+        $html .= html_writer::end_div();
+        $html .= html_writer::tag('div', $this->course_header(), array('id' => 'course-header'));
+        $html .= html_writer::end_tag('header');
+        return $html;
+    }
+    
+    /*public function full_header() {
         $pagetype = $this->page->pagetype;
         $homepage = get_home_page();
         $homepagetype = null;
@@ -5657,7 +5695,7 @@ class core_renderer_maintenance extends core_renderer {
      * @param array $displayoptions optional extra display options
      * @return string HTML fragment
      */
-    public function confirm($message, $continue, $cancel, array $displayoptions = []) {
+    public function confirm($message, $continue, $cancel, array $displayoptions = [],$flag=0) {
         // We need plain styling of confirm boxes on upgrade because we don't know which stylesheet we have (it could be
         // from any previous version of Moodle).
         if ($continue instanceof single_button) {
