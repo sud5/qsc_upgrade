@@ -31,6 +31,12 @@ $categoryid = optional_param('category', 0, PARAM_INT); // Course category - can
 $returnto = optional_param('returnto', 0, PARAM_ALPHANUM); // Generic navigation return page switch.
 $returnurl = optional_param('returnurl', '', PARAM_LOCALURL); // A return URL. returnto must also be set to 'url'.
 
+//Custom-1 start
+// -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+$courseTag = array();       // For course tag selected.
+// -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+//Custom-1 end
+
 if ($returnto === 'url' && confirm_sesskey() && $returnurl) {
     // If returnto is 'url' then $returnurl may be used as the destination to return to after saving or cancelling.
     // Sesskey must be specified, and would be set by the form anyway.
@@ -165,6 +171,25 @@ if ($editform->is_cancelled()) {
     if (empty($course->id)) {
         // In creating the course.
         $course = create_course($data, $editoroptions);
+         //Custom-2 start
+          // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+        $tagidArr =$data->tagid;
+        if(isset($tagidArr) && !empty($tagidArr))
+        {
+            $courseId = $course->id;
+            $del_header = "DELETE FROM `mdl_course_tags_pc` WHERE courseid ='".$courseId."'";
+            $DB->execute($del_header);
+            foreach ($tagidArr as $key => $tagvalue) {
+                $tagInsert =  new stdClass();
+                $tagInsert->tagid = $tagvalue;
+                $tagInsert->courseid = $course->id;
+                $newCourseTagid = $DB->insert_record('course_tags_pc', $tagInsert);
+                unset($tagInsert);
+            }
+
+        }
+        // -- -  - - --  -End - Tag Search for Private Course Tag -Nav
+        //Custom-2 end
 
         // Get the context of the newly created course.
         $context = context_course::instance($course->id, MUST_EXIST);
@@ -187,6 +212,24 @@ if ($editform->is_cancelled()) {
         // The URL to take them to if they chose save and display.
         $courseurl = new moodle_url('/course/view.php', array('id' => $course->id));
     } else {
+        //Custom-3 start   
+        // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav   
+        $tagidArr =$data->tagid;    
+        $courseId = $course->id;    
+        $del_header = "DELETE FROM `mdl_course_tags_pc` WHERE courseid ='".$courseId."'";   
+        $DB->execute($del_header);  
+        if(isset($tagidArr) && !empty($tagidArr))   
+        {   
+            foreach ($tagidArr as $key => $tagvalue) {  
+                $tagInsert =  new stdClass();   
+                $tagInsert->tagid = $tagvalue;  
+                $tagInsert->courseid = $courseId;   
+                $newCourseTagid = $DB->insert_record('course_tags_pc', $tagInsert); 
+                unset($tagInsert);  
+            }   
+        }   
+        // -- -  - - --  -End - Tag Search for Private Course Tag -Nav  
+        //Custom-3 end
         // Save any changes to the files used in the editor.
         update_course($data, $editoroptions);
         // Set the URL to take them too if they choose save and display.
@@ -217,6 +260,15 @@ if (!empty($course->id)) {
     $pagedesc = $streditcoursesettings;
     $title = $streditcoursesettings;
     $fullname = $course->fullname;
+      // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+    $coursetagData = $DB->get_records('course_tags_pc', array('courseid' => $course->id ), "tagid");
+    if(!empty($coursetagData))
+    {
+        foreach ($coursetagData as $ctagvalue) {
+           $courseTag[]=$ctagvalue->tagid;
+        }
+    }
+    // -- -  - - --  -End  - Tag Search for Private Course Tag -Nav
 } else {
     // The user is adding a course, this page isn't presented in the site navigation/admin.
     // Adding a new course is part of course category management territory.
@@ -245,8 +297,65 @@ $PAGE->add_body_class('limitedwidth');
 $PAGE->set_heading($fullname);
 
 echo $OUTPUT->header();
+    //Custom-4 start
+// -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+echo '<link rel="stylesheet" type="text/css" href="'.$CFG->wwwroot.'/theme/meline29/style/jquery.multiselect.css"/>';
+ // -- -  - - --  -End - Tag Search for Private Course Tag -Nav
+//Custom-4 end
 echo $OUTPUT->heading($pagedesc);
 
 $editform->display();
 
 echo $OUTPUT->footer();
+?>
+
+<style type="text/css">
+#ms-list-1.ms-options-wrap > .ms-options > ul input[type="checkbox"] {
+    top: 11px !important;
+}
+</style>
+<!--  -- -  - - --  -Start - Tag Search for Private Course Tag -Nav   -->
+<script src="<?=$CFG->webroot;?>/theme/meline29/javascript/jquery.multiselect.js"></script>
+<!--  -- -  - - --  -End - Tag Search for Private Course Tag -Nav   -->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#id_role_7").attr("readonly","readonly");
+    $("#id_role_7").css("background-color","white");
+    $("#id_role_7").css("cursor","text");
+    $('#id_role_7').on('focus',function(){
+        $("#id_role_7").removeAttr("readonly");
+    });
+    // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+    var SelectResponce = JSON.parse('<?php echo json_encode($courseTag); ?>');
+    var categCheck = $('#id_tagid').multiselect({
+                        columns: 1,
+                        placeholder: 'Select Tags',
+                        search: true,
+                        selectAll: true
+                    });
+    categCheck.val(SelectResponce);
+     // Then refresh
+    categCheck.multiselect("refresh");
+    categCheck.multiselect("reload");
+    $('#id_visible').on('change',function(){
+
+        var CourseType = this.value;
+        if(CourseType == 0){
+            categCheck.multiselect("disable", false);
+        }else{
+            categCheck.multiselect('disable', true);
+            categCheck.multiselect("reload");
+        }
+
+    });
+    var CourseType = $('#id_visible > option:selected').val();
+        if(CourseType == 0){
+            categCheck.multiselect("disable", false);
+        }else{
+            categCheck.multiselect('disable', true);
+            categCheck.multiselect("reload");
+        }
+
+    // -- -  - - --  -End - Tag Search for Private Course Tag -Nav
+});
+</script>

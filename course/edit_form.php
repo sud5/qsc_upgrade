@@ -5,6 +5,8 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->libdir.'/formslib.php');
 require_once($CFG->libdir.'/completionlib.php');
 require_once($CFG->libdir . '/pdflib.php');
+//Custom-1
+require_once($CFG->libdir. '/coursecatlib.php');
 
 /**
  * The form for handling editing a course.
@@ -105,12 +107,60 @@ class course_edit_form extends moodleform {
             }
         }
 
+   //Custom -1 start
+         // ----- customization_Naveen_Start --------//
+        $versionChoices = array();
+        $versionChoices[''] = 'Please Select';
+        $versionChoices['normal'] = 'Normal';
+        $versionChoices['inclassroom_quiz'] = 'In-classroom with Assessment';
+        if(!$course->course_version){
+            $mform->addElement('select', 'course_version', 'Course Version',$versionChoices);
+            $mform->addRule('course_version', "Please select type of course", 'required', null, 'client');
+        }else{
+            $mform->addElement('select', 'course_version', 'Course Version',$versionChoices);
+            $mform->addRule('course_version', "Please select type of course", 'required', null, 'client');
+        }
+        $mform->addHelpButton('course_version', 'course_version');
+        // ----- customization_Naveen_End --------//
+
+        // $choices = array();
+        // $choices['0'] = get_string('hide');
+        // $choices['1'] = get_string('show');
+        // $mform->addElement('select', 'visible', get_string('visible'), $choices);
+        // $mform->addHelpButton('visible', 'visible');
+        // $mform->setDefault('visible', $courseconfig->visible);
+        //start- private-course
         $choices = array();
-        $choices['0'] = get_string('hide');
-        $choices['1'] = get_string('show');
-        $mform->addElement('select', 'visible', get_string('coursevisibility'), $choices);
-        $mform->addHelpButton('visible', 'coursevisibility');
-        $mform->setDefault('visible', $courseconfig->visible);
+        // $choices['0'] = get_string('hide');
+        // $choices['1'] = get_string('show');
+        $choices[''] = 'Please Select';
+        $choices['0'] = 'Private';
+        $choices['1'] = 'Public';
+        //$mform->addElement('select', 'visible', get_string('visible'));
+        if(!$course->visible){
+            //$mform->addElement('select', 'visible', 'would you like make this course "Private"?',$choices,array('disabled' => 'true'));
+            $mform->addElement('select', 'visible', 'Type Of course',$choices);
+            $mform->addRule('visible', "Please select type of course", 'required', null, 'client');
+        }else{
+            $mform->addElement('select', 'visible', 'Type Of course',$choices);
+            $mform->addRule('visible', "Please select type of course", 'required', null, 'client');
+        }
+        $mform->addHelpButton('visible', 'visible');
+        //$mform->setDefault('visible', $courseconfig->visible);
+
+        //end- private-course
+        // -- -  - - --  -Start - Tag Search for Private Course Tag -Nav
+        if (empty($course->id)) {
+            $tag_select = $mform->addElement('select', 'tagid', get_string('tag'), get_string_manager()->get_list_of_tags());
+            $tag_select->setMultiple(true);
+            $mform->addHelpButton('tagid', 'coursecategory');
+        }else{
+            $tag_select = $mform->addElement('select', 'tagid', get_string('tag'), get_string_manager()->get_list_of_tags());
+            $tag_select->setMultiple(true);
+            $mform->addHelpButton('tagid', 'coursecategory');
+        }
+        // -- -  - - --  -End - Tag Search for Private Course Tag -Nav
+        //Custom -1 end
         if (!empty($course->id)) {
             if (!has_capability('moodle/course:visibility', $coursecontext)) {
                 $mform->hardFreeze('visible');
@@ -186,6 +236,18 @@ class course_edit_form extends moodleform {
         $mform->addElement('header', 'descriptionhdr', get_string('description'));
         $mform->setExpanded('descriptionhdr');
 
+         //Custom-2 start
+        //seo settings start
+        $mform->addElement('textarea','meta_keywords', get_string('metakeywords'), null);
+        $mform->addHelpButton('meta_keywords', 'metakeywords');
+        $mform->setType('meta_keywords', PARAM_RAW);
+
+        $mform->addElement('textarea','meta_descriptions', get_string('metadescriptions'), null);
+        $mform->addHelpButton('meta_descriptions', 'metadescriptions');
+        $mform->setType('meta_descriptions', PARAM_RAW);
+        //seo settings end
+        //Custom-2 end
+
         $mform->addElement('editor','summary_editor', get_string('coursesummary'), null, $editoroptions);
         $mform->addHelpButton('summary_editor', 'coursesummary');
         $mform->setType('summary_editor', PARAM_RAW);
@@ -250,6 +312,9 @@ class course_edit_form extends moodleform {
                 }
             }
             $mform->addElement('select', 'theme', get_string('forcetheme'), $themes);
+            //Custom-3 start    
+            $mform->setDefault('theme', 'meline29');    
+            //Custom-3 end
         }
 
         if ((empty($course->id) && guess_if_creator_will_have_course_capability('moodle/course:setforcedlanguage', $categorycontext))

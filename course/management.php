@@ -520,3 +520,185 @@ echo $renderer->grid_end();
 echo $renderer->management_form_end();
 
 echo $renderer->footer();
+
+?>
+
+<style type="text/css">
+
+
+span.menu-action-text {
+    line-height: 20px;
+    display: block;
+    word-wrap: break-word;
+    white-space: normal;
+    margin-bottom: 0px;
+}
+ul.ml li span i.icon {
+    font-size: 16px !important;
+}
+
+#category-listing .menubar {
+    position: relative;
+    top: inherit;
+    right: inherit;
+}
+#category-listing .menu-action img.icon {
+    display: block;
+    width: auto;
+    height: auto;
+}
+#category-listing img.icon {
+    display: block;
+}
+
+#category-listing .item-actions {
+    margin-right: 0 !important;
+    position: relative;
+}
+#category-listing .item-actions .menu {
+    top: 28px;
+    padding: 0 8px;
+    left: inherit!important;
+    right: -78px;
+}
+
+#course-listing .courses-per-page .menubar{
+
+position: relative;
+    top: inherit;
+    right: inherit;
+
+}
+#course-listing .moodle-actionmenu .menubar {
+    position: relative;
+    top: inherit;
+    left: inherit;
+    right: inherit;
+}
+#course-listing .course-listing-actions .moodle-actionmenu {
+    position: relative;
+margin-left: 5px;
+}
+#course-listing .course-listing-actions .menu {
+    width: 230px !important;
+    top: 30px;
+    right: 0px;
+}
+#course-listing .course-listing-actions .moodle-actionmenu {
+    position: relative;
+}
+
+#course-listing .moodle-actionmenu.courses-per-page .menu {
+    top: 30px;
+    right: 0;
+    width: 50px !important;
+}
+#category-listing .item-actions .menu {
+    width: 200px;
+}
+#category-listing span i.icon {
+    font-size: 16px !important;
+}
+.list-group-item-action:hover, .list-group-item-action:focus {
+    z-index: inherit !important
+}
+a.categoryname:focus {
+    background: transparent;
+    box-shadow: none;
+}
+#course-category-listings .item-actions {
+    margin-right: 0 !important;
+}
+#course-category-listings #category-listing .course-count {
+    margin-right: 0 !important;
+    min-width: auto !important;
+}
+#course-listing a.toggle-display.textmenu:after {
+    border-left: 1px solid #0b77b8;
+    border-top: 1px solid #0b77b8;
+    width: 6px;
+    content: '';
+    height: 6px;
+    transform: rotate(224deg);
+    margin-top: 11px;
+    margin-right: 0px;
+    float: right;
+    margin-left: 4px;
+}
+#course-listing .btn-secondary:hover, #category-listing .btn-secondary:hover {
+    background-color: #000;
+    color: #fff !important;
+    text-decoration: none!important;
+}
+.btn.btn-primary.search-icon, .btn.btn-primary.search-icon:hover {
+    padding: 0 9px !important;
+    width: 35px !important;
+    margin-left: 0px;
+    border-radius: 0 4px 4px 0;
+}
+.btn.btn-primary.search-icon:hover {
+    padding: 0 9px !important;
+    width: 35px !important;
+}
+#course-category-listings .listing-actions {
+    text-align: right !important;
+}
+</style>
+<script type="text/javascript">
+    //icon fa fa-eye fa-fw
+    $(".action-moveup").html('<i class="icon fa fa-arrow-up fa-fw " title="Move up" aria-label="Move up"></i>');
+    $(".action-movedown").html('<i class="icon fa fa-arrow-down fa-fw " title="Move up" aria-label="Move up"></i>');
+    $(".action-hide").html('<i class="icon fa fa-eye fa-fw" title="Hide" aria-label="Hide"></i>');
+    $(".action-show").html('<i class="icon fa fa-eye-slash fa-fw" title="Show" aria-label="Show"></i>');
+    $(".toggle-display").html('<i class="icon fa fa-cog fa-fw" title="Edit" aria-label="Edit"></i>');
+    $("#category-listing").removeClass("col-sm");
+    $("#category-listing").addClass("col-md-6");
+    $(".pair-key").removeClass("col-md-3");
+    $(".pair-key").addClass("col-md-4");
+    $(".pair-value").removeClass("col-md-9");
+    $(".pair-value").addClass("col-md-8");
+    // $(".pair-value:second").removeClass("col-md-9");
+    // $(".pair-value:second").addClass("col-md-8");
+
+    $("#course-listing").removeClass("col-sm");
+    $("#course-listing").addClass("col-md-6");
+    // $(".pair-key:second").removeClass("col-md-3");
+    // $(".pair-key:second").addClass("col-md-4");
+    // $(".pair-value:third").removeClass("col-md-9");
+    // $(".pair-value:third").addClass("col-md-8");
+
+</script>
+<style type="text/css">
+.coursecat-management-header h2 {
+    padding: 0 !important;
+}
+a.btn-secondary{
+    color: #000 !important;
+}
+.coursecat-management-header .moodle-actionmenu {
+position: relative;
+right: 0;
+float: left;
+}
+.coursecat-management-header .menubar {
+position: relative !important;
+right: 0 !important;
+top: -2px !important;
+}
+.coursecat-management-header #action-menu-2-menu.menu {
+top: 30px !important;
+right: 10px !important;
+}
+.coursecat-management-header h2 {
+width: auto !important;
+border: 0 !important;
+}
+
+
+
+.coursecat-management-header {
+border-bottom: 1px dashed #ddd;
+}
+
+
+</style>

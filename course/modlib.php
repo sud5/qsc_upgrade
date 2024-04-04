@@ -632,6 +632,14 @@ function update_moduleinfo($cm, $moduleinfo, $course, $mform = null) {
     } else {
         $cm->showdescription = 0;
     }
+    //Custom -1
+    // - - -- - - - - -- Start- Feature Request: Frontpage Latest content  - -- - -  -//
+    if (isset($moduleinfo->showfrontpage_flag) && !empty($moduleinfo->showfrontpage_flag)) {
+        $cm->showfrontpage_flag = $moduleinfo->showfrontpage_flag;
+    }else{
+        $cm->showfrontpage_flag = 0;
+    }
+    // - - -- - - - - -- End- Feature Request: Frontpage Latest content  - -- - -  -//
 
     $DB->update_record('course_modules', $cm);
 
@@ -707,7 +715,7 @@ function update_moduleinfo($cm, $moduleinfo, $course, $mform = null) {
     // Now that module is fully updated, also update completion data if required.
     // (this will wipe all user completion data and recalculate it)
     if ($completion->is_enabled() && !empty($moduleinfo->completionunlocked)) {
-        // Rebuild course cache before resetting completion states to ensure that the cm_info attributes are up to date.
+          // Rebuild course cache before resetting completion states to ensure that the cm_info attributes are up to date.
         course_modinfo::build_course_cache($course);
         // Fetch this course module's info.
         $cminfo = cm_info::create($cm);

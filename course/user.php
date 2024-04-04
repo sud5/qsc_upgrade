@@ -215,3 +215,12 @@ switch ($mode) {
 }
 
 echo $OUTPUT->footer();
+    //Custom-1      
+if($mode == 'grade' && $USER->id!=2){       
+?>      
+<script>        
+$(".user-grade a").attr("href", "javascript:void(0);");     
+</script>       
+<?php       
+}       
+?>

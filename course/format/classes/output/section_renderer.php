@@ -349,7 +349,7 @@ abstract class section_renderer extends core_course_renderer {
             'core_courseformat\\output\\local\\content\\section to render a section ' .
             'or core_courseformat\output\\local\\content\\section\\header ' .
             'to print only the header.', DEBUG_DEVELOPER);
-
+        global $PAGE;
         $o = '';
         $sectionstyle = '';
 
@@ -363,14 +363,20 @@ abstract class section_renderer extends core_course_renderer {
             }
         }
 
-        $o .= html_writer::start_tag('li', [
-            'id' => 'section-' . $section->section,
-            'class' => 'section main clearfix' . $sectionstyle,
-            'role' => 'region',
-            'aria-labelledby' => "sectionid-{$section->id}-title",
-            'data-sectionid' => $section->section,
-            'data-sectionreturnid' => $sectionreturn
-        ]);
+//        $o .= html_writer::start_tag('li', [
+//            'id' => 'section-' . $section->section,
+//            'class' => 'section main clearfix' . $sectionstyle,
+//            'role' => 'region',
+//            'aria-labelledby' => "sectionid-{$section->id}-title",
+//            'data-sectionid' => $section->section,
+//            'data-sectionreturnid' => $sectionreturn
+//        ]);
+        
+        $o.= html_writer::start_tag('li', array('id' => 'section-'.$section->section, 
+            'class' => 'section main clearfix'.$sectionstyle, 'role'=>'region', 
+            'aria-label'=> get_section_name($course, $section)));   
+        // Create a span that contains the section title to be used to create the keyboard section move menu.   
+        $o .= html_writer::tag('span', get_section_name($course, $section), array('class' => 'hidden sectionname'));
 
         $leftcontent = $this->section_left_content($section, $course, $onsectionpage);
         $o .= html_writer::tag('div', $leftcontent, array('class' => 'left side'));
@@ -390,20 +396,31 @@ abstract class section_renderer extends core_course_renderer {
             $classes = '';
         }
         $sectionname = html_writer::tag('span', $this->section_title($section, $course));
-        $o .= $this->output->heading($sectionname, 3, 'sectionname' . $classes, "sectionid-{$section->id}-title");
-
-        $o .= $this->section_availability($section);
-
-        $o .= html_writer::start_tag('div', array('class' => 'summary'));
-        if ($section->uservisible || $section->visible) {
-            // Show summary if section is available or has availability restriction information.
-            // Do not show summary if section is hidden but we still display it because of course setting
-            // "Hidden sections are shown as not available".
-            $o .= $this->format_summary_text($section);
-        }
-        $o .= html_writer::end_tag('div');
-
-        return $o;
+//        $o .= $this->output->heading($sectionname, 3, 'sectionname' . $classes, "sectionid-{$section->id}-title");
+//
+//        $o .= $this->section_availability($section);
+//
+//        $o .= html_writer::start_tag('div', array('class' => 'summary'));
+//        if ($section->uservisible || $section->visible) {
+//            // Show summary if section is available or has availability restriction information.
+//            // Do not show summary if section is hidden but we still display it because of course setting
+//            // "Hidden sections are shown as not available".
+//            $o .= $this->format_summary_text($section);
+//        }
+//        $o .= html_writer::end_tag('div');
+         //Custom 1 start   
+        if($section->section == 0)  
+            $headtags='hide_h3';    
+        else    
+            $headtags='show_h3';    
+        $o.= $this->output->heading($sectionname, 3, 'sectionname' . $classes,$headtags.'_'.$section->section); 
+        //Custom -1 end 
+        $o.= html_writer::start_tag('div', array('class' => 'summary'));    
+        $o.= $this->format_summary_text($section);  
+        $o.= html_writer::end_tag('div');   
+        $context = context_course::instance($course->id);   
+        $o .= $this->section_availability_message($section, 
+        has_capability('moodle/course:viewhiddensections', $context));
     }
 
     /**

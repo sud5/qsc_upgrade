@@ -90,4 +90,30 @@ $strloggedinas = get_string('loggedinas', '', $newfullname);
 $PAGE->set_title($strloggedinas);
 $PAGE->set_heading($course->fullname);
 $PAGE->navbar->add($strloggedinas);
+
+//Custom-1 start
+//Customization for Reporting discrepancies between LMS and Salesforce Start
+//change user_sfdc login access start
+
+$sqlSCI = 'SELECT * FROM {user} u WHERE id='.$userid;
+
+$sqlUserObjData = $DB->get_record_sql($sqlSCI);
+
+$sqlUserSFDCMapping = "SELECT usf.id, usf.userid, usf.lastaccess
+                FROM {user_sfdc} usf WHERE usf.userid = $sqlUserObjData->id order by id desc LIMIT 0,1";
+$sqlSFDCObjData = $DB->get_record_sql($sqlUserSFDCMapping);
+
+if($sqlSFDCObjData){
+    //update user_sfdc and set to lastaccess by 99
+    $update_header = "update mdl_user_sfdc set lastaccess = '99' where mdl_user_sfdc.id = ".$sqlSFDCObjData->id;
+    $DB->execute($update_header);
+}
+else{
+   // $insert_header = "INSERT INTO `mdl_user_sfdc` (`userid`, `lastaccess`) VALUES (".$sqlSFDCObjData->id.", '99')";
+    $insert_header = "INSERT INTO `mdl_user_sfdc` (`userid`, `lastaccess`) VALUES (".$sqlUserObjData->id.", '99')";
+    $DB->execute($insert_header);
+}
+//change sfdc user login access end
+//Customization for Reporting discrepancies between LMS and Salesforce End
+//Custom-1 end
 notice($strloggedinas, "$CFG->wwwroot/course/view.php?id=$course->id");
